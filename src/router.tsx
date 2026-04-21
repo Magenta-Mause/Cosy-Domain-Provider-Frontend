@@ -6,7 +6,6 @@ import {
 } from "@tanstack/react-router";
 
 import { AppShell } from "@/components/layout/app-shell";
-import { AboutPage } from "@/pages/about-page";
 import { CreateSubdomainPage } from "@/pages/create-subdomain-page";
 import { DashboardPage } from "@/pages/dashboard-page";
 import { HomePage } from "@/pages/home-page";
@@ -37,12 +36,6 @@ const indexRoute = createRoute({
   component: HomePage,
 });
 
-const aboutRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: "/about",
-  component: AboutPage,
-});
-
 const loginRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/login",
@@ -66,7 +59,6 @@ const createSubdomainRoute = createRoute({
 
 const routeTree = rootRoute.addChildren([
   indexRoute,
-  aboutRoute,
   loginRoute,
   dashboardRoute,
   createSubdomainRoute,

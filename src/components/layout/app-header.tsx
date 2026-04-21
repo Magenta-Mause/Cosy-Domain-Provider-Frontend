@@ -75,14 +75,18 @@ export function AppHeader({ route = null }: { route?: Route }) {
         <Link
           to="/dashboard"
           className={cn("pbtn sm", route !== "dashboard" && "ghost")}
-          style={{ color: route !== "dashboard" ? "oklch(0.95 0.05 70)" : undefined }}
+          style={{
+            color: route !== "dashboard" ? "oklch(0.95 0.05 70)" : undefined,
+          }}
         >
           {t("nav.dashboard")}
         </Link>
         <Link
           to="/subdomain/new"
           className={cn("pbtn sm", route !== "create" && "ghost")}
-          style={{ color: route !== "create" ? "oklch(0.95 0.05 70)" : undefined }}
+          style={{
+            color: route !== "create" ? "oklch(0.95 0.05 70)" : undefined,
+          }}
         >
           {t("nav.newSubdomain")}
         </Link>
