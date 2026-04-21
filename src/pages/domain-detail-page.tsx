@@ -387,10 +387,19 @@ export function DomainDetailPage({ domainId }: { domainId: string }) {
               <div
                 style={{ display: "flex", gap: 12, justifyContent: "flex-end" }}
               >
-                <Link to="/dashboard" data-testid="domain-detail-back-btn" className="pbtn ghost">
+                <Link
+                  to="/dashboard"
+                  data-testid="domain-detail-back-btn"
+                  className="pbtn ghost"
+                >
                   ← {t("domainDetail.backToDomains")}
                 </Link>
-                <button type="submit" data-testid="domain-detail-submit-btn" className="pbtn lg" disabled={!canSubmit}>
+                <button
+                  type="submit"
+                  data-testid="domain-detail-submit-btn"
+                  className="pbtn lg"
+                  disabled={!canSubmit}
+                >
                   {isSubmitting
                     ? t("domainDetail.saving")
                     : isCreateMode
