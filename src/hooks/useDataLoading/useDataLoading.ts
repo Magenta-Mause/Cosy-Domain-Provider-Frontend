@@ -23,23 +23,6 @@ import {
 const useDataLoading = () => {
   const dispatch = useAppDispatch();
 
-  const bootstrapAuth = useCallback(async () => {
-    dispatch(setAuthState("loading"));
-    try {
-      const token = await fetchToken();
-      setIdentityToken(token);
-      dispatch(setIdentity({ token, user: parseIdentityToken(token) }));
-      return true;
-    } catch {
-      setIdentityToken(null);
-      dispatch(clearIdentity());
-      dispatch(setAuthState("failed"));
-      return false;
-    } finally {
-      dispatch(markBootstrapped());
-    }
-  }, [dispatch]);
-
   const loadSubdomains = useCallback(async () => {
     dispatch(setSubdomainsState("loading"));
     dispatch(setSubdomainsError(null));
@@ -54,6 +37,24 @@ const useDataLoading = () => {
       return null;
     }
   }, [dispatch]);
+
+  const bootstrapAuth = useCallback(async () => {
+    dispatch(setAuthState("loading"));
+    try {
+      const token = await fetchToken();
+      setIdentityToken(token);
+      dispatch(setIdentity({ token, user: parseIdentityToken(token) }));
+      await loadSubdomains();
+      return true;
+    } catch {
+      setIdentityToken(null);
+      dispatch(clearIdentity());
+      dispatch(setAuthState("failed"));
+      return false;
+    } finally {
+      dispatch(markBootstrapped());
+    }
+  }, [dispatch, loadSubdomains]);
 
   const loadSubdomainByUuid = useCallback(
     async (uuid: string) => {

@@ -14,6 +14,7 @@ import type {
   SubdomainCreationDto,
   SubdomainUpdateDto,
 } from "@/api/generated/model";
+import useDataLoading from "@/hooks/useDataLoading/useDataLoading.ts";
 import { parseIdentityToken } from "@/lib/jwt";
 import { clearIdentity, setAuthState, setIdentity } from "@/store/auth-slice";
 import { useAppDispatch } from "@/store/hooks";
@@ -26,19 +27,21 @@ import {
 
 const useDataInteractions = () => {
   const dispatch = useAppDispatch();
+  const { loadSubdomains } = useDataLoading();
 
   const refreshIdentityToken = useCallback(async () => {
     try {
       const token = await fetchToken();
       setIdentityToken(token);
       dispatch(setIdentity({ token, user: parseIdentityToken(token) }));
+      await loadSubdomains();
       return token;
     } catch {
       setIdentityToken(null);
       dispatch(clearIdentity());
       throw new Error("Unable to refresh identity token");
     }
-  }, [dispatch]);
+  }, [dispatch, loadSubdomains]);
 
   const loginUser = useCallback(
     async (credentials: LoginDto) => {
