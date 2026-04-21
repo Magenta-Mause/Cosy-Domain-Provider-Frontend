@@ -49,7 +49,10 @@ export function LoginPage() {
             <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
               <h2 style={{ fontSize: 22 }}>{t("login.title")}</h2>
               <p style={{ fontSize: 18 }}>
-                New here? <Link to="/register">{t("login.registerLink")}</Link>
+                New here?{" "}
+                <Link to="/register" data-testid="login-register-link">
+                  {t("login.registerLink")}
+                </Link>
               </p>
             </div>
 
@@ -59,6 +62,7 @@ export function LoginPage() {
               </label>
               <input
                 id="username"
+                data-testid="login-username-input"
                 className="pinput"
                 type="text"
                 autoComplete="username"
@@ -76,6 +80,7 @@ export function LoginPage() {
               <div style={{ position: "relative" }}>
                 <input
                   id="password"
+                  data-testid="login-password-input"
                   className="pinput"
                   type={showPw ? "text" : "password"}
                   autoComplete="current-password"
@@ -87,6 +92,7 @@ export function LoginPage() {
                 />
                 <button
                   type="button"
+                  data-testid="login-toggle-password-btn"
                   onClick={() => setShowPw(!showPw)}
                   style={{
                     position: "absolute",
@@ -114,13 +120,18 @@ export function LoginPage() {
                 justifyContent: "flex-end",
               }}
             >
-              <Link to="/" style={{ fontSize: 16 }}>
+              <Link
+                to="/"
+                data-testid="login-forgot-password-link"
+                style={{ fontSize: 16 }}
+              >
                 Forgot password?
               </Link>
             </div>
 
             <button
               type="submit"
+              data-testid="login-submit-btn"
               className="pbtn lg"
               disabled={!username || !password || submitting}
               style={{ width: "100%" }}
@@ -130,7 +141,9 @@ export function LoginPage() {
 
             <p style={{ fontSize: 16, textAlign: "center", opacity: 0.7 }}>
               {t("login.noAccount")}{" "}
-              <Link to="/register">{t("login.registerLink")}</Link>
+              <Link to="/register" data-testid="login-register-link-footer">
+                {t("login.registerLink")}
+              </Link>
             </p>
           </form>
         </Panel>

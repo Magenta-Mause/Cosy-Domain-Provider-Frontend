@@ -51,6 +51,7 @@ export function LanguageMenu({ onChangeLanguage }: LanguageMenuProps) {
     <div ref={languageMenuRef} style={{ position: "relative" }}>
       <button
         type="button"
+        data-testid="language-menu-toggle-btn"
         className="pbtn sm"
         style={{ gap: 6 }}
         onClick={() => setLanguageMenuOpen((open) => !open)}
@@ -80,6 +81,7 @@ export function LanguageMenu({ onChangeLanguage }: LanguageMenuProps) {
         >
           <button
             type="button"
+            data-testid="language-menu-en-btn"
             className="pbtn sm ghost"
             style={{ justifyContent: "flex-start" }}
             onClick={() => {
@@ -90,6 +92,7 @@ export function LanguageMenu({ onChangeLanguage }: LanguageMenuProps) {
           </button>
           <button
             type="button"
+            data-testid="language-menu-de-btn"
             className="pbtn sm ghost"
             style={{ justifyContent: "flex-start" }}
             onClick={() => {

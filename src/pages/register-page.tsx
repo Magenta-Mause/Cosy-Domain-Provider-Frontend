@@ -82,7 +82,9 @@ export function RegisterPage() {
               <h2 style={{ fontSize: 22 }}>Stake your mailbox</h2>
               <p style={{ fontSize: 18 }}>
                 Already moved in?{" "}
-                <Link to="/login">{t("register.loginLink")}</Link>
+                <Link to="/login" data-testid="register-login-link">
+                  {t("register.loginLink")}
+                </Link>
               </p>
             </div>
 
@@ -121,6 +123,7 @@ export function RegisterPage() {
               </label>
               <input
                 id="username"
+                data-testid="register-username-input"
                 className="pinput"
                 type="text"
                 autoComplete="username"
@@ -139,6 +142,7 @@ export function RegisterPage() {
               </label>
               <input
                 id="email"
+                data-testid="register-email-input"
                 className="pinput"
                 type="email"
                 autoComplete="email"
@@ -156,6 +160,7 @@ export function RegisterPage() {
               <div style={{ position: "relative" }}>
                 <input
                   id="password"
+                  data-testid="register-password-input"
                   className="pinput"
                   type={showPw ? "text" : "password"}
                   autoComplete="new-password"
@@ -168,6 +173,7 @@ export function RegisterPage() {
                 />
                 <button
                   type="button"
+                  data-testid="register-toggle-password-btn"
                   onClick={() => setShowPw(!showPw)}
                   style={{
                     position: "absolute",
@@ -212,6 +218,7 @@ export function RegisterPage() {
               </label>
               <input
                 id="confirmPassword"
+                data-testid="register-confirm-password-input"
                 className="pinput"
                 type={showPw ? "text" : "password"}
                 autoComplete="new-password"
@@ -240,6 +247,7 @@ export function RegisterPage() {
                 role="checkbox"
                 aria-checked={agreed}
                 tabIndex={0}
+                data-testid="register-terms-checkbox"
                 className={agreed ? "pcheck checked" : "pcheck"}
                 onClick={() => setAgreed(!agreed)}
                 onKeyDown={(e) =>
@@ -266,6 +274,7 @@ export function RegisterPage() {
 
             <button
               type="submit"
+              data-testid="register-submit-btn"
               className="pbtn lg"
               disabled={!canSubmit}
               style={{ width: "100%" }}

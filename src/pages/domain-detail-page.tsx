@@ -169,6 +169,7 @@ export function DomainDetailPage({ domainId }: { domainId: string }) {
         <div style={{ padding: "20px 28px", maxWidth: 1100, margin: "0 auto" }}>
           <Link
             to="/dashboard"
+            data-testid="domain-detail-back-link"
             style={{
               color: "oklch(0.95 0.08 70)",
               fontSize: 16,
@@ -231,6 +232,7 @@ export function DomainDetailPage({ domainId }: { domainId: string }) {
               <button
                 key={k}
                 type="button"
+                data-testid={`domain-detail-tab-${k}-btn`}
                 className="pixel"
                 onClick={() => setActiveTab(k as typeof activeTab)}
                 style={{
@@ -327,6 +329,7 @@ export function DomainDetailPage({ domainId }: { domainId: string }) {
                   </label>
                   <input
                     id="label"
+                    data-testid="domain-detail-label-input"
                     className={`pinput${hasSubmitted && !labelValid ? " invalid" : ""}`}
                     required
                     value={label}
@@ -356,6 +359,7 @@ export function DomainDetailPage({ domainId }: { domainId: string }) {
                   </label>
                   <input
                     id="targetIp"
+                    data-testid="domain-detail-target-ip-input"
                     className={`pinput${hasSubmitted && !ipValid ? " invalid" : ""}`}
                     required
                     value={targetIp}
@@ -383,10 +387,19 @@ export function DomainDetailPage({ domainId }: { domainId: string }) {
               <div
                 style={{ display: "flex", gap: 12, justifyContent: "flex-end" }}
               >
-                <Link to="/dashboard" className="pbtn ghost">
+                <Link
+                  to="/dashboard"
+                  data-testid="domain-detail-back-btn"
+                  className="pbtn ghost"
+                >
                   ← {t("domainDetail.backToDomains")}
                 </Link>
-                <button type="submit" className="pbtn lg" disabled={!canSubmit}>
+                <button
+                  type="submit"
+                  data-testid="domain-detail-submit-btn"
+                  className="pbtn lg"
+                  disabled={!canSubmit}
+                >
                   {isSubmitting
                     ? t("domainDetail.saving")
                     : isCreateMode
@@ -511,6 +524,7 @@ export function DomainDetailPage({ domainId }: { domainId: string }) {
                   </div>
                   <button
                     type="button"
+                    data-testid="domain-detail-delete-btn"
                     className="pbtn destructive"
                     disabled={isDeleting}
                     onClick={handleDelete}
