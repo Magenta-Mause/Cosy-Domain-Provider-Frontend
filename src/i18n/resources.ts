@@ -50,7 +50,7 @@ const enCommon = {
     submitting: "Logging in...",
     error: "Could not log in. Check your credentials and try again.",
     noAccount: "No account yet?",
-    newHere: "New here?",
+    email: "Email",
     registerLink: "Create one",
     forgotPassword: "Forgot password?",
   },
@@ -202,11 +202,11 @@ const enCommon = {
     plusFeature2: "✓ Up to 5 domains per account",
     plusFeature3: "✓ Bring your own domain (CNAME)",
     plusFeature4: "✓ Priority TLS renewal queue",
-    plusSupport: "♥ Your subscription supports the Cosy core team",
+    plusSupport: "❤️ Your subscription supports the Cosy core team",
     plusButton: "Upgrade to Cosy+",
   },
   footer: {
-    text: "Made with ♥ by Medalheads · cosy-hosting.net",
+    text: "Made with ❤️ by Medalheads · cosy-hosting.net",
   },
 } as const;
 
@@ -267,7 +267,7 @@ const deCommon: CommonSchema = {
     submitting: "Anmeldung läuft...",
     error: "Anmeldung fehlgeschlagen. Bitte Zugangsdaten prüfen.",
     noAccount: "Noch kein Konto?",
-    newHere: "Neu hier?",
+    email: "Email",
     registerLink: "Jetzt erstellen",
     forgotPassword: "Passwort vergessen?",
   },
@@ -421,11 +421,11 @@ const deCommon: CommonSchema = {
     plusFeature2: "✓ Bis zu 5 Domains pro Konto",
     plusFeature3: "✓ Eigene Domain mitbringen (CNAME)",
     plusFeature4: "✓ Priorität bei TLS-Erneuerung",
-    plusSupport: "♥ Dein Abo unterstützt das Cosy-Kernteam",
+    plusSupport: "❤️ Dein Abo unterstützt das Cosy-Kernteam",
     plusButton: "Zu Cosy+ wechseln",
   },
   footer: {
-    text: "Made with ♥ by Medalheads · cosy-hosting.net",
+    text: "Made with ❤️ by Medalheads · cosy-hosting.net",
   },
 };
 

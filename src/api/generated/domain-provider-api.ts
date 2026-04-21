@@ -4,7 +4,10 @@
  * OpenAPI definition
  * OpenAPI spec version: v0
  */
-
+import {
+  useMutation,
+  useQuery
+} from '@tanstack/react-query';
 import type {
   DataTag,
   DefinedInitialDataOptions,
@@ -17,10 +20,9 @@ import type {
   UseMutationOptions,
   UseMutationResult,
   UseQueryOptions,
-  UseQueryResult,
-} from "@tanstack/react-query";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { customInstance } from "../axios-instance";
+  UseQueryResult
+} from '@tanstack/react-query';
+
 import type {
   DnsEntry,
   LoginDto,
@@ -31,1244 +33,853 @@ import type {
   SubdomainDto,
   SubdomainUpdateDto,
   UserCreationDto,
-  UserDto,
-} from "./model";
+  UserDto
+} from './model';
 
+import { customInstance } from '../axios-instance';
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
 
+
+
 export const getSubdomain = (
-  uuid: string,
-  options?: SecondParameter<typeof customInstance>,
-  signal?: AbortSignal,
+    uuid: string,
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
 ) => {
-  return customInstance<SubdomainDto>(
-    { url: `/api/v1/subdomain/${uuid}`, method: "GET", signal },
-    options,
-  );
-};
+      
+      
+      return customInstance<SubdomainDto>(
+      {url: `/api/v1/subdomain/${uuid}`, method: 'GET', signal
+    },
+      options);
+    }
+  
 
-export const getGetSubdomainQueryKey = (uuid?: string) => {
-  return [`/api/v1/subdomain/${uuid}`] as const;
-};
 
-export const getGetSubdomainQueryOptions = <
-  TData = Awaited<ReturnType<typeof getSubdomain>>,
-  TError = unknown,
->(
-  uuid: string,
-  options?: {
-    query?: Partial<
-      UseQueryOptions<Awaited<ReturnType<typeof getSubdomain>>, TError, TData>
-    >;
-    request?: SecondParameter<typeof customInstance>;
-  },
+
+export const getGetSubdomainQueryKey = (uuid?: string,) => {
+    return [
+    `/api/v1/subdomain/${uuid}`
+    ] as const;
+    }
+
+    
+export const getGetSubdomainQueryOptions = <TData = Awaited<ReturnType<typeof getSubdomain>>, TError = unknown>(uuid: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getSubdomain>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
 ) => {
-  const { query: queryOptions, request: requestOptions } = options ?? {};
 
-  const queryKey = queryOptions?.queryKey ?? getGetSubdomainQueryKey(uuid);
+const {query: queryOptions, request: requestOptions} = options ?? {};
 
-  const queryFn: QueryFunction<Awaited<ReturnType<typeof getSubdomain>>> = ({
-    signal,
-  }) => getSubdomain(uuid, requestOptions, signal);
+  const queryKey =  queryOptions?.queryKey ?? getGetSubdomainQueryKey(uuid);
 
-  return {
-    queryKey,
-    queryFn,
-    enabled: !!uuid,
-    ...queryOptions,
-  } as UseQueryOptions<
-    Awaited<ReturnType<typeof getSubdomain>>,
-    TError,
-    TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> };
-};
+  
 
-export type GetSubdomainQueryResult = NonNullable<
-  Awaited<ReturnType<typeof getSubdomain>>
->;
-export type GetSubdomainQueryError = unknown;
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getSubdomain>>> = ({ signal }) => getSubdomain(uuid, requestOptions, signal);
 
-export function useGetSubdomain<
-  TData = Awaited<ReturnType<typeof getSubdomain>>,
-  TError = unknown,
->(
-  uuid: string,
-  options: {
-    query: Partial<
-      UseQueryOptions<Awaited<ReturnType<typeof getSubdomain>>, TError, TData>
-    > &
-      Pick<
+      
+
+      
+
+   return  { queryKey, queryFn, enabled: !!(uuid), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getSubdomain>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetSubdomainQueryResult = NonNullable<Awaited<ReturnType<typeof getSubdomain>>>
+export type GetSubdomainQueryError = unknown
+
+
+export function useGetSubdomain<TData = Awaited<ReturnType<typeof getSubdomain>>, TError = unknown>(
+ uuid: string, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getSubdomain>>, TError, TData>> & Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof getSubdomain>>,
           TError,
           Awaited<ReturnType<typeof getSubdomain>>
-        >,
-        "initialData"
-      >;
-    request?: SecondParameter<typeof customInstance>;
-  },
-  queryClient?: QueryClient,
-): DefinedUseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>;
-};
-export function useGetSubdomain<
-  TData = Awaited<ReturnType<typeof getSubdomain>>,
-  TError = unknown,
->(
-  uuid: string,
-  options?: {
-    query?: Partial<
-      UseQueryOptions<Awaited<ReturnType<typeof getSubdomain>>, TError, TData>
-    > &
-      Pick<
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetSubdomain<TData = Awaited<ReturnType<typeof getSubdomain>>, TError = unknown>(
+ uuid: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getSubdomain>>, TError, TData>> & Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof getSubdomain>>,
           TError,
           Awaited<ReturnType<typeof getSubdomain>>
-        >,
-        "initialData"
-      >;
-    request?: SecondParameter<typeof customInstance>;
-  },
-  queryClient?: QueryClient,
-): UseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>;
-};
-export function useGetSubdomain<
-  TData = Awaited<ReturnType<typeof getSubdomain>>,
-  TError = unknown,
->(
-  uuid: string,
-  options?: {
-    query?: Partial<
-      UseQueryOptions<Awaited<ReturnType<typeof getSubdomain>>, TError, TData>
-    >;
-    request?: SecondParameter<typeof customInstance>;
-  },
-  queryClient?: QueryClient,
-): UseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>;
-};
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetSubdomain<TData = Awaited<ReturnType<typeof getSubdomain>>, TError = unknown>(
+ uuid: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getSubdomain>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 
-export function useGetSubdomain<
-  TData = Awaited<ReturnType<typeof getSubdomain>>,
-  TError = unknown,
->(
-  uuid: string,
-  options?: {
-    query?: Partial<
-      UseQueryOptions<Awaited<ReturnType<typeof getSubdomain>>, TError, TData>
-    >;
-    request?: SecondParameter<typeof customInstance>;
-  },
-  queryClient?: QueryClient,
-): UseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>;
-} {
-  const queryOptions = getGetSubdomainQueryOptions(uuid, options);
+export function useGetSubdomain<TData = Awaited<ReturnType<typeof getSubdomain>>, TError = unknown>(
+ uuid: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getSubdomain>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient 
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
 
-  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
-    TData,
-    TError
-  > & { queryKey: DataTag<QueryKey, TData, TError> };
+  const queryOptions = getGetSubdomainQueryOptions(uuid,options)
 
-  query.queryKey = queryOptions.queryKey;
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  query.queryKey = queryOptions.queryKey ;
 
   return query;
 }
+
+
+
+
 
 export const updateSubdomain = (
-  uuid: string,
-  subdomainUpdateDto: SubdomainUpdateDto,
-  options?: SecondParameter<typeof customInstance>,
-) => {
-  return customInstance<SubdomainDto>(
-    {
-      url: `/api/v1/subdomain/${uuid}`,
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      data: subdomainUpdateDto,
+    uuid: string,
+    subdomainUpdateDto: SubdomainUpdateDto,
+ options?: SecondParameter<typeof customInstance>,) => {
+      
+      
+      return customInstance<SubdomainDto>(
+      {url: `/api/v1/subdomain/${uuid}`, method: 'PUT',
+      headers: {'Content-Type': 'application/json', },
+      data: subdomainUpdateDto
     },
-    options,
-  );
-};
+      options);
+    }
+  
 
-export const getUpdateSubdomainMutationOptions = <
-  TError = unknown,
-  TContext = unknown,
->(options?: {
-  mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof updateSubdomain>>,
-    TError,
-    { uuid: string; data: SubdomainUpdateDto },
-    TContext
-  >;
-  request?: SecondParameter<typeof customInstance>;
-}): UseMutationOptions<
-  Awaited<ReturnType<typeof updateSubdomain>>,
-  TError,
-  { uuid: string; data: SubdomainUpdateDto },
-  TContext
-> => {
-  const mutationKey = ["updateSubdomain"];
-  const { mutation: mutationOptions, request: requestOptions } = options
-    ? options.mutation &&
-      "mutationKey" in options.mutation &&
-      options.mutation.mutationKey
-      ? options
-      : { ...options, mutation: { ...options.mutation, mutationKey } }
-    : { mutation: { mutationKey }, request: undefined };
 
-  const mutationFn: MutationFunction<
-    Awaited<ReturnType<typeof updateSubdomain>>,
-    { uuid: string; data: SubdomainUpdateDto }
-  > = (props) => {
-    const { uuid, data } = props ?? {};
+export const getUpdateSubdomainMutationOptions = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateSubdomain>>, TError,{uuid: string;data: SubdomainUpdateDto}, TContext>, request?: SecondParameter<typeof customInstance>}
+): UseMutationOptions<Awaited<ReturnType<typeof updateSubdomain>>, TError,{uuid: string;data: SubdomainUpdateDto}, TContext> => {
 
-    return updateSubdomain(uuid, data, requestOptions);
-  };
+const mutationKey = ['updateSubdomain'];
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
 
-  return { mutationFn, ...mutationOptions };
-};
+      
 
-export type UpdateSubdomainMutationResult = NonNullable<
-  Awaited<ReturnType<typeof updateSubdomain>>
->;
-export type UpdateSubdomainMutationBody = SubdomainUpdateDto;
-export type UpdateSubdomainMutationError = unknown;
 
-export const useUpdateSubdomain = <TError = unknown, TContext = unknown>(
-  options?: {
-    mutation?: UseMutationOptions<
-      Awaited<ReturnType<typeof updateSubdomain>>,
-      TError,
-      { uuid: string; data: SubdomainUpdateDto },
-      TContext
-    >;
-    request?: SecondParameter<typeof customInstance>;
-  },
-  queryClient?: QueryClient,
-): UseMutationResult<
-  Awaited<ReturnType<typeof updateSubdomain>>,
-  TError,
-  { uuid: string; data: SubdomainUpdateDto },
-  TContext
-> => {
-  const mutationOptions = getUpdateSubdomainMutationOptions(options);
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof updateSubdomain>>, {uuid: string;data: SubdomainUpdateDto}> = (props) => {
+          const {uuid,data} = props ?? {};
 
-  return useMutation(mutationOptions, queryClient);
-};
+          return  updateSubdomain(uuid,data,requestOptions)
+        }
 
+        
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type UpdateSubdomainMutationResult = NonNullable<Awaited<ReturnType<typeof updateSubdomain>>>
+    export type UpdateSubdomainMutationBody = SubdomainUpdateDto
+    export type UpdateSubdomainMutationError = unknown
+
+    export const useUpdateSubdomain = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateSubdomain>>, TError,{uuid: string;data: SubdomainUpdateDto}, TContext>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof updateSubdomain>>,
+        TError,
+        {uuid: string;data: SubdomainUpdateDto},
+        TContext
+      > => {
+
+      const mutationOptions = getUpdateSubdomainMutationOptions(options);
+
+      return useMutation(mutationOptions, queryClient);
+    }
+    
 export const deleteSubdomain = (
-  uuid: string,
-  options?: SecondParameter<typeof customInstance>,
-) => {
-  return customInstance<void>(
-    { url: `/api/v1/subdomain/${uuid}`, method: "DELETE" },
-    options,
-  );
-};
+    uuid: string,
+ options?: SecondParameter<typeof customInstance>,) => {
+      
+      
+      return customInstance<void>(
+      {url: `/api/v1/subdomain/${uuid}`, method: 'DELETE'
+    },
+      options);
+    }
+  
 
-export const getDeleteSubdomainMutationOptions = <
-  TError = unknown,
-  TContext = unknown,
->(options?: {
-  mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof deleteSubdomain>>,
-    TError,
-    { uuid: string },
-    TContext
-  >;
-  request?: SecondParameter<typeof customInstance>;
-}): UseMutationOptions<
-  Awaited<ReturnType<typeof deleteSubdomain>>,
-  TError,
-  { uuid: string },
-  TContext
-> => {
-  const mutationKey = ["deleteSubdomain"];
-  const { mutation: mutationOptions, request: requestOptions } = options
-    ? options.mutation &&
-      "mutationKey" in options.mutation &&
-      options.mutation.mutationKey
-      ? options
-      : { ...options, mutation: { ...options.mutation, mutationKey } }
-    : { mutation: { mutationKey }, request: undefined };
 
-  const mutationFn: MutationFunction<
-    Awaited<ReturnType<typeof deleteSubdomain>>,
-    { uuid: string }
-  > = (props) => {
-    const { uuid } = props ?? {};
+export const getDeleteSubdomainMutationOptions = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteSubdomain>>, TError,{uuid: string}, TContext>, request?: SecondParameter<typeof customInstance>}
+): UseMutationOptions<Awaited<ReturnType<typeof deleteSubdomain>>, TError,{uuid: string}, TContext> => {
 
-    return deleteSubdomain(uuid, requestOptions);
-  };
+const mutationKey = ['deleteSubdomain'];
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
 
-  return { mutationFn, ...mutationOptions };
-};
+      
 
-export type DeleteSubdomainMutationResult = NonNullable<
-  Awaited<ReturnType<typeof deleteSubdomain>>
->;
 
-export type DeleteSubdomainMutationError = unknown;
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof deleteSubdomain>>, {uuid: string}> = (props) => {
+          const {uuid} = props ?? {};
 
-export const useDeleteSubdomain = <TError = unknown, TContext = unknown>(
-  options?: {
-    mutation?: UseMutationOptions<
-      Awaited<ReturnType<typeof deleteSubdomain>>,
-      TError,
-      { uuid: string },
-      TContext
-    >;
-    request?: SecondParameter<typeof customInstance>;
-  },
-  queryClient?: QueryClient,
-): UseMutationResult<
-  Awaited<ReturnType<typeof deleteSubdomain>>,
-  TError,
-  { uuid: string },
-  TContext
-> => {
-  const mutationOptions = getDeleteSubdomainMutationOptions(options);
+          return  deleteSubdomain(uuid,requestOptions)
+        }
 
-  return useMutation(mutationOptions, queryClient);
-};
+        
 
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type DeleteSubdomainMutationResult = NonNullable<Awaited<ReturnType<typeof deleteSubdomain>>>
+    
+    export type DeleteSubdomainMutationError = unknown
+
+    export const useDeleteSubdomain = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteSubdomain>>, TError,{uuid: string}, TContext>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof deleteSubdomain>>,
+        TError,
+        {uuid: string},
+        TContext
+      > => {
+
+      const mutationOptions = getDeleteSubdomainMutationOptions(options);
+
+      return useMutation(mutationOptions, queryClient);
+    }
+    
 export const getAllUsers = (
-  options?: SecondParameter<typeof customInstance>,
-  signal?: AbortSignal,
+    
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
 ) => {
-  return customInstance<UserDto[]>(
-    { url: `/api/v1/user`, method: "GET", signal },
-    options,
-  );
-};
+      
+      
+      return customInstance<UserDto[]>(
+      {url: `/api/v1/user`, method: 'GET', signal
+    },
+      options);
+    }
+  
+
+
 
 export const getGetAllUsersQueryKey = () => {
-  return [`/api/v1/user`] as const;
-};
+    return [
+    `/api/v1/user`
+    ] as const;
+    }
 
-export const getGetAllUsersQueryOptions = <
-  TData = Awaited<ReturnType<typeof getAllUsers>>,
-  TError = unknown,
->(options?: {
-  query?: Partial<
-    UseQueryOptions<Awaited<ReturnType<typeof getAllUsers>>, TError, TData>
-  >;
-  request?: SecondParameter<typeof customInstance>;
-}) => {
-  const { query: queryOptions, request: requestOptions } = options ?? {};
+    
+export const getGetAllUsersQueryOptions = <TData = Awaited<ReturnType<typeof getAllUsers>>, TError = unknown>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAllUsers>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+) => {
 
-  const queryKey = queryOptions?.queryKey ?? getGetAllUsersQueryKey();
+const {query: queryOptions, request: requestOptions} = options ?? {};
 
-  const queryFn: QueryFunction<Awaited<ReturnType<typeof getAllUsers>>> = ({
-    signal,
-  }) => getAllUsers(requestOptions, signal);
+  const queryKey =  queryOptions?.queryKey ?? getGetAllUsersQueryKey();
 
-  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
-    Awaited<ReturnType<typeof getAllUsers>>,
-    TError,
-    TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> };
-};
+  
 
-export type GetAllUsersQueryResult = NonNullable<
-  Awaited<ReturnType<typeof getAllUsers>>
->;
-export type GetAllUsersQueryError = unknown;
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getAllUsers>>> = ({ signal }) => getAllUsers(requestOptions, signal);
 
-export function useGetAllUsers<
-  TData = Awaited<ReturnType<typeof getAllUsers>>,
-  TError = unknown,
->(
-  options: {
-    query: Partial<
-      UseQueryOptions<Awaited<ReturnType<typeof getAllUsers>>, TError, TData>
-    > &
-      Pick<
+      
+
+      
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getAllUsers>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetAllUsersQueryResult = NonNullable<Awaited<ReturnType<typeof getAllUsers>>>
+export type GetAllUsersQueryError = unknown
+
+
+export function useGetAllUsers<TData = Awaited<ReturnType<typeof getAllUsers>>, TError = unknown>(
+  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAllUsers>>, TError, TData>> & Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof getAllUsers>>,
           TError,
           Awaited<ReturnType<typeof getAllUsers>>
-        >,
-        "initialData"
-      >;
-    request?: SecondParameter<typeof customInstance>;
-  },
-  queryClient?: QueryClient,
-): DefinedUseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>;
-};
-export function useGetAllUsers<
-  TData = Awaited<ReturnType<typeof getAllUsers>>,
-  TError = unknown,
->(
-  options?: {
-    query?: Partial<
-      UseQueryOptions<Awaited<ReturnType<typeof getAllUsers>>, TError, TData>
-    > &
-      Pick<
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetAllUsers<TData = Awaited<ReturnType<typeof getAllUsers>>, TError = unknown>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAllUsers>>, TError, TData>> & Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof getAllUsers>>,
           TError,
           Awaited<ReturnType<typeof getAllUsers>>
-        >,
-        "initialData"
-      >;
-    request?: SecondParameter<typeof customInstance>;
-  },
-  queryClient?: QueryClient,
-): UseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>;
-};
-export function useGetAllUsers<
-  TData = Awaited<ReturnType<typeof getAllUsers>>,
-  TError = unknown,
->(
-  options?: {
-    query?: Partial<
-      UseQueryOptions<Awaited<ReturnType<typeof getAllUsers>>, TError, TData>
-    >;
-    request?: SecondParameter<typeof customInstance>;
-  },
-  queryClient?: QueryClient,
-): UseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>;
-};
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetAllUsers<TData = Awaited<ReturnType<typeof getAllUsers>>, TError = unknown>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAllUsers>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 
-export function useGetAllUsers<
-  TData = Awaited<ReturnType<typeof getAllUsers>>,
-  TError = unknown,
->(
-  options?: {
-    query?: Partial<
-      UseQueryOptions<Awaited<ReturnType<typeof getAllUsers>>, TError, TData>
-    >;
-    request?: SecondParameter<typeof customInstance>;
-  },
-  queryClient?: QueryClient,
-): UseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>;
-} {
-  const queryOptions = getGetAllUsersQueryOptions(options);
+export function useGetAllUsers<TData = Awaited<ReturnType<typeof getAllUsers>>, TError = unknown>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAllUsers>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient 
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
 
-  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
-    TData,
-    TError
-  > & { queryKey: DataTag<QueryKey, TData, TError> };
+  const queryOptions = getGetAllUsersQueryOptions(options)
 
-  query.queryKey = queryOptions.queryKey;
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  query.queryKey = queryOptions.queryKey ;
 
   return query;
 }
+
+
+
+
 
 export const createUser = (
-  userCreationDto: UserCreationDto,
-  options?: SecondParameter<typeof customInstance>,
-  signal?: AbortSignal,
+    userCreationDto: UserCreationDto,
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
 ) => {
-  return customInstance<UserDto>(
-    {
-      url: `/api/v1/user`,
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      data: userCreationDto,
-      signal,
+      
+      
+      return customInstance<UserDto>(
+      {url: `/api/v1/user`, method: 'POST',
+      headers: {'Content-Type': 'application/json', },
+      data: userCreationDto, signal
     },
-    options,
-  );
-};
+      options);
+    }
+  
 
-export const getCreateUserMutationOptions = <
-  TError = unknown,
-  TContext = unknown,
->(options?: {
-  mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof createUser>>,
-    TError,
-    { data: UserCreationDto },
-    TContext
-  >;
-  request?: SecondParameter<typeof customInstance>;
-}): UseMutationOptions<
-  Awaited<ReturnType<typeof createUser>>,
-  TError,
-  { data: UserCreationDto },
-  TContext
-> => {
-  const mutationKey = ["createUser"];
-  const { mutation: mutationOptions, request: requestOptions } = options
-    ? options.mutation &&
-      "mutationKey" in options.mutation &&
-      options.mutation.mutationKey
-      ? options
-      : { ...options, mutation: { ...options.mutation, mutationKey } }
-    : { mutation: { mutationKey }, request: undefined };
 
-  const mutationFn: MutationFunction<
-    Awaited<ReturnType<typeof createUser>>,
-    { data: UserCreationDto }
-  > = (props) => {
-    const { data } = props ?? {};
+export const getCreateUserMutationOptions = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createUser>>, TError,{data: UserCreationDto}, TContext>, request?: SecondParameter<typeof customInstance>}
+): UseMutationOptions<Awaited<ReturnType<typeof createUser>>, TError,{data: UserCreationDto}, TContext> => {
 
-    return createUser(data, requestOptions);
-  };
+const mutationKey = ['createUser'];
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
 
-  return { mutationFn, ...mutationOptions };
-};
+      
 
-export type CreateUserMutationResult = NonNullable<
-  Awaited<ReturnType<typeof createUser>>
->;
-export type CreateUserMutationBody = UserCreationDto;
-export type CreateUserMutationError = unknown;
 
-export const useCreateUser = <TError = unknown, TContext = unknown>(
-  options?: {
-    mutation?: UseMutationOptions<
-      Awaited<ReturnType<typeof createUser>>,
-      TError,
-      { data: UserCreationDto },
-      TContext
-    >;
-    request?: SecondParameter<typeof customInstance>;
-  },
-  queryClient?: QueryClient,
-): UseMutationResult<
-  Awaited<ReturnType<typeof createUser>>,
-  TError,
-  { data: UserCreationDto },
-  TContext
-> => {
-  const mutationOptions = getCreateUserMutationOptions(options);
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof createUser>>, {data: UserCreationDto}> = (props) => {
+          const {data} = props ?? {};
 
-  return useMutation(mutationOptions, queryClient);
-};
+          return  createUser(data,requestOptions)
+        }
 
+        
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type CreateUserMutationResult = NonNullable<Awaited<ReturnType<typeof createUser>>>
+    export type CreateUserMutationBody = UserCreationDto
+    export type CreateUserMutationError = unknown
+
+    export const useCreateUser = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createUser>>, TError,{data: UserCreationDto}, TContext>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof createUser>>,
+        TError,
+        {data: UserCreationDto},
+        TContext
+      > => {
+
+      const mutationOptions = getCreateUserMutationOptions(options);
+
+      return useMutation(mutationOptions, queryClient);
+    }
+    
 export const listMySubdomains = (
-  options?: SecondParameter<typeof customInstance>,
-  signal?: AbortSignal,
+    
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
 ) => {
-  return customInstance<SubdomainDto[]>(
-    { url: `/api/v1/subdomain`, method: "GET", signal },
-    options,
-  );
-};
+      
+      
+      return customInstance<SubdomainDto[]>(
+      {url: `/api/v1/subdomain`, method: 'GET', signal
+    },
+      options);
+    }
+  
+
+
 
 export const getListMySubdomainsQueryKey = () => {
-  return [`/api/v1/subdomain`] as const;
-};
+    return [
+    `/api/v1/subdomain`
+    ] as const;
+    }
 
-export const getListMySubdomainsQueryOptions = <
-  TData = Awaited<ReturnType<typeof listMySubdomains>>,
-  TError = unknown,
->(options?: {
-  query?: Partial<
-    UseQueryOptions<Awaited<ReturnType<typeof listMySubdomains>>, TError, TData>
-  >;
-  request?: SecondParameter<typeof customInstance>;
-}) => {
-  const { query: queryOptions, request: requestOptions } = options ?? {};
+    
+export const getListMySubdomainsQueryOptions = <TData = Awaited<ReturnType<typeof listMySubdomains>>, TError = unknown>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listMySubdomains>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+) => {
 
-  const queryKey = queryOptions?.queryKey ?? getListMySubdomainsQueryKey();
+const {query: queryOptions, request: requestOptions} = options ?? {};
 
-  const queryFn: QueryFunction<
-    Awaited<ReturnType<typeof listMySubdomains>>
-  > = ({ signal }) => listMySubdomains(requestOptions, signal);
+  const queryKey =  queryOptions?.queryKey ?? getListMySubdomainsQueryKey();
 
-  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
-    Awaited<ReturnType<typeof listMySubdomains>>,
-    TError,
-    TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> };
-};
+  
 
-export type ListMySubdomainsQueryResult = NonNullable<
-  Awaited<ReturnType<typeof listMySubdomains>>
->;
-export type ListMySubdomainsQueryError = unknown;
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof listMySubdomains>>> = ({ signal }) => listMySubdomains(requestOptions, signal);
 
-export function useListMySubdomains<
-  TData = Awaited<ReturnType<typeof listMySubdomains>>,
-  TError = unknown,
->(
-  options: {
-    query: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof listMySubdomains>>,
-        TError,
-        TData
-      >
-    > &
-      Pick<
+      
+
+      
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof listMySubdomains>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type ListMySubdomainsQueryResult = NonNullable<Awaited<ReturnType<typeof listMySubdomains>>>
+export type ListMySubdomainsQueryError = unknown
+
+
+export function useListMySubdomains<TData = Awaited<ReturnType<typeof listMySubdomains>>, TError = unknown>(
+  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof listMySubdomains>>, TError, TData>> & Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof listMySubdomains>>,
           TError,
           Awaited<ReturnType<typeof listMySubdomains>>
-        >,
-        "initialData"
-      >;
-    request?: SecondParameter<typeof customInstance>;
-  },
-  queryClient?: QueryClient,
-): DefinedUseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>;
-};
-export function useListMySubdomains<
-  TData = Awaited<ReturnType<typeof listMySubdomains>>,
-  TError = unknown,
->(
-  options?: {
-    query?: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof listMySubdomains>>,
-        TError,
-        TData
-      >
-    > &
-      Pick<
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useListMySubdomains<TData = Awaited<ReturnType<typeof listMySubdomains>>, TError = unknown>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listMySubdomains>>, TError, TData>> & Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof listMySubdomains>>,
           TError,
           Awaited<ReturnType<typeof listMySubdomains>>
-        >,
-        "initialData"
-      >;
-    request?: SecondParameter<typeof customInstance>;
-  },
-  queryClient?: QueryClient,
-): UseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>;
-};
-export function useListMySubdomains<
-  TData = Awaited<ReturnType<typeof listMySubdomains>>,
-  TError = unknown,
->(
-  options?: {
-    query?: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof listMySubdomains>>,
-        TError,
-        TData
-      >
-    >;
-    request?: SecondParameter<typeof customInstance>;
-  },
-  queryClient?: QueryClient,
-): UseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>;
-};
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useListMySubdomains<TData = Awaited<ReturnType<typeof listMySubdomains>>, TError = unknown>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listMySubdomains>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 
-export function useListMySubdomains<
-  TData = Awaited<ReturnType<typeof listMySubdomains>>,
-  TError = unknown,
->(
-  options?: {
-    query?: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof listMySubdomains>>,
-        TError,
-        TData
-      >
-    >;
-    request?: SecondParameter<typeof customInstance>;
-  },
-  queryClient?: QueryClient,
-): UseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>;
-} {
-  const queryOptions = getListMySubdomainsQueryOptions(options);
+export function useListMySubdomains<TData = Awaited<ReturnType<typeof listMySubdomains>>, TError = unknown>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listMySubdomains>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient 
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
 
-  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
-    TData,
-    TError
-  > & { queryKey: DataTag<QueryKey, TData, TError> };
+  const queryOptions = getListMySubdomainsQueryOptions(options)
 
-  query.queryKey = queryOptions.queryKey;
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  query.queryKey = queryOptions.queryKey ;
 
   return query;
 }
+
+
+
+
 
 export const createSubdomain = (
-  subdomainCreationDto: SubdomainCreationDto,
-  options?: SecondParameter<typeof customInstance>,
-  signal?: AbortSignal,
+    subdomainCreationDto: SubdomainCreationDto,
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
 ) => {
-  return customInstance<SubdomainDto>(
-    {
-      url: `/api/v1/subdomain`,
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      data: subdomainCreationDto,
-      signal,
+      
+      
+      return customInstance<SubdomainDto>(
+      {url: `/api/v1/subdomain`, method: 'POST',
+      headers: {'Content-Type': 'application/json', },
+      data: subdomainCreationDto, signal
     },
-    options,
-  );
-};
+      options);
+    }
+  
 
-export const getCreateSubdomainMutationOptions = <
-  TError = unknown,
-  TContext = unknown,
->(options?: {
-  mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof createSubdomain>>,
-    TError,
-    { data: SubdomainCreationDto },
-    TContext
-  >;
-  request?: SecondParameter<typeof customInstance>;
-}): UseMutationOptions<
-  Awaited<ReturnType<typeof createSubdomain>>,
-  TError,
-  { data: SubdomainCreationDto },
-  TContext
-> => {
-  const mutationKey = ["createSubdomain"];
-  const { mutation: mutationOptions, request: requestOptions } = options
-    ? options.mutation &&
-      "mutationKey" in options.mutation &&
-      options.mutation.mutationKey
-      ? options
-      : { ...options, mutation: { ...options.mutation, mutationKey } }
-    : { mutation: { mutationKey }, request: undefined };
 
-  const mutationFn: MutationFunction<
-    Awaited<ReturnType<typeof createSubdomain>>,
-    { data: SubdomainCreationDto }
-  > = (props) => {
-    const { data } = props ?? {};
+export const getCreateSubdomainMutationOptions = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createSubdomain>>, TError,{data: SubdomainCreationDto}, TContext>, request?: SecondParameter<typeof customInstance>}
+): UseMutationOptions<Awaited<ReturnType<typeof createSubdomain>>, TError,{data: SubdomainCreationDto}, TContext> => {
 
-    return createSubdomain(data, requestOptions);
-  };
+const mutationKey = ['createSubdomain'];
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
 
-  return { mutationFn, ...mutationOptions };
-};
+      
 
-export type CreateSubdomainMutationResult = NonNullable<
-  Awaited<ReturnType<typeof createSubdomain>>
->;
-export type CreateSubdomainMutationBody = SubdomainCreationDto;
-export type CreateSubdomainMutationError = unknown;
 
-export const useCreateSubdomain = <TError = unknown, TContext = unknown>(
-  options?: {
-    mutation?: UseMutationOptions<
-      Awaited<ReturnType<typeof createSubdomain>>,
-      TError,
-      { data: SubdomainCreationDto },
-      TContext
-    >;
-    request?: SecondParameter<typeof customInstance>;
-  },
-  queryClient?: QueryClient,
-): UseMutationResult<
-  Awaited<ReturnType<typeof createSubdomain>>,
-  TError,
-  { data: SubdomainCreationDto },
-  TContext
-> => {
-  const mutationOptions = getCreateSubdomainMutationOptions(options);
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof createSubdomain>>, {data: SubdomainCreationDto}> = (props) => {
+          const {data} = props ?? {};
 
-  return useMutation(mutationOptions, queryClient);
-};
+          return  createSubdomain(data,requestOptions)
+        }
 
+        
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type CreateSubdomainMutationResult = NonNullable<Awaited<ReturnType<typeof createSubdomain>>>
+    export type CreateSubdomainMutationBody = SubdomainCreationDto
+    export type CreateSubdomainMutationError = unknown
+
+    export const useCreateSubdomain = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createSubdomain>>, TError,{data: SubdomainCreationDto}, TContext>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof createSubdomain>>,
+        TError,
+        {data: SubdomainCreationDto},
+        TContext
+      > => {
+
+      const mutationOptions = getCreateSubdomainMutationOptions(options);
+
+      return useMutation(mutationOptions, queryClient);
+    }
+    
 export const register = (
-  userCreationDto: UserCreationDto,
-  params?: RegisterParams,
-  options?: SecondParameter<typeof customInstance>,
-  signal?: AbortSignal,
+    userCreationDto: UserCreationDto,
+    params?: RegisterParams,
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
 ) => {
-  return customInstance<LoginResponseDto>(
-    {
-      url: `/api/v1/auth/register`,
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
+      
+      
+      return customInstance<LoginResponseDto>(
+      {url: `/api/v1/auth/register`, method: 'POST',
+      headers: {'Content-Type': 'application/json', },
       data: userCreationDto,
-      params,
-      signal,
+        params, signal
     },
-    options,
-  );
-};
+      options);
+    }
+  
 
-export const getRegisterMutationOptions = <
-  TError = unknown,
-  TContext = unknown,
->(options?: {
-  mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof register>>,
-    TError,
-    { data: UserCreationDto; params?: RegisterParams },
-    TContext
-  >;
-  request?: SecondParameter<typeof customInstance>;
-}): UseMutationOptions<
-  Awaited<ReturnType<typeof register>>,
-  TError,
-  { data: UserCreationDto; params?: RegisterParams },
-  TContext
-> => {
-  const mutationKey = ["register"];
-  const { mutation: mutationOptions, request: requestOptions } = options
-    ? options.mutation &&
-      "mutationKey" in options.mutation &&
-      options.mutation.mutationKey
-      ? options
-      : { ...options, mutation: { ...options.mutation, mutationKey } }
-    : { mutation: { mutationKey }, request: undefined };
 
-  const mutationFn: MutationFunction<
-    Awaited<ReturnType<typeof register>>,
-    { data: UserCreationDto; params?: RegisterParams }
-  > = (props) => {
-    const { data, params } = props ?? {};
+export const getRegisterMutationOptions = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof register>>, TError,{data: UserCreationDto;params?: RegisterParams}, TContext>, request?: SecondParameter<typeof customInstance>}
+): UseMutationOptions<Awaited<ReturnType<typeof register>>, TError,{data: UserCreationDto;params?: RegisterParams}, TContext> => {
 
-    return register(data, params, requestOptions);
-  };
+const mutationKey = ['register'];
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
 
-  return { mutationFn, ...mutationOptions };
-};
+      
 
-export type RegisterMutationResult = NonNullable<
-  Awaited<ReturnType<typeof register>>
->;
-export type RegisterMutationBody = UserCreationDto;
-export type RegisterMutationError = unknown;
 
-export const useRegister = <TError = unknown, TContext = unknown>(
-  options?: {
-    mutation?: UseMutationOptions<
-      Awaited<ReturnType<typeof register>>,
-      TError,
-      { data: UserCreationDto; params?: RegisterParams },
-      TContext
-    >;
-    request?: SecondParameter<typeof customInstance>;
-  },
-  queryClient?: QueryClient,
-): UseMutationResult<
-  Awaited<ReturnType<typeof register>>,
-  TError,
-  { data: UserCreationDto; params?: RegisterParams },
-  TContext
-> => {
-  const mutationOptions = getRegisterMutationOptions(options);
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof register>>, {data: UserCreationDto;params?: RegisterParams}> = (props) => {
+          const {data,params} = props ?? {};
 
-  return useMutation(mutationOptions, queryClient);
-};
+          return  register(data,params,requestOptions)
+        }
 
+        
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type RegisterMutationResult = NonNullable<Awaited<ReturnType<typeof register>>>
+    export type RegisterMutationBody = UserCreationDto
+    export type RegisterMutationError = unknown
+
+    export const useRegister = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof register>>, TError,{data: UserCreationDto;params?: RegisterParams}, TContext>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof register>>,
+        TError,
+        {data: UserCreationDto;params?: RegisterParams},
+        TContext
+      > => {
+
+      const mutationOptions = getRegisterMutationOptions(options);
+
+      return useMutation(mutationOptions, queryClient);
+    }
+    
 export const logout = (
-  options?: SecondParameter<typeof customInstance>,
-  signal?: AbortSignal,
+    
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
 ) => {
-  return customInstance<void>(
-    { url: `/api/v1/auth/logout`, method: "POST", signal },
-    options,
-  );
-};
-
-export const getLogoutMutationOptions = <
-  TError = unknown,
-  TContext = unknown,
->(options?: {
-  mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof logout>>,
-    TError,
-    void,
-    TContext
-  >;
-  request?: SecondParameter<typeof customInstance>;
-}): UseMutationOptions<
-  Awaited<ReturnType<typeof logout>>,
-  TError,
-  void,
-  TContext
-> => {
-  const mutationKey = ["logout"];
-  const { mutation: mutationOptions, request: requestOptions } = options
-    ? options.mutation &&
-      "mutationKey" in options.mutation &&
-      options.mutation.mutationKey
-      ? options
-      : { ...options, mutation: { ...options.mutation, mutationKey } }
-    : { mutation: { mutationKey }, request: undefined };
-
-  const mutationFn: MutationFunction<
-    Awaited<ReturnType<typeof logout>>,
-    void
-  > = () => {
-    return logout(requestOptions);
-  };
-
-  return { mutationFn, ...mutationOptions };
-};
-
-export type LogoutMutationResult = NonNullable<
-  Awaited<ReturnType<typeof logout>>
->;
-
-export type LogoutMutationError = unknown;
-
-export const useLogout = <TError = unknown, TContext = unknown>(
-  options?: {
-    mutation?: UseMutationOptions<
-      Awaited<ReturnType<typeof logout>>,
-      TError,
-      void,
-      TContext
-    >;
-    request?: SecondParameter<typeof customInstance>;
-  },
-  queryClient?: QueryClient,
-): UseMutationResult<
-  Awaited<ReturnType<typeof logout>>,
-  TError,
-  void,
-  TContext
-> => {
-  const mutationOptions = getLogoutMutationOptions(options);
-
-  return useMutation(mutationOptions, queryClient);
-};
-
-export const login = (
-  loginDto: LoginDto,
-  params?: LoginParams,
-  options?: SecondParameter<typeof customInstance>,
-  signal?: AbortSignal,
-) => {
-  return customInstance<LoginResponseDto>(
-    {
-      url: `/api/v1/auth/login`,
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      data: loginDto,
-      params,
-      signal,
+      
+      
+      return customInstance<void>(
+      {url: `/api/v1/auth/logout`, method: 'POST', signal
     },
-    options,
-  );
-};
+      options);
+    }
+  
 
-export const getLoginMutationOptions = <
-  TError = unknown,
-  TContext = unknown,
->(options?: {
-  mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof login>>,
-    TError,
-    { data: LoginDto; params?: LoginParams },
-    TContext
-  >;
-  request?: SecondParameter<typeof customInstance>;
-}): UseMutationOptions<
-  Awaited<ReturnType<typeof login>>,
-  TError,
-  { data: LoginDto; params?: LoginParams },
-  TContext
-> => {
-  const mutationKey = ["login"];
-  const { mutation: mutationOptions, request: requestOptions } = options
-    ? options.mutation &&
-      "mutationKey" in options.mutation &&
-      options.mutation.mutationKey
-      ? options
-      : { ...options, mutation: { ...options.mutation, mutationKey } }
-    : { mutation: { mutationKey }, request: undefined };
 
-  const mutationFn: MutationFunction<
-    Awaited<ReturnType<typeof login>>,
-    { data: LoginDto; params?: LoginParams }
-  > = (props) => {
-    const { data, params } = props ?? {};
+export const getLogoutMutationOptions = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof logout>>, TError,void, TContext>, request?: SecondParameter<typeof customInstance>}
+): UseMutationOptions<Awaited<ReturnType<typeof logout>>, TError,void, TContext> => {
 
-    return login(data, params, requestOptions);
-  };
+const mutationKey = ['logout'];
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
 
-  return { mutationFn, ...mutationOptions };
-};
+      
 
-export type LoginMutationResult = NonNullable<
-  Awaited<ReturnType<typeof login>>
->;
-export type LoginMutationBody = LoginDto;
-export type LoginMutationError = unknown;
 
-export const useLogin = <TError = unknown, TContext = unknown>(
-  options?: {
-    mutation?: UseMutationOptions<
-      Awaited<ReturnType<typeof login>>,
-      TError,
-      { data: LoginDto; params?: LoginParams },
-      TContext
-    >;
-    request?: SecondParameter<typeof customInstance>;
-  },
-  queryClient?: QueryClient,
-): UseMutationResult<
-  Awaited<ReturnType<typeof login>>,
-  TError,
-  { data: LoginDto; params?: LoginParams },
-  TContext
-> => {
-  const mutationOptions = getLoginMutationOptions(options);
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof logout>>, void> = () => {
+          
 
-  return useMutation(mutationOptions, queryClient);
-};
+          return  logout(requestOptions)
+        }
 
-export const getRoutes = (
-  options?: SecondParameter<typeof customInstance>,
-  signal?: AbortSignal,
+        
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type LogoutMutationResult = NonNullable<Awaited<ReturnType<typeof logout>>>
+    
+    export type LogoutMutationError = unknown
+
+    export const useLogout = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof logout>>, TError,void, TContext>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof logout>>,
+        TError,
+        void,
+        TContext
+      > => {
+
+      const mutationOptions = getLogoutMutationOptions(options);
+
+      return useMutation(mutationOptions, queryClient);
+    }
+    
+export const login = (
+    loginDto: LoginDto,
+    params?: LoginParams,
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
 ) => {
-  return customInstance<DnsEntry[]>(
-    { url: `/api/v1/route`, method: "GET", signal },
-    options,
-  );
-};
+      
+      
+      return customInstance<LoginResponseDto>(
+      {url: `/api/v1/auth/login`, method: 'POST',
+      headers: {'Content-Type': 'application/json', },
+      data: loginDto,
+        params, signal
+    },
+      options);
+    }
+  
+
+
+export const getLoginMutationOptions = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof login>>, TError,{data: LoginDto;params?: LoginParams}, TContext>, request?: SecondParameter<typeof customInstance>}
+): UseMutationOptions<Awaited<ReturnType<typeof login>>, TError,{data: LoginDto;params?: LoginParams}, TContext> => {
+
+const mutationKey = ['login'];
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof login>>, {data: LoginDto;params?: LoginParams}> = (props) => {
+          const {data,params} = props ?? {};
+
+          return  login(data,params,requestOptions)
+        }
+
+        
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type LoginMutationResult = NonNullable<Awaited<ReturnType<typeof login>>>
+    export type LoginMutationBody = LoginDto
+    export type LoginMutationError = unknown
+
+    export const useLogin = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof login>>, TError,{data: LoginDto;params?: LoginParams}, TContext>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof login>>,
+        TError,
+        {data: LoginDto;params?: LoginParams},
+        TContext
+      > => {
+
+      const mutationOptions = getLoginMutationOptions(options);
+
+      return useMutation(mutationOptions, queryClient);
+    }
+    
+export const getRoutes = (
+    
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+) => {
+      
+      
+      return customInstance<DnsEntry[]>(
+      {url: `/api/v1/route`, method: 'GET', signal
+    },
+      options);
+    }
+  
+
+
 
 export const getGetRoutesQueryKey = () => {
-  return [`/api/v1/route`] as const;
-};
+    return [
+    `/api/v1/route`
+    ] as const;
+    }
 
-export const getGetRoutesQueryOptions = <
-  TData = Awaited<ReturnType<typeof getRoutes>>,
-  TError = unknown,
->(options?: {
-  query?: Partial<
-    UseQueryOptions<Awaited<ReturnType<typeof getRoutes>>, TError, TData>
-  >;
-  request?: SecondParameter<typeof customInstance>;
-}) => {
-  const { query: queryOptions, request: requestOptions } = options ?? {};
+    
+export const getGetRoutesQueryOptions = <TData = Awaited<ReturnType<typeof getRoutes>>, TError = unknown>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getRoutes>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+) => {
 
-  const queryKey = queryOptions?.queryKey ?? getGetRoutesQueryKey();
+const {query: queryOptions, request: requestOptions} = options ?? {};
 
-  const queryFn: QueryFunction<Awaited<ReturnType<typeof getRoutes>>> = ({
-    signal,
-  }) => getRoutes(requestOptions, signal);
+  const queryKey =  queryOptions?.queryKey ?? getGetRoutesQueryKey();
 
-  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
-    Awaited<ReturnType<typeof getRoutes>>,
-    TError,
-    TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> };
-};
+  
 
-export type GetRoutesQueryResult = NonNullable<
-  Awaited<ReturnType<typeof getRoutes>>
->;
-export type GetRoutesQueryError = unknown;
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getRoutes>>> = ({ signal }) => getRoutes(requestOptions, signal);
 
-export function useGetRoutes<
-  TData = Awaited<ReturnType<typeof getRoutes>>,
-  TError = unknown,
->(
-  options: {
-    query: Partial<
-      UseQueryOptions<Awaited<ReturnType<typeof getRoutes>>, TError, TData>
-    > &
-      Pick<
+      
+
+      
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getRoutes>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetRoutesQueryResult = NonNullable<Awaited<ReturnType<typeof getRoutes>>>
+export type GetRoutesQueryError = unknown
+
+
+export function useGetRoutes<TData = Awaited<ReturnType<typeof getRoutes>>, TError = unknown>(
+  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getRoutes>>, TError, TData>> & Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof getRoutes>>,
           TError,
           Awaited<ReturnType<typeof getRoutes>>
-        >,
-        "initialData"
-      >;
-    request?: SecondParameter<typeof customInstance>;
-  },
-  queryClient?: QueryClient,
-): DefinedUseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>;
-};
-export function useGetRoutes<
-  TData = Awaited<ReturnType<typeof getRoutes>>,
-  TError = unknown,
->(
-  options?: {
-    query?: Partial<
-      UseQueryOptions<Awaited<ReturnType<typeof getRoutes>>, TError, TData>
-    > &
-      Pick<
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetRoutes<TData = Awaited<ReturnType<typeof getRoutes>>, TError = unknown>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getRoutes>>, TError, TData>> & Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof getRoutes>>,
           TError,
           Awaited<ReturnType<typeof getRoutes>>
-        >,
-        "initialData"
-      >;
-    request?: SecondParameter<typeof customInstance>;
-  },
-  queryClient?: QueryClient,
-): UseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>;
-};
-export function useGetRoutes<
-  TData = Awaited<ReturnType<typeof getRoutes>>,
-  TError = unknown,
->(
-  options?: {
-    query?: Partial<
-      UseQueryOptions<Awaited<ReturnType<typeof getRoutes>>, TError, TData>
-    >;
-    request?: SecondParameter<typeof customInstance>;
-  },
-  queryClient?: QueryClient,
-): UseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>;
-};
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetRoutes<TData = Awaited<ReturnType<typeof getRoutes>>, TError = unknown>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getRoutes>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 
-export function useGetRoutes<
-  TData = Awaited<ReturnType<typeof getRoutes>>,
-  TError = unknown,
->(
-  options?: {
-    query?: Partial<
-      UseQueryOptions<Awaited<ReturnType<typeof getRoutes>>, TError, TData>
-    >;
-    request?: SecondParameter<typeof customInstance>;
-  },
-  queryClient?: QueryClient,
-): UseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>;
-} {
-  const queryOptions = getGetRoutesQueryOptions(options);
+export function useGetRoutes<TData = Awaited<ReturnType<typeof getRoutes>>, TError = unknown>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getRoutes>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient 
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
 
-  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
-    TData,
-    TError
-  > & { queryKey: DataTag<QueryKey, TData, TError> };
+  const queryOptions = getGetRoutesQueryOptions(options)
 
-  query.queryKey = queryOptions.queryKey;
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  query.queryKey = queryOptions.queryKey ;
 
   return query;
 }
 
+
+
+
+
 export const fetchToken = (
-  options?: SecondParameter<typeof customInstance>,
-  signal?: AbortSignal,
+    
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
 ) => {
-  return customInstance<string>(
-    { url: `/api/v1/auth/token`, method: "GET", signal },
-    options,
-  );
-};
+      
+      
+      return customInstance<string>(
+      {url: `/api/v1/auth/token`, method: 'GET', signal
+    },
+      options);
+    }
+  
+
+
 
 export const getFetchTokenQueryKey = () => {
-  return [`/api/v1/auth/token`] as const;
-};
+    return [
+    `/api/v1/auth/token`
+    ] as const;
+    }
 
-export const getFetchTokenQueryOptions = <
-  TData = Awaited<ReturnType<typeof fetchToken>>,
-  TError = unknown,
->(options?: {
-  query?: Partial<
-    UseQueryOptions<Awaited<ReturnType<typeof fetchToken>>, TError, TData>
-  >;
-  request?: SecondParameter<typeof customInstance>;
-}) => {
-  const { query: queryOptions, request: requestOptions } = options ?? {};
+    
+export const getFetchTokenQueryOptions = <TData = Awaited<ReturnType<typeof fetchToken>>, TError = unknown>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof fetchToken>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+) => {
 
-  const queryKey = queryOptions?.queryKey ?? getFetchTokenQueryKey();
+const {query: queryOptions, request: requestOptions} = options ?? {};
 
-  const queryFn: QueryFunction<Awaited<ReturnType<typeof fetchToken>>> = ({
-    signal,
-  }) => fetchToken(requestOptions, signal);
+  const queryKey =  queryOptions?.queryKey ?? getFetchTokenQueryKey();
 
-  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
-    Awaited<ReturnType<typeof fetchToken>>,
-    TError,
-    TData
-  > & { queryKey: DataTag<QueryKey, TData, TError> };
-};
+  
 
-export type FetchTokenQueryResult = NonNullable<
-  Awaited<ReturnType<typeof fetchToken>>
->;
-export type FetchTokenQueryError = unknown;
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof fetchToken>>> = ({ signal }) => fetchToken(requestOptions, signal);
 
-export function useFetchToken<
-  TData = Awaited<ReturnType<typeof fetchToken>>,
-  TError = unknown,
->(
-  options: {
-    query: Partial<
-      UseQueryOptions<Awaited<ReturnType<typeof fetchToken>>, TError, TData>
-    > &
-      Pick<
+      
+
+      
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof fetchToken>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type FetchTokenQueryResult = NonNullable<Awaited<ReturnType<typeof fetchToken>>>
+export type FetchTokenQueryError = unknown
+
+
+export function useFetchToken<TData = Awaited<ReturnType<typeof fetchToken>>, TError = unknown>(
+  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof fetchToken>>, TError, TData>> & Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof fetchToken>>,
           TError,
           Awaited<ReturnType<typeof fetchToken>>
-        >,
-        "initialData"
-      >;
-    request?: SecondParameter<typeof customInstance>;
-  },
-  queryClient?: QueryClient,
-): DefinedUseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>;
-};
-export function useFetchToken<
-  TData = Awaited<ReturnType<typeof fetchToken>>,
-  TError = unknown,
->(
-  options?: {
-    query?: Partial<
-      UseQueryOptions<Awaited<ReturnType<typeof fetchToken>>, TError, TData>
-    > &
-      Pick<
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useFetchToken<TData = Awaited<ReturnType<typeof fetchToken>>, TError = unknown>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof fetchToken>>, TError, TData>> & Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof fetchToken>>,
           TError,
           Awaited<ReturnType<typeof fetchToken>>
-        >,
-        "initialData"
-      >;
-    request?: SecondParameter<typeof customInstance>;
-  },
-  queryClient?: QueryClient,
-): UseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>;
-};
-export function useFetchToken<
-  TData = Awaited<ReturnType<typeof fetchToken>>,
-  TError = unknown,
->(
-  options?: {
-    query?: Partial<
-      UseQueryOptions<Awaited<ReturnType<typeof fetchToken>>, TError, TData>
-    >;
-    request?: SecondParameter<typeof customInstance>;
-  },
-  queryClient?: QueryClient,
-): UseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>;
-};
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useFetchToken<TData = Awaited<ReturnType<typeof fetchToken>>, TError = unknown>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof fetchToken>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 
-export function useFetchToken<
-  TData = Awaited<ReturnType<typeof fetchToken>>,
-  TError = unknown,
->(
-  options?: {
-    query?: Partial<
-      UseQueryOptions<Awaited<ReturnType<typeof fetchToken>>, TError, TData>
-    >;
-    request?: SecondParameter<typeof customInstance>;
-  },
-  queryClient?: QueryClient,
-): UseQueryResult<TData, TError> & {
-  queryKey: DataTag<QueryKey, TData, TError>;
-} {
-  const queryOptions = getFetchTokenQueryOptions(options);
+export function useFetchToken<TData = Awaited<ReturnType<typeof fetchToken>>, TError = unknown>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof fetchToken>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient 
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
 
-  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
-    TData,
-    TError
-  > & { queryKey: DataTag<QueryKey, TData, TError> };
+  const queryOptions = getFetchTokenQueryOptions(options)
 
-  query.queryKey = queryOptions.queryKey;
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  query.queryKey = queryOptions.queryKey ;
 
   return query;
 }

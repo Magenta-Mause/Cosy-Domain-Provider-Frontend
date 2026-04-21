@@ -7,7 +7,7 @@
 
 export interface LoginDto {
   /** @minLength 1 */
-  username: string;
+  email: string;
   /** @minLength 1 */
   password: string;
 }

@@ -11,7 +11,8 @@ export interface UserCreationDto {
    * @maxLength 20
    */
   username?: string;
-  email?: string;
+  /** @minLength 1 */
+  email: string;
   /**
    * @minLength 8
    * @maxLength 2147483647
