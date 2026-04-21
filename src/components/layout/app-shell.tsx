@@ -1,9 +1,11 @@
-import {Outlet} from "@tanstack/react-router";
-import Header from "@/components/layout/Header/Header.tsx";
+import { Outlet } from "@tanstack/react-router";
+import { AppHeader } from "@/components/layout/app-header";
 
 export function AppShell() {
-    return <div>
-        <Header/>
-        <Outlet/>
-    </div>;
+  return (
+    <div>
+      <AppHeader />
+      <Outlet />
+    </div>
+  );
 }

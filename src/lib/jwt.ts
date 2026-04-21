@@ -6,9 +6,28 @@ export function parseIdentityToken(token: string): AuthUser | null {
     if (!payload) return null;
     const decoded = JSON.parse(
       atob(payload.replace(/-/g, "+").replace(/_/g, "/")),
-    ) as { username?: string; sub?: string };
-    const username = decoded.username ?? decoded.sub;
-    return username ? { username } : null;
+    ) as {
+      username?: string;
+      sub?: string;
+      email?: string;
+      iat?: number;
+      exp?: number;
+      [key: string]: unknown;
+    };
+
+    return {
+      username: decoded.username ?? null,
+      email:
+        typeof decoded.email === "string"
+          ? decoded.email
+          : typeof decoded.upn === "string"
+            ? decoded.upn
+            : null,
+      subject: decoded.sub ?? null,
+      issuedAt: typeof decoded.iat === "number" ? decoded.iat : null,
+      expiresAt: typeof decoded.exp === "number" ? decoded.exp : null,
+      claims: decoded,
+    };
   } catch {
     return null;
   }

@@ -1,13 +1,8 @@
-import { useQueryClient } from "@tanstack/react-query";
-import { Link } from "@tanstack/react-router";
-import { Plus, Trash2 } from "lucide-react";
+import { useNavigate } from "@tanstack/react-router";
+import { Plus } from "lucide-react";
+import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 
-import {
-  getListMySubdomainsQueryKey,
-  useDeleteSubdomain,
-  useListMySubdomains,
-} from "@/api/generated/domain-provider-api";
 import type { SubdomainDto } from "@/api/generated/model";
 import { SubdomainDtoStatus } from "@/api/generated/model";
 import { Button } from "@/components/ui/button";
@@ -18,7 +13,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import useDataLoading from "@/hooks/useDataLoading/useDataLoading";
 import { cn } from "@/lib/utils";
+import { useAppSelector } from "@/store/hooks";
 
 const statusStyles: Record<SubdomainDtoStatus, string> = {
   [SubdomainDtoStatus.ACTIVE]: "bg-green-100 text-green-800",
@@ -48,19 +45,17 @@ function StatusBadge({ status }: { status: SubdomainDtoStatus }) {
 
 export function DashboardPage() {
   const { t } = useTranslation();
-  const queryClient = useQueryClient();
-  const { data, isLoading, isError } = useListMySubdomains();
-  const deleteMutation = useDeleteSubdomain({
-    mutation: {
-      onSuccess: () => {
-        void queryClient.invalidateQueries({
-          queryKey: getListMySubdomainsQueryKey(),
-        });
-      },
-    },
-  });
+  const navigate = useNavigate();
+  const { loadSubdomains } = useDataLoading();
+  const subdomains = useAppSelector(
+    (state) => state.subdomains.items,
+  ) as SubdomainDto[];
+  const isLoading = useAppSelector((state) => state.subdomains.state) === "loading";
+  const isError = useAppSelector((state) => state.subdomains.state) === "failed";
 
-  const subdomains: SubdomainDto[] = data ?? [];
+  useEffect(() => {
+    void loadSubdomains();
+  }, [loadSubdomains]);
 
   return (
     <Card className="mx-auto max-w-4xl">
@@ -69,13 +64,16 @@ export function DashboardPage() {
           <CardTitle>{t("dashboard.title")}</CardTitle>
           <CardDescription>{t("dashboard.description")}</CardDescription>
         </div>
-        <Link
-          to="/subdomain/new"
-          className="inline-flex h-10 items-center justify-center rounded-md bg-primary px-4 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+        <button
+          type="button"
+          className="pbtn sm"
+          onClick={() => {
+            void navigate({ to: "/domain/$domainId", params: { domainId: "new" } });
+          }}
         >
           <Plus className="mr-2 h-4 w-4" />
-          {t("dashboard.register")}
-        </Link>
+          {t("dashboard.createNew")}
+        </button>
       </CardHeader>
       <CardContent>
         {isLoading ? (
@@ -94,14 +92,32 @@ export function DashboardPage() {
                   <th className="px-4 py-2">{t("dashboard.columnLabel")}</th>
                   <th className="px-4 py-2">{t("dashboard.columnTarget")}</th>
                   <th className="px-4 py-2">{t("dashboard.columnStatus")}</th>
-                  <th className="px-4 py-2" />
                 </tr>
               </thead>
               <tbody>
                 {subdomains.map((subdomain) => (
                   <tr key={subdomain.uuid} className="border-t">
                     <td className="px-4 py-3 font-medium">
-                      {subdomain.fqdn ?? subdomain.label}
+                      {subdomain.uuid ? (
+                        <div className="flex items-center gap-3">
+                          <span>{subdomain.fqdn ?? subdomain.label}</span>
+                          <Button
+                            type="button"
+                            variant="outline"
+                            size="sm"
+                            onClick={() => {
+                              void navigate({
+                                to: "/domain/$domainId",
+                                params: { domainId: subdomain.uuid as string },
+                              });
+                            }}
+                          >
+                            {t("dashboard.open")}
+                          </Button>
+                        </div>
+                      ) : (
+                        (subdomain.fqdn ?? subdomain.label)
+                      )}
                     </td>
                     <td className="px-4 py-3 font-mono text-xs">
                       {subdomain.targetIp}
@@ -110,26 +126,6 @@ export function DashboardPage() {
                       {subdomain.status ? (
                         <StatusBadge status={subdomain.status} />
                       ) : null}
-                    </td>
-                    <td className="px-4 py-3 text-right">
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        disabled={
-                          deleteMutation.isPending &&
-                          deleteMutation.variables?.uuid === subdomain.uuid
-                        }
-                        onClick={() => {
-                          if (!subdomain.uuid) return;
-                          deleteMutation.mutate({ uuid: subdomain.uuid });
-                        }}
-                      >
-                        <Trash2 className="mr-2 h-3.5 w-3.5" />
-                        {deleteMutation.isPending &&
-                        deleteMutation.variables?.uuid === subdomain.uuid
-                          ? t("dashboard.deleting")
-                          : t("dashboard.delete")}
-                      </Button>
                     </td>
                   </tr>
                 ))}

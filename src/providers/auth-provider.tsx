@@ -1,39 +1,22 @@
 import { useEffect } from "react";
-import { setIdentityToken } from "@/api/axios-instance";
-import { fetchToken } from "@/api/generated/domain-provider-api";
-import { parseIdentityToken } from "@/lib/jwt";
-import {
-  clearIdentity,
-  markBootstrapped,
-  setIdentity,
-} from "@/store/auth-slice";
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import useDataLoading from "@/hooks/useDataLoading/useDataLoading";
+import { useAppSelector } from "@/store/hooks";
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const dispatch = useAppDispatch();
+  const { bootstrapAuth } = useDataLoading();
   const bootstrapped = useAppSelector((state) => state.auth.bootstrapped);
 
   useEffect(() => {
     let cancelled = false;
-    void fetchToken()
-      .then((token) => {
-        if (cancelled) return;
-        setIdentityToken(token);
-        dispatch(setIdentity({ token, user: parseIdentityToken(token) }));
-      })
-      .catch(() => {
-        if (cancelled) return;
-        setIdentityToken(null);
-        dispatch(clearIdentity());
-      })
-      .finally(() => {
-        if (cancelled) return;
-        dispatch(markBootstrapped());
-      });
+    void (async () => {
+      await bootstrapAuth();
+      if (cancelled) return;
+    })();
+
     return () => {
       cancelled = true;
     };
-  }, [dispatch]);
+  }, [bootstrapAuth]);
 
   if (!bootstrapped) {
     return (

@@ -8,7 +8,10 @@ const STATUS_COLORS: Record<SubdomainDtoStatus, string> = {
   [SubdomainDtoStatus.FAILED]: "var(--destructive)",
 };
 
-const STATUS_I18N: Record<SubdomainDtoStatus, string> = {
+const STATUS_I18N: Record<
+  SubdomainDtoStatus,
+  "status.active" | "status.pending" | "status.failed"
+> = {
   [SubdomainDtoStatus.ACTIVE]: "status.active",
   [SubdomainDtoStatus.PENDING]: "status.pending",
   [SubdomainDtoStatus.FAILED]: "status.failed",

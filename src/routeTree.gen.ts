@@ -9,11 +9,17 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as RegisterRouteImport } from './routes/register'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as SubdomainNewRouteImport } from './routes/subdomain.new'
+import { Route as DomainDomainIdRouteImport } from './routes/domain.$domainId'
 
+const RegisterRoute = RegisterRouteImport.update({
+  id: '/register',
+  path: '/register',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
@@ -29,9 +35,9 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const SubdomainNewRoute = SubdomainNewRouteImport.update({
-  id: '/subdomain/new',
-  path: '/subdomain/new',
+const DomainDomainIdRoute = DomainDomainIdRouteImport.update({
+  id: '/domain/$domainId',
+  path: '/domain/$domainId',
   getParentRoute: () => rootRouteImport,
 } as any)
 
@@ -39,38 +45,55 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRoute
   '/login': typeof LoginRoute
-  '/subdomain/new': typeof SubdomainNewRoute
+  '/register': typeof RegisterRoute
+  '/domain/$domainId': typeof DomainDomainIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRoute
   '/login': typeof LoginRoute
-  '/subdomain/new': typeof SubdomainNewRoute
+  '/register': typeof RegisterRoute
+  '/domain/$domainId': typeof DomainDomainIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRoute
   '/login': typeof LoginRoute
-  '/subdomain/new': typeof SubdomainNewRoute
+  '/register': typeof RegisterRoute
+  '/domain/$domainId': typeof DomainDomainIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/dashboard' | '/login' | '/subdomain/new'
+  fullPaths: '/' | '/dashboard' | '/login' | '/register' | '/domain/$domainId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/dashboard' | '/login' | '/subdomain/new'
-  id: '__root__' | '/' | '/dashboard' | '/login' | '/subdomain/new'
+  to: '/' | '/dashboard' | '/login' | '/register' | '/domain/$domainId'
+  id:
+    | '__root__'
+    | '/'
+    | '/dashboard'
+    | '/login'
+    | '/register'
+    | '/domain/$domainId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   DashboardRoute: typeof DashboardRoute
   LoginRoute: typeof LoginRoute
-  SubdomainNewRoute: typeof SubdomainNewRoute
+  RegisterRoute: typeof RegisterRoute
+  DomainDomainIdRoute: typeof DomainDomainIdRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/register': {
+      id: '/register'
+      path: '/register'
+      fullPath: '/register'
+      preLoaderRoute: typeof RegisterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/login': {
       id: '/login'
       path: '/login'
@@ -92,11 +115,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/subdomain/new': {
-      id: '/subdomain/new'
-      path: '/subdomain/new'
-      fullPath: '/subdomain/new'
-      preLoaderRoute: typeof SubdomainNewRouteImport
+    '/domain/$domainId': {
+      id: '/domain/$domainId'
+      path: '/domain/$domainId'
+      fullPath: '/domain/$domainId'
+      preLoaderRoute: typeof DomainDomainIdRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -106,7 +129,8 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   DashboardRoute: DashboardRoute,
   LoginRoute: LoginRoute,
-  SubdomainNewRoute: SubdomainNewRoute,
+  RegisterRoute: RegisterRoute,
+  DomainDomainIdRoute: DomainDomainIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

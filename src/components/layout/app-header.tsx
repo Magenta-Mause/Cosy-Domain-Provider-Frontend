@@ -1,34 +1,25 @@
-import { useQueryClient } from "@tanstack/react-query";
 import { Link, useNavigate } from "@tanstack/react-router";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import { setIdentityToken } from "@/api/axios-instance";
-import { useLogout } from "@/api/generated/domain-provider-api";
-import { Mailbox } from "@/components/pixel/mailbox";
-import { cn } from "@/lib/utils";
-import { clearIdentity } from "@/store/auth-slice";
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import cosyLogo from "@/assets/cosy-logo.webp";
+import { LanguageMenu } from "@/components/layout/language-menu";
+import { UserMenu } from "@/components/layout/user-menu";
+import useAuthInformation from "@/hooks/useAuthInformation/useAuthInformation";
+import type { AppLanguage } from "@/i18n/resources";
 
-type Route = "dashboard" | "create" | "detail" | null;
-
-export function AppHeader({ route = null }: { route?: Route }) {
-  const { t } = useTranslation();
-  const dispatch = useAppDispatch();
+export function AppHeader() {
+  const { t, i18n } = useTranslation();
   const navigate = useNavigate();
-  const queryClient = useQueryClient();
-  const username = useAppSelector((state) => state.auth.user?.username);
-  const logoutMutation = useLogout({
-    mutation: {
-      onSettled: () => {
-        setIdentityToken(null);
-        dispatch(clearIdentity());
-        queryClient.clear();
-        void navigate({ to: "/login" });
-      },
-    },
-  });
+  const { logoutUser, userName, isUserLoggedIn } = useAuthInformation();
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
 
-  const initial = username?.[0]?.toUpperCase() ?? "?";
+  async function handleLanguageChange(language: AppLanguage) {
+    await i18n.changeLanguage(language);
+    if (typeof window !== "undefined") {
+      window.localStorage.setItem("cosy-language", language);
+    }
+  }
 
   return (
     <header
@@ -50,7 +41,11 @@ export function AppHeader({ route = null }: { route?: Route }) {
           textDecoration: "none",
         }}
       >
-        <Mailbox size={36} />
+        <img
+          src={cosyLogo}
+          alt="Cosy logo"
+          style={{ width: 36, height: 36, objectFit: "contain" }}
+        />
         <div style={{ textAlign: "left" }}>
           <div
             className="pixel"
@@ -71,53 +66,26 @@ export function AppHeader({ route = null }: { route?: Route }) {
         </div>
       </Link>
       <div style={{ flex: 1 }} />
-      <nav style={{ display: "flex", gap: 6, alignItems: "center" }}>
-        <Link
-          to="/dashboard"
-          className={cn("pbtn sm", route !== "dashboard" && "ghost")}
-          style={{
-            color: route !== "dashboard" ? "oklch(0.95 0.05 70)" : undefined,
+      <LanguageMenu onChangeLanguage={handleLanguageChange} />
+      {isUserLoggedIn ? (
+        <UserMenu
+          userName={userName}
+          isLoggingOut={isLoggingOut}
+          onLogout={async () => {
+            setIsLoggingOut(true);
+            try {
+              await logoutUser();
+              await navigate({ to: "/login" });
+            } finally {
+              setIsLoggingOut(false);
+            }
           }}
-        >
-          {t("nav.dashboard")}
+        />
+      ) : (
+        <Link to="/login" className="pbtn sm secondary">
+          {t("nav.login")}
         </Link>
-        <Link
-          to="/subdomain/new"
-          className={cn("pbtn sm", route !== "create" && "ghost")}
-          style={{
-            color: route !== "create" ? "oklch(0.95 0.05 70)" : undefined,
-          }}
-        >
-          {t("nav.newSubdomain")}
-        </Link>
-      </nav>
-      <button
-        type="button"
-        className="pbtn sm secondary"
-        disabled={logoutMutation.isPending}
-        onClick={() => logoutMutation.mutate()}
-        style={{ gap: 8 }}
-        title={t("nav.logout")}
-      >
-        <span
-          style={{
-            width: 22,
-            height: 22,
-            borderRadius: 2,
-            background: "var(--accent)",
-            border: "2px solid var(--foreground)",
-            display: "inline-flex",
-            alignItems: "center",
-            justifyContent: "center",
-            fontSize: 12,
-            color: "var(--btn-primary)",
-            fontFamily: "'Press Start 2P', monospace",
-          }}
-        >
-          {initial}
-        </span>
-        {username ?? t("nav.logout")}
-      </button>
+      )}
     </header>
   );
 }
