@@ -5,16 +5,16 @@
  * OpenAPI spec version: v0
  */
 
-export * from './dnsEntry';
-export * from './loginDto';
-export * from './loginParams';
-export * from './loginResponseDto';
-export * from './loginTokenMode';
-export * from './registerParams';
-export * from './registerTokenMode';
-export * from './subdomainCreationDto';
-export * from './subdomainDto';
-export * from './subdomainDtoStatus';
-export * from './subdomainUpdateDto';
-export * from './userCreationDto';
-export * from './userDto';
+export * from "./dnsEntry";
+export * from "./loginDto";
+export * from "./loginParams";
+export * from "./loginResponseDto";
+export * from "./loginTokenMode";
+export * from "./registerParams";
+export * from "./registerTokenMode";
+export * from "./subdomainCreationDto";
+export * from "./subdomainDto";
+export * from "./subdomainDtoStatus";
+export * from "./subdomainUpdateDto";
+export * from "./userCreationDto";
+export * from "./userDto";

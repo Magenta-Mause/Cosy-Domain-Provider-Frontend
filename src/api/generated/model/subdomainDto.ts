@@ -4,7 +4,7 @@
  * OpenAPI definition
  * OpenAPI spec version: v0
  */
-import type { SubdomainDtoStatus } from './subdomainDtoStatus';
+import type { SubdomainDtoStatus } from "./subdomainDtoStatus";
 
 export interface SubdomainDto {
   uuid?: string;

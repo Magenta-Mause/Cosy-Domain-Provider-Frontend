@@ -2,6 +2,24 @@ import axios, { type AxiosRequestConfig } from "axios";
 
 export const AXIOS_INSTANCE = axios.create({
   baseURL: "/",
+  withCredentials: true,
+});
+
+let identityToken: string | null = null;
+
+export function setIdentityToken(token: string | null) {
+  identityToken = token;
+}
+
+export function getIdentityToken() {
+  return identityToken;
+}
+
+AXIOS_INSTANCE.interceptors.request.use((config) => {
+  if (identityToken) {
+    config.headers.Authorization = `Bearer ${identityToken}`;
+  }
+  return config;
 });
 
 export const customInstance = <T>(

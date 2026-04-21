@@ -1,9 +1,14 @@
-import { Link, Outlet } from "@tanstack/react-router";
-import { Sparkles } from "lucide-react";
+import { useQueryClient } from "@tanstack/react-query";
+import { Link, Outlet, useNavigate } from "@tanstack/react-router";
+import { LogOut, Sparkles } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
+import { setIdentityToken } from "@/api/axios-instance";
+import { useLogout } from "@/api/generated/domain-provider-api";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { clearIdentity } from "@/store/auth-slice";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 
 const navLinkClass =
   "rounded-md px-3 py-2 text-sm font-medium transition-colors";
@@ -11,6 +16,23 @@ const navLinkClass =
 export function AppShell() {
   const { i18n, t } = useTranslation();
   const activeLanguage = i18n.resolvedLanguage?.startsWith("fi") ? "fi" : "en";
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+  const authenticated = useAppSelector(
+    (state) => state.auth.identityToken !== null,
+  );
+  const username = useAppSelector((state) => state.auth.user?.username);
+  const logoutMutation = useLogout({
+    mutation: {
+      onSettled: () => {
+        setIdentityToken(null);
+        dispatch(clearIdentity());
+        queryClient.clear();
+        void navigate({ to: "/login" });
+      },
+    },
+  });
 
   return (
     <div className="min-h-screen bg-muted/40">
@@ -46,6 +68,33 @@ export function AppShell() {
               >
                 {t("nav.about")}
               </Link>
+              {authenticated ? (
+                <Link
+                  to="/dashboard"
+                  className={cn(
+                    navLinkClass,
+                    "text-muted-foreground hover:text-foreground",
+                  )}
+                  activeProps={{
+                    className: cn(navLinkClass, "bg-secondary text-foreground"),
+                  }}
+                >
+                  {t("nav.dashboard")}
+                </Link>
+              ) : (
+                <Link
+                  to="/login"
+                  className={cn(
+                    navLinkClass,
+                    "text-muted-foreground hover:text-foreground",
+                  )}
+                  activeProps={{
+                    className: cn(navLinkClass, "bg-secondary text-foreground"),
+                  }}
+                >
+                  {t("nav.login")}
+                </Link>
+              )}
             </nav>
             <div className="hidden items-center gap-1 sm:flex">
               <span className="mr-1 text-xs text-muted-foreground">
@@ -70,6 +119,24 @@ export function AppShell() {
                 {t("language.fi")}
               </Button>
             </div>
+            {authenticated ? (
+              <div className="hidden items-center gap-2 sm:flex">
+                {username ? (
+                  <span className="text-xs text-muted-foreground">
+                    {username}
+                  </span>
+                ) : null}
+                <Button
+                  size="sm"
+                  variant="outline"
+                  disabled={logoutMutation.isPending}
+                  onClick={() => logoutMutation.mutate()}
+                >
+                  <LogOut className="mr-1.5 h-3.5 w-3.5" />
+                  {t("nav.logout")}
+                </Button>
+              </div>
+            ) : null}
           </div>
         </div>
       </header>

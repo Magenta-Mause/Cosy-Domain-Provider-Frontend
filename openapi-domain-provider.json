@@ -1,1 +1,362 @@
-{"openapi":"3.1.0","info":{"title":"OpenAPI definition","version":"v0"},"servers":[{"url":"http://localhost:8080","description":"Generated server url"}],"paths":{"/api/v1/subdomain/{uuid}":{"get":{"tags":["subdomain-controller"],"operationId":"getSubdomain","parameters":[{"name":"uuid","in":"path","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"$ref":"#/components/schemas/SubdomainDto"}}}}}},"put":{"tags":["subdomain-controller"],"operationId":"updateSubdomain","parameters":[{"name":"uuid","in":"path","required":true,"schema":{"type":"string"}}],"requestBody":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/SubdomainUpdateDto"}}},"required":true},"responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"$ref":"#/components/schemas/SubdomainDto"}}}}}},"delete":{"tags":["subdomain-controller"],"operationId":"deleteSubdomain","parameters":[{"name":"uuid","in":"path","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK"}}}},"/api/v1/user":{"get":{"tags":["user-controller"],"operationId":"getAllUsers","responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/UserDto"}}}}}}},"post":{"tags":["user-controller"],"operationId":"createUser","requestBody":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/UserCreationDto"}}},"required":true},"responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"$ref":"#/components/schemas/UserDto"}}}}}}},"/api/v1/subdomain":{"get":{"tags":["subdomain-controller"],"operationId":"listMySubdomains","responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/SubdomainDto"}}}}}}},"post":{"tags":["subdomain-controller"],"operationId":"createSubdomain","requestBody":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/SubdomainCreationDto"}}},"required":true},"responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"$ref":"#/components/schemas/SubdomainDto"}}}}}}},"/api/v1/auth/register":{"post":{"tags":["authorization-controller"],"operationId":"register","parameters":[{"name":"tokenMode","in":"query","required":false,"schema":{"type":"string","default":"COOKIE","enum":["COOKIE","DIRECT"]}}],"requestBody":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/UserCreationDto"}}},"required":true},"responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"$ref":"#/components/schemas/LoginResponseDto"}}}}}}},"/api/v1/auth/logout":{"post":{"tags":["authorization-controller"],"operationId":"logout","responses":{"200":{"description":"OK"}}}},"/api/v1/auth/login":{"post":{"tags":["authorization-controller"],"operationId":"login","parameters":[{"name":"tokenMode","in":"query","required":false,"schema":{"type":"string","default":"COOKIE","enum":["COOKIE","DIRECT"]}}],"requestBody":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/LoginDto"}}},"required":true},"responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"$ref":"#/components/schemas/LoginResponseDto"}}}}}}},"/api/v1/route":{"get":{"tags":["route-controller"],"operationId":"getRoutes","responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/DnsEntry"}}}}}}}},"/api/v1/auth/token":{"get":{"tags":["authorization-controller"],"operationId":"fetchToken","parameters":[{"name":"refreshToken","in":"cookie","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"type":"string"}}}}}}}},"components":{"schemas":{"SubdomainUpdateDto":{"type":"object","properties":{"targetIp":{"type":"string","minLength":1,"pattern":"^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$"}},"required":["targetIp"]},"SubdomainDto":{"type":"object","properties":{"uuid":{"type":"string"},"label":{"type":"string"},"fqdn":{"type":"string"},"targetIp":{"type":"string"},"status":{"type":"string","enum":["PENDING","ACTIVE","FAILED"]},"createdAt":{"type":"string","format":"date-time"},"updatedAt":{"type":"string","format":"date-time"}}},"UserCreationDto":{"type":"object","properties":{"username":{"type":"string","maxLength":20,"minLength":3},"email":{"type":"string","format":"email"},"password":{"type":"string","maxLength":2147483647,"minLength":8}}},"UserDto":{"type":"object","properties":{"uuid":{"type":"string"},"username":{"type":"string"},"email":{"type":"string"}}},"SubdomainCreationDto":{"type":"object","properties":{"label":{"type":"string","maxLength":63,"minLength":1,"pattern":"^[a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?$"},"targetIp":{"type":"string","minLength":1,"pattern":"^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$"}},"required":["label","targetIp"]},"LoginResponseDto":{"type":"object","properties":{"refreshToken":{"type":"string"}}},"LoginDto":{"type":"object","properties":{"username":{"type":"string","minLength":1},"password":{"type":"string","minLength":1}},"required":["password","username"]},"DnsEntry":{"type":"object","properties":{"name":{"type":"string"},"type":{"type":"string"},"ttl":{"type":"integer","format":"int64"},"values":{"type":"array","items":{"type":"string"}}}}}}}
+{
+  "openapi": "3.1.0",
+  "info": { "title": "OpenAPI definition", "version": "v0" },
+  "servers": [
+    { "url": "http://localhost:8080", "description": "Generated server url" }
+  ],
+  "paths": {
+    "/api/v1/subdomain/{uuid}": {
+      "get": {
+        "tags": ["subdomain-controller"],
+        "operationId": "getSubdomain",
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/SubdomainDto" }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["subdomain-controller"],
+        "operationId": "updateSubdomain",
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/SubdomainUpdateDto" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/SubdomainDto" }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["subdomain-controller"],
+        "operationId": "deleteSubdomain",
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": { "200": { "description": "OK" } }
+      }
+    },
+    "/api/v1/user": {
+      "get": {
+        "tags": ["user-controller"],
+        "operationId": "getAllUsers",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/UserDto" }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["user-controller"],
+        "operationId": "createUser",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/UserCreationDto" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": { "schema": { "$ref": "#/components/schemas/UserDto" } }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/subdomain": {
+      "get": {
+        "tags": ["subdomain-controller"],
+        "operationId": "listMySubdomains",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/SubdomainDto" }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["subdomain-controller"],
+        "operationId": "createSubdomain",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/SubdomainCreationDto" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/SubdomainDto" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/auth/register": {
+      "post": {
+        "tags": ["authorization-controller"],
+        "operationId": "register",
+        "parameters": [
+          {
+            "name": "tokenMode",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "COOKIE",
+              "enum": ["COOKIE", "DIRECT"]
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/UserCreationDto" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/LoginResponseDto" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/auth/logout": {
+      "post": {
+        "tags": ["authorization-controller"],
+        "operationId": "logout",
+        "responses": { "200": { "description": "OK" } }
+      }
+    },
+    "/api/v1/auth/login": {
+      "post": {
+        "tags": ["authorization-controller"],
+        "operationId": "login",
+        "parameters": [
+          {
+            "name": "tokenMode",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "COOKIE",
+              "enum": ["COOKIE", "DIRECT"]
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/LoginDto" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/LoginResponseDto" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/route": {
+      "get": {
+        "tags": ["route-controller"],
+        "operationId": "getRoutes",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/DnsEntry" }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/auth/token": {
+      "get": {
+        "tags": ["authorization-controller"],
+        "operationId": "fetchToken",
+        "parameters": [
+          {
+            "name": "refreshToken",
+            "in": "cookie",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": { "*/*": { "schema": { "type": "string" } } }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "SubdomainUpdateDto": {
+        "type": "object",
+        "properties": {
+          "targetIp": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$"
+          }
+        },
+        "required": ["targetIp"]
+      },
+      "SubdomainDto": {
+        "type": "object",
+        "properties": {
+          "uuid": { "type": "string" },
+          "label": { "type": "string" },
+          "fqdn": { "type": "string" },
+          "targetIp": { "type": "string" },
+          "status": {
+            "type": "string",
+            "enum": ["PENDING", "ACTIVE", "FAILED"]
+          },
+          "createdAt": { "type": "string", "format": "date-time" },
+          "updatedAt": { "type": "string", "format": "date-time" }
+        }
+      },
+      "UserCreationDto": {
+        "type": "object",
+        "properties": {
+          "username": { "type": "string", "maxLength": 20, "minLength": 3 },
+          "email": { "type": "string", "format": "email" },
+          "password": {
+            "type": "string",
+            "maxLength": 2147483647,
+            "minLength": 8
+          }
+        }
+      },
+      "UserDto": {
+        "type": "object",
+        "properties": {
+          "uuid": { "type": "string" },
+          "username": { "type": "string" },
+          "email": { "type": "string" }
+        }
+      },
+      "SubdomainCreationDto": {
+        "type": "object",
+        "properties": {
+          "label": {
+            "type": "string",
+            "maxLength": 63,
+            "minLength": 1,
+            "pattern": "^[a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?$"
+          },
+          "targetIp": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$"
+          }
+        },
+        "required": ["label", "targetIp"]
+      },
+      "LoginResponseDto": {
+        "type": "object",
+        "properties": { "refreshToken": { "type": "string" } }
+      },
+      "LoginDto": {
+        "type": "object",
+        "properties": {
+          "username": { "type": "string", "minLength": 1 },
+          "password": { "type": "string", "minLength": 1 }
+        },
+        "required": ["password", "username"]
+      },
+      "DnsEntry": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "type": { "type": "string" },
+          "ttl": { "type": "integer", "format": "int64" },
+          "values": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    }
+  }
+}
