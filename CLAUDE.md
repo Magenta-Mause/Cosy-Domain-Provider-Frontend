@@ -5,11 +5,11 @@ React SPA for managing `cosy-hosting.net` subdomains. Backend: `../cosy-domain-p
 ## Commands
 
 ```bash
-npm run dev        # Dev server at localhost:5173 (proxies /api → http://127.0.0.1:8080)
-npm run build      # TypeScript check + Vite production build
-npm run lint       # Biome check
-npm run lint:fix   # Biome auto-fix
-npm run gen:api    # Regenerate API client from running backend OpenAPI spec (backend must be up)
+bun dev            # Dev server at localhost:5173 (proxies /api → http://127.0.0.1:8080)
+bun run build      # TypeScript check + Vite production build (bun build conflicts with bun's bundler)
+bun lint       # Biome check
+bun lint:fix   # Biome auto-fix
+bun gen:api    # Regenerate API client from running backend OpenAPI spec (backend must be up)
 ```
 
 ## Key conventions

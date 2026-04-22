@@ -10,13 +10,13 @@ React + Vite frontend scaffolded with:
 
 ## Scripts
 
-- `npm run dev` - start development server
-- `npm run build` - type-check and build production bundle
-- `npm run lint` - run Biome checks
-- `npm run lint:fix` - apply safe Biome fixes
-- `npm run format` - format code with Biome
-- `npm run preview` - preview production build
-- `npm run gen:api` - fetch backend OpenAPI doc and generate Orval client
+- `bun dev` - start development server
+- `bun run build` - type-check and build production bundle (`bun build` conflicts with bun's own bundler)
+- `bun lint` - run Biome checks
+- `bun lint:fix` - apply safe Biome fixes
+- `bun format` - format code with Biome
+- `bun preview` - preview production build
+- `bun gen:api` - fetch backend OpenAPI doc and generate Orval client
 
 ## Structure
 
