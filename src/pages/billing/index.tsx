@@ -1,3 +1,4 @@
+import { Link } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 import { Badge } from "@/components/pixel/badge";
 import { ErrorMessage } from "@/components/pixel/error-message";
@@ -8,14 +9,15 @@ import { useBillingLogic } from "./useBillingLogic";
 
 export function BillingPage() {
   const { t } = useTranslation();
-  const { isPlus, isRedirecting, error, handlePortalClick } = useBillingLogic();
+  const { isPlus, isVerified, isRedirecting, error, handlePortalClick } =
+    useBillingLogic();
 
   return (
     <div style={{ minHeight: "100vh", background: "var(--background)" }}>
       <BillingHeader />
       <div className="flex flex-col p-[20px] max-w-[600px] mx-auto gap-5">
         <FlatPanel className="px-5 py-5 flex flex-col gap-4">
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-5">
             <span className="pixel text-xs opacity-60">
               {t("billing.currentPlan")}
             </span>
@@ -28,13 +30,22 @@ export function BillingPage() {
             {isPlus ? t("billing.plusPlanDesc") : t("billing.freePlanDesc")}
           </p>
 
-          {error && <ErrorMessage>{error}</ErrorMessage>}
+          {!isPlus && !isVerified && (
+            <ErrorMessage>
+              {t("billing.verifyRequired")}{" "}
+              <Link to="/verify" className="underline">
+                {t("billing.verifyLink")}
+              </Link>
+            </ErrorMessage>
+          )}
+
+          {error && isVerified && <ErrorMessage>{error}</ErrorMessage>}
 
           <Button
             type="button"
             data-testid="billing-portal-btn"
             onClick={handlePortalClick}
-            disabled={isRedirecting}
+            disabled={isRedirecting || (!isPlus && !isVerified)}
             className="w-fit"
           >
             {isRedirecting

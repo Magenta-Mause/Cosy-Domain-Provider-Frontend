@@ -4,7 +4,7 @@ import type { SubdomainDto } from "@/api/generated/model";
 import { DotLoader } from "@/components/pixel/dot-loader";
 import { FlatPanel } from "@/components/pixel/panel";
 
-import { SubdomainListItem } from "./components/SubdomainListItem";
+import { SubdomainListItem } from "./components/subdomain-list-item.tsx";
 
 interface SubdomainListProps {
   subdomains: SubdomainDto[];

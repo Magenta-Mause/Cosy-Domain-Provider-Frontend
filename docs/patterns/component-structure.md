@@ -9,12 +9,12 @@ src/pages/dashboard/
   index.tsx                   ← thin page: consumes hook, renders components
   useDashboardLogic.ts        ← all state, derived values, handlers
   components/
-    DashboardBanner.tsx       ← layout sub-component
+    dashboard-banner.tsx       ← layout sub-component
     subdomain-list/
       index.ts                ← barrel export
-      SubdomainList.tsx
+      subdomain-list.tsx
       components/
-        SubdomainListItem.tsx
+        subdomain-list-item.tsx
 
 src/components/layout/user-menu/
   index.ts                    ← re-exports UserMenu (keeps import paths stable)

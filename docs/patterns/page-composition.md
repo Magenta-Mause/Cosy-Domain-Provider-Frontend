@@ -46,8 +46,8 @@ export function DashboardPage() {
 When a page has a visually distinct banner/header area (sky background, mailbox, page title), extract it as a dedicated component in the page's `components/` folder:
 
 ```
-pages/dashboard/components/DashboardBanner.tsx     ← sky-bg + AppHeader + title row
-pages/domain-detail/components/DomainDetailHeader.tsx  ← sky-bg + AppHeader + back link + domain title
+pages/dashboard/components/dashboard-banner.tsx     ← sky-bg + AppHeader + title row
+pages/domain-detail/components/domain-detail-header.tsx  ← sky-bg + AppHeader + back link + domain title
 ```
 
 These banner components receive only the props they need to render — they do not call hooks themselves (except `useTranslation`).

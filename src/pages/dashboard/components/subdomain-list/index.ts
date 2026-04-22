@@ -1,1 +1,1 @@
-export { SubdomainList } from "./SubdomainList";
+export { SubdomainList } from "./subdomain-list.tsx";

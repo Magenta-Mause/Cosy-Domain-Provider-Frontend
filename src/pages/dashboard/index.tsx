@@ -1,6 +1,6 @@
 import UserPricingCard from "@/pages/dashboard/components/user-pricing-card.tsx";
 
-import { DashboardBanner } from "./components/DashboardBanner";
+import { DashboardBanner } from "./components/dashboard-banner.tsx";
 import { SubdomainList } from "./components/subdomain-list";
 import { useDashboardLogic } from "./useDashboardLogic";
 

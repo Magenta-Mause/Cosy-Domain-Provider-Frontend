@@ -1,1 +1,1 @@
-export { OverviewTab } from "./OverviewTab";
+export { OverviewTab } from "./overview-tab.tsx";
