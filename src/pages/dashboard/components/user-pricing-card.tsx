@@ -1,31 +1,43 @@
 import { Check, X } from "lucide-react";
+import { Link } from "@tanstack/react-router";
 import { Badge } from "@/components/pixel/badge.tsx";
 import { FlatPanel } from "@/components/pixel/panel.tsx";
 import useAuthInformation from "@/hooks/useAuthInformation/useAuthInformation.ts";
+import { useTranslation } from "react-i18next";
 
 export type PricingModel = "FREE" | "COSY+";
 
-interface UserPricingCardProps {
-  pricingModel: PricingModel;
-  serverCount: number;
-}
-
-export const PRICING_GAME_SERVER_COUNT: Record<PricingModel, number> = {
+const MAX_SUBDOMAINS: Record<PricingModel, number> = {
   "COSY+": 5,
   FREE: 1,
 };
 
-const UserPricingCard = (props: UserPricingCardProps) => {
-  const { isVerified } = useAuthInformation();
+interface UserPricingCardProps {
+  serverCount: number;
+}
+
+const UserPricingCard = ({ serverCount }: UserPricingCardProps) => {
+  const { isVerified, userPlan } = useAuthInformation();
+  const { t } = useTranslation();
+
+  const pricingModel: PricingModel = userPlan === "PLUS" ? "COSY+" : "FREE";
 
   return (
     <FlatPanel className={"px-5 py-4 flex flex-col gap-2"}>
-      <Badge
-        color={props.pricingModel === "COSY+" ? "accent" : "gray"}
-        className={"py-1 w-fit"}
-      >
-        {props.pricingModel === "COSY+" ? "Cosy +" : "Free"}
-      </Badge>
+      <div className="flex items-center justify-between">
+        <Badge
+          color={pricingModel === "COSY+" ? "accent" : "gray"}
+          className={"py-1 w-fit"}
+        >
+          {pricingModel === "COSY+" ? "Cosy +" : "Free"}
+        </Badge>
+        <Link
+          to="/billing"
+          className="text-xs opacity-60 hover:opacity-100 underline underline-offset-2"
+        >
+          {t("billing.manageLink")}
+        </Link>
+      </div>
       <div className={"flex gap-1 items-center"}>
         {isVerified ? (
           <>
@@ -40,8 +52,7 @@ const UserPricingCard = (props: UserPricingCardProps) => {
         )}
       </div>
       <div className={"italic opacity-70"}>
-        {props.serverCount}/{PRICING_GAME_SERVER_COUNT[props.pricingModel]}{" "}
-        Subdomains
+        {serverCount}/{MAX_SUBDOMAINS[pricingModel]} Subdomains
       </div>
     </FlatPanel>
   );

@@ -17,6 +17,7 @@ const useAuthInformation = () => {
       userName: auth.user?.username ?? null,
       userEmail: auth.user?.email ?? null,
       isVerified: auth.user?.isVerified ?? null,
+      userPlan: auth.user?.plan ?? null,
       userSubject: auth.user?.subject ?? null,
       tokenIssuedAt: auth.user?.issuedAt ?? null,
       tokenExpiresAt: auth.user?.expiresAt ?? null,

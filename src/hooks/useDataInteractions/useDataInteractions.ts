@@ -1,5 +1,6 @@
 import { useCallback } from "react";
 import { setIdentityToken } from "@/api/axios-instance";
+import { getBillingPortalUrl } from "@/api/billing-api";
 import {
   createSubdomain,
   deleteSubdomain,
@@ -154,6 +155,11 @@ const useDataInteractions = () => {
     [],
   );
 
+  const openBillingPortal = useCallback(async () => {
+    const { url } = await getBillingPortalUrl();
+    window.location.href = url;
+  }, []);
+
   return {
     refreshIdentityToken,
     loginUser,
@@ -166,6 +172,7 @@ const useDataInteractions = () => {
     createSubdomain: createSubdomainInteraction,
     updateSubdomain: updateSubdomainInteraction,
     deleteSubdomain: deleteSubdomainInteraction,
+    openBillingPortal,
   };
 };
 

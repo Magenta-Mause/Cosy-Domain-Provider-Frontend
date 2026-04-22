@@ -4,6 +4,7 @@ export interface AuthUser {
   username: string | null;
   email: string | null;
   isVerified: boolean | null;
+  plan: "FREE" | "PLUS" | null;
   subject: string | null;
   issuedAt: number | null;
   expiresAt: number | null;

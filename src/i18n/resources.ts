@@ -11,6 +11,7 @@ const enCommon = {
     changePassword: "Change password",
     deleteUser: "Delete user",
     notImplemented: "Not implemented",
+    billing: "Subscription",
   },
   language: {
     label: "Language",
@@ -200,12 +201,26 @@ const enCommon = {
     plusBadge: "Cosy+",
     plusTitle: "Custom names",
     plusPrice: "€3 / month",
-    plusFeature1: "✓ Pick your exact subdomain",
-    plusFeature2: "✓ Up to 5 domains per account",
-    plusFeature3: "✓ Bring your own domain (CNAME)",
-    plusFeature4: "✓ Priority TLS renewal queue",
+    plusFeature1: "Pick your exact subdomain",
+    plusFeature2: "Up to 5 domains per account",
+    plusFeature3: "Bring your own domain (CNAME)",
+    plusFeature4: "Priority TLS renewal queue",
     plusSupport: "❤️ Your subscription supports the Cosy core team",
     plusButton: "Upgrade to Cosy+",
+  },
+  billing: {
+    title: "Subscription",
+    manageLink: "Manage →",
+    currentPlan: "Current plan",
+    free: "Free",
+    plus: "Cosy+",
+    manageButton: "Manage subscription →",
+    upgradeButton: "Upgrade to Cosy+ →",
+    redirecting: "Opening billing portal...",
+    error: "Could not open billing portal. Please try again.",
+    freePlanDesc:
+      "You are on the free plan. Upgrade to Cosy+ to choose custom subdomain names and get up to 5 domains.",
+    plusPlanDesc: "You are on Cosy+. Thank you for supporting the project!",
   },
   footer: {
     text: "Made with ❤️ by Medalheads · cosy-hosting.net",
@@ -231,6 +246,7 @@ const deCommon: CommonSchema = {
     changePassword: "Passwort ändern",
     deleteUser: "Benutzer löschen",
     notImplemented: "Nicht implementiert",
+    billing: "Abonnement",
   },
   language: {
     label: "Sprache",
@@ -432,6 +448,21 @@ const deCommon: CommonSchema = {
     plusFeature4: "✓ Priorität bei TLS-Erneuerung",
     plusSupport: "❤️ Dein Abo unterstützt das Cosy-Kernteam",
     plusButton: "Zu Cosy+ wechseln",
+  },
+  billing: {
+    title: "Abonnement",
+    manageLink: "Verwalten →",
+    currentPlan: "Aktueller Plan",
+    free: "Kostenlos",
+    plus: "Cosy+",
+    manageButton: "Abonnement verwalten →",
+    upgradeButton: "Auf Cosy+ upgraden →",
+    redirecting: "Abrechnungsportal wird geöffnet...",
+    error:
+      "Das Abrechnungsportal konnte nicht geöffnet werden. Bitte erneut versuchen.",
+    freePlanDesc:
+      "Du nutzt den kostenlosen Plan. Upgrade auf Cosy+, um eigene Subdomain-Namen zu wählen und bis zu 5 Domains zu erhalten.",
+    plusPlanDesc: "Du nutzt Cosy+. Danke, dass du das Projekt unterstützt!",
   },
   footer: {
     text: "Made with ❤️ by Medalheads · cosy-hosting.net",

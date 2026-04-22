@@ -1,4 +1,5 @@
 import { useTranslation } from "react-i18next";
+import { Link } from "@tanstack/react-router";
 
 import { Button } from "@/components/ui/button";
 
@@ -53,6 +54,14 @@ export function UserMenuDropdown({
       >
         {t("nav.changePassword")}
       </Button>
+      <Link
+        to="/billing"
+        data-testid="user-menu-billing-btn"
+        className="pbtn ghost sm justify-start"
+        onClick={onClose}
+      >
+        {t("nav.billing")}
+      </Link>
       <Button
         type="button"
         data-testid="user-menu-logout-btn"
