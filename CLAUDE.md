@@ -24,5 +24,7 @@ npm run gen:api    # Regenerate API client from running backend OpenAPI spec (ba
 ## Patterns
 
 See `docs/patterns/` for canonical conventions:
+- `component-structure.md` — folder layout, logic hooks, barrel exports, `src/lib/validators`
+- `page-composition.md` — max nesting depth, banner components, auth page pattern
 - `state-management.md` — data flow: custom hooks → axios → Redux dispatch
 - `form-inputs.md` — `FormField` component spec and validation rules
