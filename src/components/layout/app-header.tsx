@@ -10,7 +10,7 @@ import useAuthInformation from "@/hooks/useAuthInformation/useAuthInformation";
 export function AppHeader() {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const { logoutUser, userName, isUserLoggedIn } = useAuthInformation();
+  const { logoutUser, userName, isUserLoggedIn, deleteUser } = useAuthInformation();
   const { handleLanguageChange } = useLanguageChange();
   const [isLoggingOut, setIsLoggingOut] = useState(false);
 
@@ -32,6 +32,11 @@ export function AppHeader() {
               await navigate({ to: "/login" });
             } finally {
               setIsLoggingOut(false);
+            }
+          }}
+          onDelete={async () => {
+            if (confirm(t("nav.userDeletionConfirm"))) {
+              await deleteUser();
             }
           }}
         />

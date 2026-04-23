@@ -12,10 +12,7 @@ export function LandingNav() {
   const { handleLanguageChange } = useLanguageChange();
 
   return (
-    <header
-      className="flex items-center gap-4 relative z-[3]"
-      style={{ padding: "20px 32px" }}
-    >
+    <header className="flex items-center gap-4 relative z-[3] px-8 py-5">
       <CosyLogo testId="home-logo" />
 
       <div className="flex-1" />

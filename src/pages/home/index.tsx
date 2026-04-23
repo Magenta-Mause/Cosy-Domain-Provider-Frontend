@@ -8,9 +8,7 @@ import { PricingSection } from "./components/pricing-section";
 
 export function HomePage() {
   return (
-    <div
-      style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}
-    >
+    <div className="min-h-screen flex flex-col">
       <Scenery>
         <LandingNav />
         <HeroSection />

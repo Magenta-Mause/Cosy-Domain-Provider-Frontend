@@ -5,6 +5,7 @@ import { OAuthButtons } from "@/components/auth/oauth-buttons";
 import { PasswordInput } from "@/components/auth/password-input";
 import { ErrorMessage } from "@/components/pixel/error-message";
 import { Button } from "@/components/ui/button";
+import { InputField } from "@/components/ui/input-field";
 
 import { PasswordStrength } from "../password-strength";
 import { useRegisterFormLogic } from "./useRegisterFormLogic";
@@ -23,6 +24,8 @@ export function RegisterForm() {
     setConfirmPassword,
     showPw,
     setShowPw,
+    showConfirmPw,
+    setShowConfirmPw,
     agreed,
     setAgreed,
     errorMessage,
@@ -56,22 +59,17 @@ export function RegisterForm() {
             />
           </div>
 
-          <div className="flex flex-col gap-2">
-            <label className="plabel" htmlFor="email">
-              {t("register.email")}
-            </label>
-            <input
-              id="email"
-              data-testid="register-email-input"
-              className="pinput"
-              type="email"
-              autoComplete="email"
-              required
-              placeholder="janne@example.net"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </div>
+          <InputField
+            id="email"
+            label={t("register.email")}
+            type="email"
+            autoComplete="email"
+            required
+            placeholder="janne@example.net"
+            value={email}
+            onChange={setEmail}
+            testId="register-email-input"
+          />
 
           <Button
             type="submit"
@@ -94,24 +92,19 @@ export function RegisterForm() {
             ← {email}
           </button>
 
-          <div className="flex flex-col gap-2">
-            <label className="plabel" htmlFor="username">
-              {t("register.username")}
-            </label>
-            <input
-              id="username"
-              data-testid="register-username-input"
-              className="pinput"
-              type="text"
-              autoComplete="username"
-              required
-              minLength={3}
-              maxLength={20}
-              placeholder="your-username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-            />
-          </div>
+          <InputField
+            id="username"
+            label={t("register.username")}
+            type="text"
+            autoComplete="username"
+            required
+            minLength={3}
+            maxLength={20}
+            placeholder="your-username"
+            value={username}
+            onChange={setUsername}
+            testId="register-username-input"
+          />
 
           <div className="flex flex-col gap-2">
             <label className="plabel" htmlFor="password">
@@ -145,8 +138,8 @@ export function RegisterForm() {
               required
               value={confirmPassword}
               onChange={setConfirmPassword}
-              showPw={showPw}
-              onToggleShow={() => setShowPw(!showPw)}
+              showPw={showConfirmPw}
+              onToggleShow={() => setShowConfirmPw(!showConfirmPw)}
               testId="register-confirm-password-input"
             />
             {!confirmValid && confirmPassword.length > 0 ? (
@@ -165,16 +158,14 @@ export function RegisterForm() {
             {t("register.termsPrefix")}{" "}
             <button
               type="button"
-              className="bg-transparent border-none p-0 cursor-pointer underline"
-              style={{ color: "inherit", fontSize: "inherit" }}
+              className="bg-transparent border-none p-0 cursor-pointer underline text-inherit [font-size:inherit]"
             >
               {t("register.termsLink")}
             </button>{" "}
             &{" "}
             <button
               type="button"
-              className="bg-transparent border-none p-0 cursor-pointer underline"
-              style={{ color: "inherit", fontSize: "inherit" }}
+              className="bg-transparent border-none p-0 cursor-pointer underline text-inherit [font-size:inherit]"
             >
               {t("register.privacyPolicyLink")}
             </button>

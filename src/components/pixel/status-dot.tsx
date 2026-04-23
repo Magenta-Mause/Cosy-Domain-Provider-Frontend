@@ -22,11 +22,8 @@ export function StatusDot({ status }: { status: SubdomainDtoStatus }) {
   return (
     <span className="inline-flex items-center gap-1.5 text-base">
       <span
-        className="w-2.5 h-2.5"
-        style={{
-          background: STATUS_COLORS[status],
-          border: "2px solid var(--foreground)",
-        }}
+        className="w-2.5 h-2.5 border-2 border-foreground"
+        style={{ background: STATUS_COLORS[status] }}
       />
       {t(STATUS_I18N[status])}
     </span>

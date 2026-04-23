@@ -1,1 +1,1 @@
-export { LanguageMenu } from "./LanguageMenu";
+export { LanguageMenu } from "./language-menu";

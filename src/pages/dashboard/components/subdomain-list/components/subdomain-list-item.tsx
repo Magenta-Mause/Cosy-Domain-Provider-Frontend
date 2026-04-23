@@ -34,10 +34,7 @@ export function SubdomainListItem({ domain }: { domain: SubdomainDto }) {
         />
         <div className="flex-1 flex flex-col gap-1">
           <div className="flex gap-2.5 items-center">
-            <div
-              className="pixel text-base"
-              style={{ color: "var(--btn-primary)" }}
-            >
+            <div className="pixel text-base text-btn-primary">
               {domain.fqdn ?? domain.label}
             </div>
           </div>

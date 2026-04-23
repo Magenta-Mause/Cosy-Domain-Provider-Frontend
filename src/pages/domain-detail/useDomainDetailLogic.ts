@@ -9,10 +9,16 @@ import useDataLoading from "@/hooks/useDataLoading/useDataLoading";
 import { isValidIpv4, isValidSubdomainLabel } from "@/lib/validators";
 import { useAppSelector } from "@/store/hooks";
 
-export type LabelAvailability = "idle" | "checking" | "available" | "taken" | "reserved";
-export type NamingMode = "random" | "custom";
+import {
+  DEBOUNCE_MS,
+  formatCreatedAt,
+  getLocale,
+  type LabelAvailability,
+  type NamingMode,
+  type TabKey,
+} from "./lib";
 
-const DEBOUNCE_MS = 500;
+export type { LabelAvailability, NamingMode, TabKey } from "./lib";
 
 export function useDomainDetailLogic(domainId: string) {
   const { t, i18n } = useTranslation();
@@ -38,9 +44,7 @@ export function useDomainDetailLogic(domainId: string) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [hasSubmitted, setHasSubmitted] = useState(false);
-  const [activeTab, setActiveTab] = useState<"overview" | "dns" | "danger">(
-    "overview",
-  );
+  const [activeTab, setActiveTab] = useState<TabKey>("overview");
   const [labelAvailability, setLabelAvailability] =
     useState<LabelAvailability>("idle");
   const [namingMode, setNamingMode] = useState<NamingMode>(
@@ -127,15 +131,12 @@ export function useDomainDetailLogic(domainId: string) {
       ? namingMode === "random" || (isPlus && labelAvailability === "available")
       : labelValid);
 
-  const locale = i18n.language.toLowerCase().startsWith("de")
-    ? "de-DE"
-    : "en-US";
-  const createdAt = domain?.createdAt
-    ? new Intl.DateTimeFormat(locale, {
-        dateStyle: "medium",
-        timeStyle: "short",
-      }).format(new Date(domain.createdAt))
-    : t("domainDetail.unknownValue");
+  const locale = getLocale(i18n.language);
+  const createdAt = formatCreatedAt(
+    domain?.createdAt,
+    locale,
+    t("domainDetail.unknownValue"),
+  );
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();

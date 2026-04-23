@@ -1,4 +1,6 @@
+import { REGEXP_ONLY_DIGITS_AND_CHARS } from "input-otp";
 import { RotateCw } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 import { ErrorMessage } from "@/components/pixel/error-message";
 import { Button } from "@/components/ui/button";
@@ -13,7 +15,7 @@ interface VerifyFormProps {
   userEmail: string | null | undefined;
   verificationToken: string;
   isVerifying: boolean;
-  isResending: boolean;
+  isSending: boolean;
   resendSent: boolean;
   verifyError: string | null;
   resendError: string | null;
@@ -27,7 +29,7 @@ export function VerifyForm({
   userEmail,
   verificationToken,
   isVerifying,
-  isResending,
+  isSending,
   resendSent,
   verifyError,
   resendError,
@@ -36,18 +38,20 @@ export function VerifyForm({
   onVerify,
   onResend,
 }: VerifyFormProps) {
+  const { t } = useTranslation();
+
   return (
     <div className="flex flex-col gap-10">
       <div className="flex flex-col gap-5">
-        <h3>Check your mailbox</h3>
-        <div>
-          We sent a 6-letter code to {userEmail}. Paste it below to move in.
-        </div>
+        <h3>{t("verify.inputTitle")}</h3>
+        <div>{t("verify.inputDescription", { email: userEmail ?? "" })}</div>
       </div>
       <div className="w-full flex justify-center">
         <InputOTP
           value={verificationToken}
           maxLength={6}
+          pattern={REGEXP_ONLY_DIGITS_AND_CHARS}
+          pasteTransformer={(text) => text.replace(/[-\s]/g, "")}
           onChange={onTokenChange}
           disabled={isBusy}
         >
@@ -84,8 +88,8 @@ export function VerifyForm({
         >
           <RotateCw size="18px" />
           <span>
-            {isResending
-              ? "Sending…"
+            {isSending
+              ? t("verify.sendingBtn")
               : resendSent
                 ? "Code sent!"
                 : "Resend Verification Code"}

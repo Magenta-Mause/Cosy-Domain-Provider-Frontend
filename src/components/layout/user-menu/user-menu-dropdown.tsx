@@ -1,5 +1,5 @@
+import { Link, useNavigate } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
-import { Link } from "@tanstack/react-router";
 
 import { Button } from "@/components/ui/button";
 
@@ -7,29 +7,24 @@ type UserMenuDropdownProps = {
   isLoggingOut: boolean;
   onClose: () => void;
   onLogout: () => Promise<void>;
+  onDelete: () => Promise<void>;
 };
 
 export function UserMenuDropdown({
   isLoggingOut,
   onClose,
   onLogout,
+  onDelete,
 }: UserMenuDropdownProps) {
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
   return (
     <div
       role="menu"
       aria-label={t("nav.userMenu")}
-      className="absolute grid gap-1.5 p-2 z-30"
-      style={{
-        top: "calc(100% + 8px)",
-        right: 0,
-        minWidth: 220,
-        background: "var(--btn-secondary)",
-        border: "2px solid var(--foreground)",
-        borderRadius: "var(--radius-sm)",
-        boxShadow: "4px 4px 0 0 var(--foreground)",
-      }}
+      className="absolute grid gap-1.5 p-2 z-30 top-[calc(100%+8px)] right-0 min-w-[220px] bg-btn-secondary border-2 border-foreground rounded-radius-sm"
+      style={{ boxShadow: "4px 4px 0 0 var(--foreground)" }}
     >
       <Button
         type="button"
@@ -37,22 +32,12 @@ export function UserMenuDropdown({
         variant="ghost"
         size="sm"
         className="justify-start"
-        title={t("nav.notImplemented")}
-        onClick={onClose}
-        disabled
+        onClick={() => {
+          navigate({ to: "/settings" });
+          onClose();
+        }}
       >
-        {t("nav.changeUsername")}
-      </Button>
-      <Button
-        type="button"
-        data-testid="user-menu-change-password-btn"
-        variant="ghost"
-        size="sm"
-        className="justify-start"
-        title={t("nav.notImplemented")}
-        disabled
-      >
-        {t("nav.changePassword")}
+        {t("nav.userSettings")}
       </Button>
       <Link
         to="/billing"
@@ -84,11 +69,8 @@ export function UserMenuDropdown({
         data-testid="user-menu-delete-user-btn"
         variant="ghost"
         size="sm"
-        className="justify-start"
-        style={{ color: "var(--destructive)" }}
-        title={t("nav.notImplemented")}
-        onClick={onClose}
-        disabled
+        className="justify-start !text-destructive"
+        onClick={onDelete}
       >
         {t("nav.deleteUser")}
       </Button>

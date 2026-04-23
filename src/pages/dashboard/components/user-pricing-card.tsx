@@ -1,5 +1,5 @@
-import { Check, X } from "lucide-react";
 import { Link } from "@tanstack/react-router";
+import { Check, X } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 import { Badge } from "@/components/pixel/badge";
@@ -41,7 +41,9 @@ const UserPricingCard = ({ serverCount }: UserPricingCardProps) => {
             ) : (
               <>
                 <X size={16} className="opacity-60" />
-                <span className="opacity-60">{t("dashboard.planCardNotVerified")}</span>
+                <span className="opacity-60">
+                  {t("dashboard.planCardNotVerified")}
+                </span>
               </>
             )}
           </div>

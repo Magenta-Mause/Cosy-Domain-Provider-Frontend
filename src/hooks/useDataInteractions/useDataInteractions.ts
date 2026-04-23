@@ -4,6 +4,7 @@ import { getBillingPortalUrl, getCheckoutUrl } from "@/api/billing-api";
 import {
   createSubdomain,
   deleteSubdomain,
+  deleteUser,
   fetchToken,
   forgotPassword,
   login,
@@ -12,12 +13,14 @@ import {
   resendVerification,
   resetPassword,
   updateSubdomain,
+  updateUser,
   verifyEmail,
 } from "@/api/generated/domain-provider-api";
 import type {
   LoginDto,
   SubdomainCreationDto,
   SubdomainUpdateDto,
+  UpdateUserDto,
 } from "@/api/generated/model";
 import useDataLoading from "@/hooks/useDataLoading/useDataLoading.ts";
 import { parseIdentityToken } from "@/lib/jwt";
@@ -179,6 +182,19 @@ const useDataInteractions = () => {
     },
     [dispatch, refreshIdentityToken],
   );
+
+  const updateUserInteraction = useCallback(
+    async (dto: UpdateUserDto) => {
+      await updateUser(dto);
+      await refreshIdentityToken();
+    },
+    [refreshIdentityToken],
+  );
+
+  const deleteUserInteraction = useCallback(async () => {
+    await deleteUser();
+  }, []);
+
   const openBillingPortal = useCallback(async () => {
     const { url } = await getBillingPortalUrl();
     window.location.href = url;
@@ -203,6 +219,8 @@ const useDataInteractions = () => {
     deleteSubdomain: deleteSubdomainInteraction,
     initiateOAuth,
     setupPassword,
+    updateUser: updateUserInteraction,
+    deleteUser: deleteUserInteraction,
     openBillingPortal,
     openCheckout,
   };

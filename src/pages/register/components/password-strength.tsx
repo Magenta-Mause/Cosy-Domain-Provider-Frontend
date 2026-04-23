@@ -19,9 +19,8 @@ export function PasswordStrength({ password }: PasswordStrengthProps) {
       {[0, 1, 2, 3].map((i) => (
         <div
           key={i}
-          className="flex-1 h-2"
+          className="flex-1 h-2 border-2 border-foreground"
           style={{
-            border: "2px solid var(--foreground)",
             background:
               password.length > i * 3 ? strengthColor : "var(--input-bg)",
           }}

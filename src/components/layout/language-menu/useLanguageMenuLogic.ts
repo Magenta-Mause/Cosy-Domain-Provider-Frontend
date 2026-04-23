@@ -1,5 +1,6 @@
 import { useDropdown } from "@/hooks/useDropdown/useDropdown";
 import type { AppLanguage } from "@/i18n/resources";
+import { getLanguageCode } from "./lib";
 
 export function useLanguageMenuLogic(
   onChangeLanguage: (language: AppLanguage) => Promise<void> | void,
@@ -11,9 +12,7 @@ export function useLanguageMenuLogic(
     ref: menuRef,
   } = useDropdown();
 
-  const languageCode = currentLanguage.toLowerCase().startsWith("de")
-    ? "DE"
-    : "EN";
+  const languageCode = getLanguageCode(currentLanguage);
 
   async function handleLanguageChange(language: AppLanguage) {
     await onChangeLanguage(language);

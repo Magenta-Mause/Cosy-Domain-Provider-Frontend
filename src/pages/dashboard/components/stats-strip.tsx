@@ -46,10 +46,7 @@ export function StatsStrip({ subdomains }: StatsStripProps) {
           <div className="pixel text-[10px] opacity-70">
             {s.label.toUpperCase()}
           </div>
-          <div
-            className="pixel text-[22px] mt-2"
-            style={{ color: "var(--btn-primary)" }}
-          >
+          <div className="pixel text-[22px] mt-2 text-btn-primary">
             {s.value}
           </div>
           <div className="text-[15px] mt-1 opacity-75">{s.sub}</div>

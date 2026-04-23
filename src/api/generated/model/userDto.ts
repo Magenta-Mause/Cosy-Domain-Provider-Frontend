@@ -4,10 +4,12 @@
  * OpenAPI definition
  * OpenAPI spec version: v0
  */
+import type { UserDtoPlan } from "./userDtoPlan";
 
 export interface UserDto {
   uuid?: string;
   username?: string;
   email?: string;
+  plan?: UserDtoPlan;
   verified?: boolean;
 }

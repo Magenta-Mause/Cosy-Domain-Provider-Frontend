@@ -60,10 +60,7 @@ export function FeaturesSection() {
             {stops.map((f) => (
               <FlatPanel key={f.label} className="hover-lift p-5">
                 <div className="flex flex-col gap-2">
-                  <div
-                    className="pixel text-sm"
-                    style={{ color: "var(--btn-primary)" }}
-                  >
+                  <div className="pixel text-sm text-btn-primary">
                     {f.label}
                   </div>
                   <h3>{f.title}</h3>

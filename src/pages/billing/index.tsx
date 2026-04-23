@@ -4,7 +4,7 @@ import { Badge } from "@/components/pixel/badge";
 import { ErrorMessage } from "@/components/pixel/error-message";
 import { FlatPanel } from "@/components/pixel/panel";
 import { Button } from "@/components/ui/button";
-import { BillingHeader } from "./components/BillingHeader";
+import { BillingHeader } from "./components/billing-header";
 import { useBillingLogic } from "./useBillingLogic";
 
 export function BillingPage() {
@@ -13,14 +13,12 @@ export function BillingPage() {
     useBillingLogic();
 
   return (
-    <div style={{ minHeight: "100vh", background: "var(--background)" }}>
+    <div className="min-h-screen bg-background">
       <BillingHeader />
       <div className="flex flex-col p-[20px] max-w-[600px] mx-auto gap-5">
         <FlatPanel className="px-5 py-5 flex flex-col gap-4">
           <div className="flex items-center gap-5">
-            <span className="pixel text-xs opacity-60">
-              {t("billing.currentPlan")}
-            </span>
+            <span className="pixel text-xs">{t("billing.currentPlan")}</span>
             <Badge color={isPlus ? "accent" : "gray"} className="py-1">
               {isPlus ? t("billing.plus") : t("billing.free")}
             </Badge>
@@ -60,10 +58,10 @@ export function BillingPage() {
           <FlatPanel className="px-5 py-5 flex flex-col gap-2">
             <span className="pixel text-xs mb-2">Cosy+</span>
             <ul className="flex flex-col gap-1 text-sm opacity-80">
-              <li>✓ {t("pricing.plusFeature1")}</li>
-              <li>✓ {t("pricing.plusFeature2")}</li>
-              <li>✓ {t("pricing.plusFeature3")}</li>
-              <li>✓ {t("pricing.plusFeature4")}</li>
+              <li>{t("pricing.plusFeature1")}</li>
+              <li>{t("pricing.plusFeature2")}</li>
+              <li>{t("pricing.plusFeature3")}</li>
+              <li>{t("pricing.plusFeature4")}</li>
             </ul>
             <p className="text-xs mt-2 opacity-60">
               {t("pricing.plusPrice")} &mdash; {t("pricing.plusSupport")}
