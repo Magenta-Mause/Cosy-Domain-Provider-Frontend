@@ -1,10 +1,9 @@
 import { Link } from "@tanstack/react-router";
-import { useTranslation } from "react-i18next";
 
 import { LanguageMenu } from "@/components/layout/language-menu";
 import { Panel } from "@/components/pixel/panel";
 import { Scenery } from "@/components/pixel/scenery";
-import type { AppLanguage } from "@/i18n/resources";
+import { useLanguageChange } from "@/hooks/useLanguageChange/useLanguageChange";
 
 interface AuthPageLayoutProps {
   children: React.ReactNode;
@@ -17,19 +16,12 @@ export function AuthPageLayout({
   backButtonLink = "/",
   maxWidth = 420,
 }: AuthPageLayoutProps) {
-  const { i18n } = useTranslation();
-
-  async function handleLanguageChange(language: AppLanguage) {
-    await i18n.changeLanguage(language);
-    if (typeof window !== "undefined") {
-      window.localStorage.setItem("cosy-language", language);
-    }
-  }
+  const { handleLanguageChange } = useLanguageChange();
 
   return (
     <Scenery>
       <Link
-        to={backButtonLink}
+        to={backButtonLink as any}
         data-testid="auth-back-link"
         className="pbtn ghost absolute top-6 left-7 z-[5]"
         style={{ color: "oklch(0.95 0.08 70)" }}
