@@ -18,10 +18,16 @@ src/pages/dashboard/
 
 src/components/layout/user-menu/
   index.ts                    ← re-exports UserMenu (keeps import paths stable)
-  UserMenu.tsx
-  useUserMenuLogic.ts
-  UserMenuDropdown.tsx
+  user-menu.tsx               ← component files: kebab-case
+  user-menu-dropdown.tsx
+  useUserMenuLogic.ts         ← hook files: camelCase
 ```
+
+## File naming
+
+- **Component files** (`.tsx`) use **kebab-case**: `billing-header.tsx`, `domain-tab-bar.tsx`.
+- **Hook files** (`.ts`) use **camelCase**, matching the exported function name: `useDashboardLogic.ts`, `useDropdown.ts`.
+- **`index.ts` barrel files** are always lowercase.
 
 ## Rules
 

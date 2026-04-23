@@ -22,39 +22,24 @@ export function DnsTab({ domain }: DnsTabProps) {
         <h3>{t("domainDetail.dnsRecords")}</h3>
         <p className="text-base opacity-75 mt-1.5">
           {t("domainDetail.dnsManagedFor")}{" "}
-          <span
-            className="pixel"
-            style={{ fontSize: 12, color: "var(--btn-primary)" }}
-          >
+          <span className="pixel text-xs text-btn-primary">
             {domain?.fqdn ?? domain?.label}
           </span>
           . {t("domainDetail.dnsTargetIp")}{" "}
-          <span
-            className="pixel"
-            style={{ fontSize: 12, color: "var(--btn-primary)" }}
-          >
+          <span className="pixel text-xs text-btn-primary">
             {domain?.targetIp ?? "—"}
           </span>
         </p>
       </div>
-      <FlatPanel style={{ padding: 0, overflow: "hidden" }}>
+      <FlatPanel className="p-0 overflow-hidden">
         <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "80px 1.5fr 2fr 80px",
-            gap: 0,
-          }}
+          className="grid gap-0"
+          style={{ gridTemplateColumns: "80px 1.5fr 2fr 80px" }}
         >
           {headers.map((h) => (
             <div
               key={h}
-              className="pixel"
-              style={{
-                padding: "10px 14px",
-                fontSize: 10,
-                background: "var(--btn-primary)",
-                color: "var(--btn-secondary)",
-              }}
+              className="pixel px-[14px] py-[10px] text-[10px] bg-btn-primary text-btn-secondary"
             >
               {h}
             </div>
@@ -63,16 +48,11 @@ export function DnsTab({ domain }: DnsTabProps) {
             row.map((cell, j) => (
               <div
                 key={`${row[0]}-${headers[j]}`}
-                className="truncate"
+                className={`truncate px-[14px] py-3 border-t-2 border-t-foreground ${j === 0 ? "text-[11px] text-btn-primary" : "text-[17px]"}`}
                 style={
-                  {
-                    padding: "12px 14px",
-                    fontSize: j === 0 ? 11 : 17,
-                    borderTop: "2px solid var(--foreground)",
-                    fontFamily:
-                      j === 0 ? "'Press Start 2P', monospace" : undefined,
-                    color: j === 0 ? "var(--btn-primary)" : undefined,
-                  } as React.CSSProperties
+                  j === 0
+                    ? { fontFamily: "'Press Start 2P', monospace" }
+                    : undefined
                 }
               >
                 {cell}

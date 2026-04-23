@@ -500,7 +500,8 @@ const deCommon: CommonSchema = {
     freePlanDesc:
       "Du nutzt den kostenlosen Plan. Upgrade auf Cosy+, um eigene Subdomain-Namen zu wählen und bis zu 5 Domains zu erhalten.",
     plusPlanDesc: "Du nutzt Cosy+. Danke, dass du das Projekt unterstützt!",
-    verifyRequired: "Du musst dein Konto verifizieren, bevor du upgraden kannst.",
+    verifyRequired:
+      "Du musst dein Konto verifizieren, bevor du upgraden kannst.",
     verifyLink: "Konto verifizieren →",
   },
   footer: {

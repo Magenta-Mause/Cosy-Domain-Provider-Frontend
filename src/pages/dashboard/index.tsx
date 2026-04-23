@@ -9,7 +9,7 @@ export function DashboardPage() {
     useDashboardLogic();
 
   return (
-    <div style={{ minHeight: "100vh", background: "var(--background)" }}>
+    <div className="min-h-screen bg-background">
       <DashboardBanner isVerified={isVerified} onCreateNew={handleCreateNew} />
       <div className="flex flex-col p-[20px] max-w-[1200px] mx-auto my-0 gap-5">
         <UserPricingCard serverCount={subdomains.length} />

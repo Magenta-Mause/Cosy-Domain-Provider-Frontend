@@ -7,7 +7,12 @@ import useAuthInformation from "@/hooks/useAuthInformation/useAuthInformation";
 import useDataInteractions from "@/hooks/useDataInteractions/useDataInteractions";
 import { isValidIpv4, isValidSubdomainLabel } from "@/lib/validators";
 
-export type LabelAvailability = "idle" | "checking" | "available" | "taken" | "reserved";
+export type LabelAvailability =
+  | "idle"
+  | "checking"
+  | "available"
+  | "taken"
+  | "reserved";
 export type NamingMode = "random" | "custom";
 
 const DEBOUNCE_MS = 500;
@@ -19,9 +24,12 @@ export function useCreateSubdomainLogic() {
   const isPlus = userPlan === "PLUS";
   const { createSubdomain } = useDataInteractions();
 
-  const [namingMode, setNamingMode] = useState<NamingMode>(isPlus ? "custom" : "random");
+  const [namingMode, setNamingMode] = useState<NamingMode>(
+    isPlus ? "custom" : "random",
+  );
   const [label, setLabelRaw] = useState("");
-  const [labelAvailability, setLabelAvailability] = useState<LabelAvailability>("idle");
+  const [labelAvailability, setLabelAvailability] =
+    useState<LabelAvailability>("idle");
   const [targetIp, setTargetIp] = useState("");
   const [hasSubmitted, setHasSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -42,7 +50,11 @@ export function useCreateSubdomainLogic() {
       try {
         const result = await checkLabelAvailability(value);
         setLabelAvailability(
-          result.available ? "available" : result.reason === "reserved" ? "reserved" : "taken",
+          result.available
+            ? "available"
+            : result.reason === "reserved"
+              ? "reserved"
+              : "taken",
         );
       } catch {
         setLabelAvailability("idle");
@@ -50,10 +62,17 @@ export function useCreateSubdomainLogic() {
     }, DEBOUNCE_MS);
   };
 
-  useEffect(() => () => { if (debounceRef.current) clearTimeout(debounceRef.current); }, []);
+  useEffect(
+    () => () => {
+      if (debounceRef.current) clearTimeout(debounceRef.current);
+    },
+    [],
+  );
 
   const labelValid = useMemo(
-    () => namingMode === "random" || (isValidSubdomainLabel(label) && labelAvailability === "available"),
+    () =>
+      namingMode === "random" ||
+      (isValidSubdomainLabel(label) && labelAvailability === "available"),
     [namingMode, label, labelAvailability],
   );
 
@@ -76,7 +95,10 @@ export function useCreateSubdomainLogic() {
         targetIp,
       });
       if (created.uuid) {
-        await navigate({ to: "/domain/$domainId", params: { domainId: created.uuid } });
+        await navigate({
+          to: "/domain/$domainId",
+          params: { domainId: created.uuid },
+        });
       } else {
         await navigate({ to: "/dashboard" });
       }

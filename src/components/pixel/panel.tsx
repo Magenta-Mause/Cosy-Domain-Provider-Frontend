@@ -26,7 +26,7 @@ export function FlatPanel({
   return (
     <div
       className={cn(
-        "bg-[var(--secondary-background)] border-[3px] border-[var(--foreground)] rounded-[var(--radius)]",
+        "bg-secondary-background border-[3px] border-foreground rounded-radius",
         className,
       )}
       style={{

@@ -20,10 +20,7 @@ export function HeroSection() {
         style={{ gridTemplateColumns: "1.1fr 1fr" }}
       >
         <div className="flex flex-col gap-6">
-          <div
-            className="signpost self-start text-xs"
-            style={{ padding: "8px 14px" }}
-          >
+          <div className="signpost self-start text-xs px-[14px] py-2">
             {t("hero.badge")}
           </div>
           <h1
@@ -44,7 +41,7 @@ export function HeroSection() {
             {t("hero.description")}
           </p>
 
-          <FlatPanel style={{ padding: 16, maxWidth: 520 }}>
+          <FlatPanel className="p-4 max-w-[520px]">
             <label htmlFor="subdomain-input" className="plabel mb-[10px]">
               {t("hero.claimLabel")}
             </label>

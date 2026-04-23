@@ -16,19 +16,20 @@ export function DashboardBanner({
 
   return (
     <PageHeader>
-      <div
-        style={{
-          display: "flex",
-          alignItems: "flex-end",
-          gap: 16,
-          marginBottom: 16,
-        }}
-      >
-        <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: 8 }}>
-          <div className="pixel" style={{ fontSize: 11, color: "oklch(0.92 0.05 70)" }}>
+      <div className="flex items-end gap-4 mb-4">
+        <div className="flex-1 flex flex-col gap-2">
+          <div
+            className="pixel text-[11px]"
+            style={{ color: "oklch(0.92 0.05 70)" }}
+          >
             {t("dashboard.postOfficeLabel")}
           </div>
-          <h1 style={{ color: "oklch(0.95 0.08 70)", textShadow: "3px 3px 0 oklch(0.25 0.08 30)" }}>
+          <h1
+            style={{
+              color: "oklch(0.95 0.08 70)",
+              textShadow: "3px 3px 0 oklch(0.25 0.08 30)",
+            }}
+          >
             {t("dashboard.title")}
           </h1>
         </div>

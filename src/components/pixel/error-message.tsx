@@ -1,7 +1,3 @@
 export function ErrorMessage({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="text-base" style={{ color: "var(--destructive)" }}>
-      ⚠ {children}
-    </div>
-  );
+  return <div className="text-base text-destructive">⚠ {children}</div>;
 }

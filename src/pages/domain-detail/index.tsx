@@ -38,11 +38,11 @@ export function DomainDetailPage({ domainId }: { domainId: string }) {
 
   if (isInitialLoading) {
     return (
-      <div style={{ minHeight: "100vh", background: "var(--background)" }}>
+      <div className="min-h-screen bg-background">
         <div className="sky-bg">
           <AppHeader />
         </div>
-        <div style={{ padding: 40, textAlign: "center", fontSize: 18 }}>
+        <div className="p-10 text-center text-lg">
           <DotLoader />
         </div>
       </div>
@@ -50,24 +50,14 @@ export function DomainDetailPage({ domainId }: { domainId: string }) {
   }
 
   return (
-    <div style={{ minHeight: "100vh", background: "var(--background)" }}>
+    <div className="min-h-screen bg-background">
       <DomainDetailHeader domain={domain} isCreateMode={isCreateMode} />
-      <div
-        style={{
-          padding: "0 28px 80px",
-          maxWidth: 1100,
-          margin: "0 auto",
-          marginTop: 35,
-        }}
-      >
+      <div className="px-7 pb-20 max-w-[1100px] mx-auto mt-[35px]">
         {!isCreateMode ? (
           <DomainTabBar activeTab={activeTab} onChange={setActiveTab} />
         ) : null}
         <FlatPanel
-          style={{
-            padding: 28,
-            borderTopLeftRadius: activeTab === "overview" ? 0 : undefined,
-          }}
+          className={`p-7${activeTab === "overview" ? " rounded-tl-none" : ""}`}
         >
           {isCreateMode || activeTab === "overview" ? (
             <OverviewTab

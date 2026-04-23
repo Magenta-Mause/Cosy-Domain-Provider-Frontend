@@ -19,25 +19,17 @@ export function DomainTabBar({ activeTab, onChange }: DomainTabBarProps) {
           key={k}
           type="button"
           data-testid={`domain-detail-tab-${k}-btn`}
-          className="pixel"
+          className="pixel px-4 py-[10px] text-[11px] relative cursor-pointer border-[3px] border-foreground rounded-tl-radius-sm rounded-tr-radius-sm -mb-[3px]"
           onClick={() => onChange(k)}
           style={{
-            padding: "10px 16px",
-            fontSize: 11,
             background:
               activeTab === k ? "var(--secondary-background)" : "transparent",
-            border: "3px solid var(--foreground)",
             borderBottom:
               activeTab === k
                 ? "3px solid var(--secondary-background)"
                 : "3px solid var(--foreground)",
-            borderTopLeftRadius: "var(--radius-sm)",
-            borderTopRightRadius: "var(--radius-sm)",
             color: activeTab === k ? "var(--btn-primary)" : "var(--foreground)",
-            marginBottom: -3,
-            position: "relative",
             zIndex: activeTab === k ? 2 : 1,
-            cursor: "pointer",
           }}
         >
           {l.toUpperCase()}

@@ -31,10 +31,7 @@ export function SubdomainList({
 
   if (isError) {
     return (
-      <FlatPanel
-        className="p-6 text-center"
-        style={{ color: "var(--destructive)" }}
-      >
+      <FlatPanel className="p-6 text-center text-destructive">
         ⚠ {t("dashboard.loadError")}
       </FlatPanel>
     );

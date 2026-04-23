@@ -1,7 +1,7 @@
 import { AuthPageLayout } from "@/components/auth/auth-page-layout";
 
-import { VerifiedView } from "./components/VerifiedView";
-import { VerifyForm } from "./components/VerifyForm";
+import { VerifiedView } from "./components/verified-view";
+import { VerifyForm } from "./components/verify-form";
 import { useVerifyLogic } from "./useVerifyLogic";
 
 const VerifyPage = () => {
@@ -41,7 +41,7 @@ const VerifyPage = () => {
         resendError={resendError}
         isBusy={isBusy}
         onTokenChange={(code) => {
-          setVerificationToken(code.toUpperCase());
+          setVerificationToken(code.toUpperCase().replaceAll("-", ""));
           setVerifyError(null);
         }}
         onVerify={() => triggerVerification(verificationToken)}

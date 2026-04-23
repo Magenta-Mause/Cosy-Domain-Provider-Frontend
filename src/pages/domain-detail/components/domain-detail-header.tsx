@@ -23,18 +23,19 @@ export function DomainDetailHeader({
       <Link
         to="/dashboard"
         data-testid="domain-detail-back-link"
-        style={{ color: "oklch(0.95 0.08 70)", fontSize: 16, display: "block", marginBottom: 12 }}
+        className="block mb-3 text-base"
+        style={{ color: "oklch(0.95 0.08 70)" }}
       >
         ← {t("domainDetail.backToDomains")}
       </Link>
-      <div style={{ display: "flex", gap: 20, alignItems: "center" }}>
+      <div className="flex gap-5 items-center">
         <Mailbox size={64} />
-        <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: 8 }}>
+        <div className="flex-1 flex flex-col gap-2">
           <h1
+            className="text-[28px]"
             style={{
               color: "oklch(0.95 0.08 70)",
               textShadow: "3px 3px 0 oklch(0.25 0.08 30)",
-              fontSize: 28,
             }}
           >
             {isCreateMode
@@ -42,7 +43,7 @@ export function DomainDetailHeader({
               : (domain?.fqdn ?? domain?.label ?? t("domainDetail.title"))}
           </h1>
           {!isCreateMode && domain?.status ? (
-            <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
+            <div className="flex gap-2.5 items-center">
               <StatusDot status={domain.status} />
               <SubdomainStatusBadge status={domain.status} variant="detail" />
             </div>

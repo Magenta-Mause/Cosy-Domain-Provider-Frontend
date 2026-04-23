@@ -4,7 +4,7 @@ import { Badge } from "@/components/pixel/badge";
 import { ErrorMessage } from "@/components/pixel/error-message";
 import { FlatPanel } from "@/components/pixel/panel";
 import { Button } from "@/components/ui/button";
-import { BillingHeader } from "./components/BillingHeader";
+import { BillingHeader } from "./components/billing-header";
 import { useBillingLogic } from "./useBillingLogic";
 
 export function BillingPage() {
@@ -13,7 +13,7 @@ export function BillingPage() {
     useBillingLogic();
 
   return (
-    <div style={{ minHeight: "100vh", background: "var(--background)" }}>
+    <div className="min-h-screen bg-background">
       <BillingHeader />
       <div className="flex flex-col p-[20px] max-w-[600px] mx-auto gap-5">
         <FlatPanel className="px-5 py-5 flex flex-col gap-4">

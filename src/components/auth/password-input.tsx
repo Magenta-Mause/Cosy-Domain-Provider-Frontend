@@ -32,7 +32,7 @@ export function PasswordInput({
       <input
         id={id}
         data-testid={testId}
-        className="pinput"
+        className="pinput pr-20"
         type={showPw ? "text" : "password"}
         autoComplete={autoComplete}
         required={required}
@@ -40,7 +40,7 @@ export function PasswordInput({
         placeholder={placeholder}
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        style={{ paddingRight: 80, ...style }}
+        style={style}
       />
       <button
         type="button"

@@ -16,10 +16,10 @@ function PlanCard({ selected, onClick, badge, description }: PlanCardProps) {
       type="button"
       onClick={onClick}
       className={cn(
-        "flex-1 text-left p-4 bg-[var(--secondary-background)] rounded-[var(--radius)] transition-colors border-[3px]",
+        "flex-1 text-left p-4 bg-secondary-background rounded-radius transition-colors border-[3px]",
         selected
-          ? "border-[var(--accent-2)]"
-          : "border-[var(--foreground)] opacity-70 hover:opacity-100",
+          ? "border-accent-2"
+          : "border-foreground opacity-70 hover:opacity-100",
       )}
       style={{ boxShadow: "4px 4px 0 0 var(--shadow)" }}
     >
@@ -46,13 +46,21 @@ export function PlanSelector({ namingMode, onSelect }: PlanSelectorProps) {
         <PlanCard
           selected={namingMode === "random"}
           onClick={() => onSelect("random")}
-          badge={<Badge color="gray" className="py-1">Free</Badge>}
+          badge={
+            <Badge color="gray" className="py-1">
+              Free
+            </Badge>
+          }
           description={t("createSubdomain.randomName")}
         />
         <PlanCard
           selected={namingMode === "custom"}
           onClick={() => onSelect("custom")}
-          badge={<Badge color="accent" className="py-1">Cosy+</Badge>}
+          badge={
+            <Badge color="accent" className="py-1">
+              Cosy+
+            </Badge>
+          }
           description={t("createSubdomain.customName")}
         />
       </div>

@@ -8,11 +8,7 @@ export function PricingSection() {
   const { t } = useTranslation();
 
   return (
-    <section
-      id="pricing"
-      className="px-8 py-[60px]"
-      style={{ background: "var(--background)" }}
-    >
+    <section id="pricing" className="px-8 py-[60px] bg-background">
       <div className="max-w-[1000px] mx-auto">
         <div className="mb-8 text-center flex flex-col gap-2">
           <h2>{t("pricing.title")}</h2>
@@ -26,10 +22,7 @@ export function PricingSection() {
               <div className="w-full flex flex-col gap-3">
                 <Badge color="gray">{t("pricing.freeBadge")}</Badge>
                 <h3>{t("pricing.freeTitle")}</h3>
-                <div
-                  className="pixel text-[26px]"
-                  style={{ color: "var(--btn-primary)" }}
-                >
+                <div className="pixel text-[26px] text-btn-primary">
                   {t("pricing.freePrice")}
                 </div>
                 <ul className="list-none p-0 m-0 stack-sm">
@@ -56,10 +49,7 @@ export function PricingSection() {
               <div className="w-full flex flex-col gap-3">
                 <Badge>{t("pricing.plusBadge")}</Badge>
                 <h3>{t("pricing.plusTitle")}</h3>
-                <div
-                  className="pixel text-[26px]"
-                  style={{ color: "var(--btn-primary)" }}
-                >
+                <div className="pixel text-[26px] text-btn-primary">
                   {t("pricing.plusPrice")}
                 </div>
                 <ul className="list-none p-0 m-0 stack-sm">
@@ -67,10 +57,7 @@ export function PricingSection() {
                   <li>{t("pricing.plusFeature2")}</li>
                   <li>{t("pricing.plusFeature3")}</li>
                   <li>{t("pricing.plusFeature4")}</li>
-                  <li
-                    className="font-bold"
-                    style={{ color: "var(--accent-4)" }}
-                  >
+                  <li className="font-bold text-accent-4">
                     {t("pricing.plusSupport")}
                   </li>
                 </ul>

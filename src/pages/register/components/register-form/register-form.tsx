@@ -6,7 +6,7 @@ import { ErrorMessage } from "@/components/pixel/error-message";
 import { Button } from "@/components/ui/button";
 
 import { PasswordStrength } from "../password-strength";
-import { OrDivider } from "./components/OrDivider";
+import { OrDivider } from "./components/or-divider";
 import { useRegisterFormLogic } from "./useRegisterFormLogic";
 
 export function RegisterForm() {
@@ -128,16 +128,14 @@ export function RegisterForm() {
         {t("register.termsPrefix")}{" "}
         <button
           type="button"
-          className="bg-transparent border-none p-0 cursor-pointer underline"
-          style={{ color: "inherit", fontSize: "inherit" }}
+          className="bg-transparent border-none p-0 cursor-pointer underline text-inherit [font-size:inherit]"
         >
           {t("register.termsLink")}
         </button>{" "}
         &{" "}
         <button
           type="button"
-          className="bg-transparent border-none p-0 cursor-pointer underline"
-          style={{ color: "inherit", fontSize: "inherit" }}
+          className="bg-transparent border-none p-0 cursor-pointer underline text-inherit [font-size:inherit]"
         >
           {t("register.privacyPolicyLink")}
         </button>

@@ -9,7 +9,7 @@ A page's `return` statement should be no deeper than **3 levels of nesting**. Th
 export function DashboardPage() {
   const { subdomains, isVerified, handleCreateNew } = useDashboardLogic();
   return (
-    <div style={{ minHeight: "100vh", background: "var(--background)" }}>
+    <div className="min-h-screen bg-background">
       <DashboardBanner isVerified={isVerified} onCreateNew={handleCreateNew} />
       <div className="flex flex-col p-[20px] max-w-[1200px] mx-auto gap-5">
         <UserPricingCard serverCount={subdomains.length} />
@@ -22,13 +22,13 @@ export function DashboardPage() {
 // Bad — page doubles as layout component
 export function DashboardPage() {
   return (
-    <div style={{ minHeight: "100vh" }}>
+    <div className="min-h-screen bg-background">
       <div className="sky-bg">
         <AppHeader />
-        <div style={{ padding: "20px 28px", maxWidth: 1200 }}>
-          <div style={{ display: "flex", alignItems: "flex-end" }}>
-            <div style={{ flex: 1, display: "flex", flexDirection: "column" }}>
-              <div className="pixel" style={{ fontSize: 11 }}>...</div>
+        <div className="px-7 py-5">
+          <div className="flex items-end gap-4">
+            <div className="flex-1 flex flex-col gap-2">
+              <div className="pixel text-[11px]">...</div>
               <h1>...</h1>
             </div>
             <Button>...</Button>
@@ -69,14 +69,14 @@ Extract view variants (e.g. verified vs. unverified state) into separate compone
 
 ## Loading states
 
-A full-page loading state is acceptable as an early return with slightly more structure:
+A full-page loading state is acceptable as an early return:
 
 ```tsx
 if (isInitialLoading) {
   return (
-    <div style={{ minHeight: "100vh", background: "var(--background)" }}>
+    <div className="min-h-screen bg-background">
       <div className="sky-bg"><AppHeader /></div>
-      <div style={{ padding: 40, textAlign: "center" }}><DotLoader /></div>
+      <div className="p-10 text-center text-lg"><DotLoader /></div>
     </div>
   );
 }

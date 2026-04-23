@@ -31,16 +31,8 @@ export function LanguageMenu({ onChangeLanguage }: LanguageMenuProps) {
         <div
           role="menu"
           aria-label={t("language.label")}
-          className="absolute grid gap-1.5 p-2 z-[35]"
-          style={{
-            top: "calc(100% + 8px)",
-            right: 0,
-            minWidth: 180,
-            background: "var(--btn-secondary)",
-            border: "2px solid var(--foreground)",
-            borderRadius: "var(--radius-sm)",
-            boxShadow: "4px 4px 0 0 var(--foreground)",
-          }}
+          className="absolute grid gap-1.5 p-2 z-[35] top-[calc(100%+8px)] right-0 min-w-[180px] bg-btn-secondary border-2 border-foreground rounded-radius-sm"
+          style={{ boxShadow: "4px 4px 0 0 var(--foreground)" }}
         >
           <Button
             type="button"

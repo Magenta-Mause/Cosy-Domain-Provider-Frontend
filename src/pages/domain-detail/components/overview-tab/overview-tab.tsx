@@ -51,7 +51,7 @@ function LabelAvailabilityIndicator({
     );
   if (availability === "available")
     return (
-      <span className="text-base" style={{ color: "var(--success)" }}>
+      <span className="text-base text-success">
         ✓ {t("createSubdomain.labelAvailable")}
       </span>
     );
@@ -75,10 +75,10 @@ function PlanCard({ selected, onClick, badge, label }: PlanCardProps) {
       type="button"
       onClick={onClick}
       className={cn(
-        "flex-1 text-left p-4 bg-[var(--secondary-background)] rounded-[var(--radius)] transition-colors",
+        "flex-1 text-left p-4 bg-secondary-background rounded-radius transition-colors",
         selected
-          ? "border-[3px] border-[var(--accent-2)]"
-          : "border-[3px] border-[var(--foreground)] opacity-70 hover:opacity-100",
+          ? "border-[3px] border-accent-2"
+          : "border-[3px] border-foreground opacity-70 hover:opacity-100",
       )}
       style={{ boxShadow: "4px 4px 0 0 var(--shadow)" }}
     >
@@ -157,10 +157,7 @@ export function OverviewTab({
             </div>
 
             {namingMode === "custom" && !isPlus && (
-              <div
-                className="flex flex-col gap-3 p-4 rounded-[var(--radius)] border-[2px] border-[var(--foreground)]"
-                style={{ background: "var(--secondary-background)" }}
-              >
+              <div className="flex flex-col gap-3 p-4 rounded-radius border-[2px] border-foreground bg-secondary-background">
                 {isVerified ? (
                   <>
                     <p className="text-sm opacity-80">

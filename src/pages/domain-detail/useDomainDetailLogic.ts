@@ -9,7 +9,12 @@ import useDataLoading from "@/hooks/useDataLoading/useDataLoading";
 import { isValidIpv4, isValidSubdomainLabel } from "@/lib/validators";
 import { useAppSelector } from "@/store/hooks";
 
-export type LabelAvailability = "idle" | "checking" | "available" | "taken" | "reserved";
+export type LabelAvailability =
+  | "idle"
+  | "checking"
+  | "available"
+  | "taken"
+  | "reserved";
 export type NamingMode = "random" | "custom";
 
 const DEBOUNCE_MS = 500;
