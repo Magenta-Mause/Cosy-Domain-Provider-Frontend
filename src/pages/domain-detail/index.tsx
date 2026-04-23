@@ -1,9 +1,9 @@
 import { AppHeader } from "@/components/layout/app-header";
 import { DotLoader } from "@/components/pixel/dot-loader";
 import { FlatPanel } from "@/components/pixel/panel";
-import { DomainDetailHeader } from "./components/DomainDetailHeader";
 import { DangerTab } from "./components/danger-tab";
 import { DnsTab } from "./components/dns-tab";
+import { DomainDetailHeader } from "./components/domain-detail-header.tsx";
 import { DomainTabBar } from "./components/domain-tab-bar";
 import { OverviewTab } from "./components/overview-tab";
 import { useDomainDetailLogic } from "./useDomainDetailLogic";
@@ -12,6 +12,8 @@ export function DomainDetailPage({ domainId }: { domainId: string }) {
   const {
     domain,
     isCreateMode,
+    isPlus,
+    isVerified,
     isInitialLoading,
     label,
     setLabel,
@@ -24,6 +26,9 @@ export function DomainDetailPage({ domainId }: { domainId: string }) {
     activeTab,
     setActiveTab,
     labelValid,
+    labelAvailability,
+    namingMode,
+    setNamingMode,
     ipValid,
     canSubmit,
     createdAt,
@@ -68,6 +73,8 @@ export function DomainDetailPage({ domainId }: { domainId: string }) {
             <OverviewTab
               domain={domain}
               isCreateMode={isCreateMode}
+              isPlus={isPlus}
+              isVerified={isVerified}
               label={label}
               onLabelChange={setLabel}
               targetIp={targetIp}
@@ -77,6 +84,9 @@ export function DomainDetailPage({ domainId }: { domainId: string }) {
               isDeleting={isDeleting}
               hasSubmitted={hasSubmitted}
               labelValid={labelValid}
+              labelAvailability={labelAvailability}
+              namingMode={namingMode}
+              onNamingModeChange={setNamingMode}
               ipValid={ipValid}
               canSubmit={canSubmit}
               createdAt={createdAt}

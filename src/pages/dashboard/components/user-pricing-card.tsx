@@ -1,48 +1,60 @@
 import { Check, X } from "lucide-react";
-import { Badge } from "@/components/pixel/badge.tsx";
-import { FlatPanel } from "@/components/pixel/panel.tsx";
-import useAuthInformation from "@/hooks/useAuthInformation/useAuthInformation.ts";
+import { Link } from "@tanstack/react-router";
+import { useTranslation } from "react-i18next";
 
-export type PricingModel = "FREE" | "COSY+";
+import { Badge } from "@/components/pixel/badge";
+import { FlatPanel } from "@/components/pixel/panel";
+import useAuthInformation from "@/hooks/useAuthInformation/useAuthInformation";
 
-interface UserPricingCardProps {
-  pricingModel: PricingModel;
-  serverCount: number;
-}
+type PricingModel = "FREE" | "COSY+";
 
-export const PRICING_GAME_SERVER_COUNT: Record<PricingModel, number> = {
+const MAX_SUBDOMAINS: Record<PricingModel, number> = {
   "COSY+": 5,
   FREE: 1,
 };
 
-const UserPricingCard = (props: UserPricingCardProps) => {
-  const { isVerified } = useAuthInformation();
+interface UserPricingCardProps {
+  serverCount: number;
+}
+
+const UserPricingCard = ({ serverCount }: UserPricingCardProps) => {
+  const { isVerified, userPlan } = useAuthInformation();
+  const { t } = useTranslation();
+
+  const pricingModel: PricingModel = userPlan === "PLUS" ? "COSY+" : "FREE";
+  const isPlus = pricingModel === "COSY+";
 
   return (
-    <FlatPanel className={"px-5 py-4 flex flex-col gap-2"}>
-      <Badge
-        color={props.pricingModel === "COSY+" ? "accent" : "gray"}
-        className={"py-1 w-fit"}
-      >
-        {props.pricingModel === "COSY+" ? "Cosy +" : "Free"}
-      </Badge>
-      <div className={"flex gap-1 items-center"}>
-        {isVerified ? (
-          <>
-            <Check size={"22"} />
-            Account Verified
-          </>
-        ) : (
-          <>
-            <X size={"22"} />
-            Account not Verified yet
-          </>
-        )}
+    <FlatPanel className="px-5 py-4 flex items-center justify-between gap-6">
+      <div className="flex flex-col gap-3">
+        <Badge color={isPlus ? "accent" : "gray"} className="py-1 w-fit">
+          {isPlus ? "Cosy+" : t("billing.free")}
+        </Badge>
+
+        <div className="flex flex-col gap-1.5">
+          <div className="flex items-center gap-2 text-sm">
+            {isVerified ? (
+              <>
+                <Check size={16} />
+                <span>{t("dashboard.planCardVerified")}</span>
+              </>
+            ) : (
+              <>
+                <X size={16} className="opacity-60" />
+                <span className="opacity-60">{t("dashboard.planCardNotVerified")}</span>
+              </>
+            )}
+          </div>
+          <div className="text-sm opacity-60 italic">
+            {serverCount}/{MAX_SUBDOMAINS[pricingModel]}{" "}
+            {t("dashboard.planCardSubdomains")}
+          </div>
+        </div>
       </div>
-      <div className={"italic opacity-70"}>
-        {props.serverCount}/{PRICING_GAME_SERVER_COUNT[props.pricingModel]}{" "}
-        Subdomains
-      </div>
+
+      <Link to="/billing" className="pbtn sm secondary shrink-0">
+        {t("dashboard.planCardManage")}
+      </Link>
     </FlatPanel>
   );
 };

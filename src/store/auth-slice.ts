@@ -5,6 +5,7 @@ export interface AuthUser {
   email: string | null;
   isVerified: boolean | null;
   needsPasswordSetup: boolean;
+  plan: "FREE" | "PLUS" | null;
   subject: string | null;
   issuedAt: number | null;
   expiresAt: number | null;

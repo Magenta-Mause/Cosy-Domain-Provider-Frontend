@@ -28,6 +28,10 @@ export function parseIdentityToken(token: string): AuthUser | null {
       subject: decoded.sub ?? null,
       isVerified: decoded.isVerified ?? null,
       needsPasswordSetup: decoded.needsPasswordSetup === true,
+      plan:
+        decoded.plan === "PLUS" || decoded.plan === "FREE"
+          ? decoded.plan
+          : null,
       issuedAt: typeof decoded.iat === "number" ? decoded.iat : null,
       expiresAt: typeof decoded.exp === "number" ? decoded.exp : null,
       claims: decoded,

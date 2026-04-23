@@ -1,16 +1,26 @@
 import { useNavigate } from "@tanstack/react-router";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 
+import { checkLabelAvailability } from "@/api/billing-api";
+import useAuthInformation from "@/hooks/useAuthInformation/useAuthInformation";
 import useDataInteractions from "@/hooks/useDataInteractions/useDataInteractions";
 import useDataLoading from "@/hooks/useDataLoading/useDataLoading";
 import { isValidIpv4, isValidSubdomainLabel } from "@/lib/validators";
 import { useAppSelector } from "@/store/hooks";
 
+export type LabelAvailability = "idle" | "checking" | "available" | "taken" | "reserved";
+export type NamingMode = "random" | "custom";
+
+const DEBOUNCE_MS = 500;
+
 export function useDomainDetailLogic(domainId: string) {
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   const isCreateMode = domainId === "new";
+
+  const { userPlan, isVerified } = useAuthInformation();
+  const isPlus = userPlan === "PLUS";
 
   const { createSubdomain, updateSubdomain, deleteSubdomain } =
     useDataInteractions();
@@ -22,7 +32,7 @@ export function useDomainDetailLogic(domainId: string) {
   const [loadedSubdomain, setLoadedSubdomain] =
     useState<typeof cachedSubdomain>(undefined);
   const [isInitialLoading, setIsInitialLoading] = useState(false);
-  const [label, setLabel] = useState("");
+  const [label, setLabelRaw] = useState("");
   const [targetIp, setTargetIp] = useState("");
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -31,12 +41,54 @@ export function useDomainDetailLogic(domainId: string) {
   const [activeTab, setActiveTab] = useState<"overview" | "dns" | "danger">(
     "overview",
   );
+  const [labelAvailability, setLabelAvailability] =
+    useState<LabelAvailability>("idle");
+  const [namingMode, setNamingMode] = useState<NamingMode>(
+    isPlus ? "custom" : "random",
+  );
+
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const setLabel = (value: string) => {
+    setLabelRaw(value);
+
+    if (!isCreateMode || !isPlus) return;
+
+    if (debounceRef.current) clearTimeout(debounceRef.current);
+
+    if (!isValidSubdomainLabel(value)) {
+      setLabelAvailability("idle");
+      return;
+    }
+
+    setLabelAvailability("checking");
+    debounceRef.current = setTimeout(async () => {
+      try {
+        const result = await checkLabelAvailability(value);
+        if (result.available) {
+          setLabelAvailability("available");
+        } else {
+          setLabelAvailability(
+            result.reason === "reserved" ? "reserved" : "taken",
+          );
+        }
+      } catch {
+        setLabelAvailability("idle");
+      }
+    }, DEBOUNCE_MS);
+  };
+
+  useEffect(() => {
+    return () => {
+      if (debounceRef.current) clearTimeout(debounceRef.current);
+    };
+  }, []);
 
   useEffect(() => {
     if (isCreateMode) return;
     if (cachedSubdomain?.uuid) {
       setLoadedSubdomain(cachedSubdomain);
-      setLabel(cachedSubdomain.label ?? "");
+      setLabelRaw(cachedSubdomain.label ?? "");
       setTargetIp(cachedSubdomain.targetIp ?? "");
       return;
     }
@@ -51,7 +103,7 @@ export function useDomainDetailLogic(domainId: string) {
         return;
       }
       setLoadedSubdomain(loaded);
-      setLabel(loaded.label ?? "");
+      setLabelRaw(loaded.label ?? "");
       setTargetIp(loaded.targetIp ?? "");
     })();
     return () => {
@@ -61,12 +113,19 @@ export function useDomainDetailLogic(domainId: string) {
 
   const domain = cachedSubdomain ?? loadedSubdomain;
 
-  const labelValid = useMemo(
-    () => (isCreateMode ? isValidSubdomainLabel(label) : true),
-    [isCreateMode, label],
-  );
+  const labelValid = useMemo(() => {
+    if (!isCreateMode) return true;
+    if (namingMode === "random") return true;
+    return isValidSubdomainLabel(label) && labelAvailability === "available";
+  }, [isCreateMode, namingMode, label, labelAvailability]);
+
   const ipValid = isValidIpv4(targetIp);
-  const canSubmit = labelValid && ipValid && !isSubmitting;
+  const canSubmit =
+    !isSubmitting &&
+    ipValid &&
+    (isCreateMode
+      ? namingMode === "random" || (isPlus && labelAvailability === "available")
+      : labelValid);
 
   const locale = i18n.language.toLowerCase().startsWith("de")
     ? "de-DE"
@@ -82,11 +141,15 @@ export function useDomainDetailLogic(domainId: string) {
     event.preventDefault();
     setHasSubmitted(true);
     setErrorMessage(null);
-    if (!labelValid || !ipValid) return;
+    if (!ipValid) return;
+    if (isCreateMode && namingMode === "custom" && !labelValid) return;
     setIsSubmitting(true);
     try {
       if (isCreateMode) {
-        const created = await createSubdomain({ label, targetIp });
+        const created = await createSubdomain({
+          label: namingMode === "custom" ? label : "",
+          targetIp,
+        });
         if (created.uuid) {
           await navigate({
             to: "/domain/$domainId",
@@ -128,6 +191,8 @@ export function useDomainDetailLogic(domainId: string) {
   return {
     domain,
     isCreateMode,
+    isPlus,
+    isVerified,
     isInitialLoading,
     label,
     setLabel,
@@ -140,6 +205,9 @@ export function useDomainDetailLogic(domainId: string) {
     activeTab,
     setActiveTab,
     labelValid,
+    labelAvailability,
+    namingMode,
+    setNamingMode,
     ipValid,
     canSubmit,
     createdAt,
