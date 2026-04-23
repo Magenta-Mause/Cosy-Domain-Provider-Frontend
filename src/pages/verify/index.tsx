@@ -1,5 +1,5 @@
 import { AuthPageLayout } from "@/components/auth/auth-page-layout";
-
+import { sanitizeVerificationCode } from "@/pages/verify/lib.ts";
 import { VerifiedView } from "./components/verified-view";
 import { VerifyForm } from "./components/verify-form";
 import { useVerifyLogic } from "./useVerifyLogic";
@@ -41,10 +41,12 @@ const VerifyPage = () => {
         resendError={resendError}
         isBusy={isBusy}
         onTokenChange={(code) => {
-          setVerificationToken(
-            code.toUpperCase().replaceAll("-", "").replaceAll(" ", ""),
-          );
+          const sanitized = sanitizeVerificationCode(code);
+          setVerificationToken(sanitized);
           setVerifyError(null);
+          if (sanitized.length === 6) {
+            void triggerVerification(sanitized);
+          }
         }}
         onVerify={() => triggerVerification(verificationToken)}
         onResend={() => void triggerResend()}

@@ -6,7 +6,7 @@ import { checkLabelAvailability } from "@/api/billing-api";
 import useAuthInformation from "@/hooks/useAuthInformation/useAuthInformation";
 import useDataInteractions from "@/hooks/useDataInteractions/useDataInteractions";
 import { isValidIpv4, isValidSubdomainLabel } from "@/lib/validators";
-import { DEBOUNCE_MS } from "../lib";
+import { DEBOUNCE_MS, type LabelAvailability, type NamingMode } from "../lib";
 
 export type { LabelAvailability, NamingMode } from "../lib";
 

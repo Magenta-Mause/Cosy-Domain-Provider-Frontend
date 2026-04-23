@@ -9,7 +9,14 @@ import useDataLoading from "@/hooks/useDataLoading/useDataLoading";
 import { isValidIpv4, isValidSubdomainLabel } from "@/lib/validators";
 import { useAppSelector } from "@/store/hooks";
 
-import { DEBOUNCE_MS, formatCreatedAt, getLocale, type TabKey } from "./lib";
+import {
+  DEBOUNCE_MS,
+  formatCreatedAt,
+  getLocale,
+  type LabelAvailability,
+  type NamingMode,
+  type TabKey,
+} from "./lib";
 
 export type { LabelAvailability, NamingMode, TabKey } from "./lib";
 

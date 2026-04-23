@@ -1,3 +1,4 @@
+import { REGEXP_ONLY_DIGITS_AND_CHARS } from "input-otp";
 import { RotateCw } from "lucide-react";
 
 import { ErrorMessage } from "@/components/pixel/error-message";
@@ -48,8 +49,9 @@ export function VerifyForm({
         <InputOTP
           value={verificationToken}
           maxLength={6}
+          pattern={REGEXP_ONLY_DIGITS_AND_CHARS}
+          pasteTransformer={(text) => text.replace(/[-\s]/g, "")}
           onChange={onTokenChange}
-          onPasteCapture={console.log}
           disabled={isBusy}
         >
           <InputOTPGroup>
