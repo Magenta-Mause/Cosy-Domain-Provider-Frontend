@@ -5,11 +5,11 @@
  * OpenAPI spec version: v0
  */
 
-export type RegisterTokenMode = typeof RegisterTokenMode[keyof typeof RegisterTokenMode];
-
+export type RegisterTokenMode =
+  (typeof RegisterTokenMode)[keyof typeof RegisterTokenMode];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const RegisterTokenMode = {
-  COOKIE: 'COOKIE',
-  DIRECT: 'DIRECT',
+  COOKIE: "COOKIE",
+  DIRECT: "DIRECT",
 } as const;

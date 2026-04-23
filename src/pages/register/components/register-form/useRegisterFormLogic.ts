@@ -18,6 +18,7 @@ export function useRegisterFormLogic() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPw, setShowPw] = useState(false);
+  const [showConfirmPw, setShowConfirmPw] = useState(false);
   const [agreed, setAgreed] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
@@ -62,6 +63,8 @@ export function useRegisterFormLogic() {
     setConfirmPassword,
     showPw,
     setShowPw,
+    showConfirmPw,
+    setShowConfirmPw,
     agreed,
     setAgreed,
     errorMessage,

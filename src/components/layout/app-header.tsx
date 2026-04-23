@@ -37,7 +37,7 @@ export function AppHeader() {
             COSY
           </div>
           <div
-            className="text-sm mt-0.5 opacity-[0.85]"
+            className="text-sm -mt-1 opacity-[0.85]"
             style={{ color: "oklch(0.92 0.04 60)" }}
           >
             Domain Provider

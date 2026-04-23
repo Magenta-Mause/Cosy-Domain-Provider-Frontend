@@ -4,7 +4,7 @@
  * OpenAPI definition
  * OpenAPI spec version: v0
  */
-import type { UserDtoPlan } from './userDtoPlan';
+import type { UserDtoPlan } from "./userDtoPlan";
 
 export interface UserDto {
   uuid?: string;

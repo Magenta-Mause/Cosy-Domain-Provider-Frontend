@@ -1,3 +1,7 @@
+import eyeClosedIcon from "@/assets/eyeClosed.webp";
+import eyeOpenIcon from "@/assets/eyeOpen.webp";
+import { Icon } from "@/components/ui/icon";
+
 interface PasswordInputProps {
   id: string;
   autoComplete?: string;
@@ -45,10 +49,11 @@ export function PasswordInput({
       <button
         type="button"
         data-testid={toggleTestId}
+        aria-label={showPw ? "Hide password" : "Show password"}
         onClick={onToggleShow}
-        className="absolute right-[10px] top-1/2 -translate-y-1/2 text-sm opacity-70"
+        className="absolute right-[10px] top-1/2 -translate-y-1/2 opacity-70 hover:opacity-100 flex items-center"
       >
-        {showPw ? "[hide]" : "[show]"}
+        <Icon src={showPw ? eyeOpenIcon : eyeClosedIcon} className="size-6" />
       </button>
     </div>
   );

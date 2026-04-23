@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 
 import { Badge } from "@/components/pixel/badge";
 import { ErrorMessage } from "@/components/pixel/error-message";
+import { InputField } from "@/components/ui/input-field";
 import type { LabelAvailability, NamingMode } from "@/pages/domain-detail/lib";
 
 import { LabelAvailabilityIndicator } from "./label-availability-indicator";
@@ -79,25 +80,20 @@ export function CreateModeFields({
 
       {namingMode === "custom" && isPlus ? (
         <div className="flex flex-col gap-2">
-          <label className="plabel" htmlFor="label">
-            {t("createSubdomain.label")}
-          </label>
-          <input
+          <InputField
             id="label"
-            data-testid="domain-detail-label-input"
-            className={`pinput${labelInvalid ? " invalid" : ""}`}
+            label={t("createSubdomain.label")}
             value={label}
-            onChange={(event) =>
-              onLabelChange(
-                event.target.value.toLowerCase().replaceAll(" ", "-"),
-              )
+            onChange={(v) =>
+              onLabelChange(v.toLowerCase().replaceAll(" ", "-"))
             }
             placeholder="my-castle"
             required
+            invalid={labelInvalid}
+            endDecorator=".play.cosy-hosting.net"
+            testId="domain-detail-label-input"
+            hint={t("createSubdomain.labelHint")}
           />
-          <div className="text-base opacity-[0.65]">
-            {t("createSubdomain.labelHint")}
-          </div>
           <LabelAvailabilityIndicator availability={labelAvailability} />
           {labelInvalid && labelAvailability === "idle" ? (
             <ErrorMessage>{t("domainDetail.labelInvalid")}</ErrorMessage>

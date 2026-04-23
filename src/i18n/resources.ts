@@ -7,11 +7,10 @@ const enCommon = {
     login: "Log in",
     logout: "Log out",
     userMenu: "User menu",
-    changeUsername: "Change username",
-    changePassword: "Change password",
     deleteUser: "Delete user",
     notImplemented: "Not implemented",
     billing: "Subscription",
+    userSettings: "User Settings",
     userDeletionConfirm:
       "Are you sure you want to delete your account? This will also delete all your dns entries.",
   },
@@ -186,7 +185,7 @@ const enCommon = {
     titleLine1: "Pick a home",
     titleLine2: "on the internet.",
     description:
-      "Cosy Domain Provider gives your self-hosted Cosy server a friendly address on cosy-hosting.net — with automatic TLS, so the little green padlock stays happy.",
+      "Cosy Domain Provider gives your self-hosted Cosy server a friendly address on play.cosy-hosting.net — with automatic TLS, so the little green padlock stays happy.",
     claimLabel: "Claim your address",
     checkButton: "Check →",
     benefit1: "✓ Free tier: 1 random address",
@@ -198,7 +197,7 @@ const enCommon = {
     subtitle: "Everything you need to mail packets to your home server.",
     stop1Title: "Claim an address",
     stop1Body:
-      "Pick a free subdomain on cosy-hosting.net or bring a custom one with Cosy+.",
+      "Pick a free subdomain on play.cosy-hosting.net or bring a custom one with Cosy+.",
     stop2Title: "Verify & connect",
     stop2Body:
       "One-time token pasted into your Cosy instance. We handle the DNS.",
@@ -260,6 +259,24 @@ const enCommon = {
   footer: {
     text: "Made with ❤️ by Medalheads · cosy-hosting.net",
   },
+  settings: {
+    title: "Account settings",
+    usernameSection: "Change username",
+    newUsername: "New username",
+    usernameSuccess: "Username updated!",
+    usernameError: "Could not update username. Please try again.",
+    passwordSection: "Change password",
+    currentPassword: "Current password",
+    newPassword: "New password",
+    confirmNewPassword: "Confirm new password",
+    passwordMismatch: "Passwords do not match.",
+    passwordTooShort: "Needs at least 8 characters",
+    wrongCurrentPassword: "Current password is incorrect.",
+    passwordSuccess: "Password updated!",
+    passwordError: "Could not update password. Please try again.",
+    saveButton: "Save",
+    saving: "Saving...",
+  },
 } as const;
 
 type DeepStringSchema<T> = {
@@ -277,11 +294,10 @@ const deCommon: CommonSchema = {
     login: "Anmelden",
     logout: "Abmelden",
     userMenu: "Benutzermenü",
-    changeUsername: "Benutzernamen ändern",
-    changePassword: "Passwort ändern",
     deleteUser: "Benutzer löschen",
     notImplemented: "Nicht implementiert",
     billing: "Abonnement",
+    userSettings: "Kontoeinstellungen",
     userDeletionConfirm:
       "Bist du dir sicher, dass du deinen Account löschen willst? Dadurch werden auch alle deine Subdomains gelöscht.",
   },
@@ -462,7 +478,7 @@ const deCommon: CommonSchema = {
     titleLine1: "Such dir ein Zuhause",
     titleLine2: "im Internet.",
     description:
-      "Cosy Domain Provider gibt deinem selbst gehosteten Cosy-Server eine freundliche Adresse auf cosy-hosting.net – mit automatischem TLS, damit das kleine grüne Schloss glücklich bleibt.",
+      "Cosy Domain Provider gibt deinem selbst gehosteten Cosy-Server eine freundliche Adresse auf play.cosy-hosting.net – mit automatischem TLS, damit das kleine grüne Schloss glücklich bleibt.",
     claimLabel: "Deine Adresse sichern",
     checkButton: "Prüfen →",
     benefit1: "✓ Kostenlos: 1 zufällige Adresse",
@@ -475,7 +491,7 @@ const deCommon: CommonSchema = {
       "Alles, was du brauchst, um Pakete an deinen Heimserver zu schicken.",
     stop1Title: "Adresse sichern",
     stop1Body:
-      "Wähle eine kostenlose Subdomain auf cosy-hosting.net oder bringe deine eigene mit Cosy+.",
+      "Wähle eine kostenlose Subdomain auf play.cosy-hosting.net oder bringe deine eigene mit Cosy+.",
     stop2Title: "Verifizieren & verbinden",
     stop2Body:
       "Einmaliger Token in deine Cosy-Instanz einfügen. Wir kümmern uns um das DNS.",
@@ -541,6 +557,26 @@ const deCommon: CommonSchema = {
   },
   footer: {
     text: "Made with ❤️ by Medalheads · cosy-hosting.net",
+  },
+  settings: {
+    title: "Kontoeinstellungen",
+    usernameSection: "Benutzername ändern",
+    newUsername: "Neuer Benutzername",
+    usernameSuccess: "Benutzername aktualisiert!",
+    usernameError:
+      "Benutzername konnte nicht aktualisiert werden. Bitte erneut versuchen.",
+    passwordSection: "Passwort ändern",
+    currentPassword: "Aktuelles Passwort",
+    newPassword: "Neues Passwort",
+    confirmNewPassword: "Neues Passwort bestätigen",
+    passwordMismatch: "Passwörter stimmen nicht überein.",
+    passwordTooShort: "Mindestens 8 Zeichen erforderlich",
+    wrongCurrentPassword: "Das aktuelle Passwort ist falsch.",
+    passwordSuccess: "Passwort aktualisiert!",
+    passwordError:
+      "Passwort konnte nicht aktualisiert werden. Bitte erneut versuchen.",
+    saveButton: "Speichern",
+    saving: "Wird gespeichert...",
   },
 };
 

@@ -49,7 +49,7 @@ export function OverviewTab({
       >
         <legend className="sr-only">{t("domainDetail.formLegend")}</legend>
 
-        <ReadonlyLabelField label={label} />
+        <ReadonlyLabelField label={label} fqdn={domain?.fqdn} />
 
         <TargetIpField
           targetIp={targetIp}

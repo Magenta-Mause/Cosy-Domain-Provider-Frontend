@@ -13,12 +13,14 @@ import {
   resendVerification,
   resetPassword,
   updateSubdomain,
+  updateUser,
   verifyEmail,
 } from "@/api/generated/domain-provider-api";
 import type {
   LoginDto,
   SubdomainCreationDto,
   SubdomainUpdateDto,
+  UpdateUserDto,
 } from "@/api/generated/model";
 import useDataLoading from "@/hooks/useDataLoading/useDataLoading.ts";
 import { parseIdentityToken } from "@/lib/jwt";
@@ -156,6 +158,14 @@ const useDataInteractions = () => {
     [],
   );
 
+  const updateUserInteraction = useCallback(
+    async (dto: UpdateUserDto) => {
+      await updateUser(dto);
+      await refreshIdentityToken();
+    },
+    [refreshIdentityToken],
+  );
+
   const deleteUserInteraction = useCallback(async () => {
     await deleteUser();
   }, []);
@@ -182,6 +192,7 @@ const useDataInteractions = () => {
     createSubdomain: createSubdomainInteraction,
     updateSubdomain: updateSubdomainInteraction,
     deleteSubdomain: deleteSubdomainInteraction,
+    updateUser: updateUserInteraction,
     deleteUser: deleteUserInteraction,
     openBillingPortal,
     openCheckout,

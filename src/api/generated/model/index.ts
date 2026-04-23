@@ -5,9 +5,12 @@
  * OpenAPI spec version: v0
  */
 
+export * from "./billingPortalResponseDto";
+export * from "./checkLabelAvailabilityParams";
 export * from "./dnsEntry";
 export * from "./emailVerificationDto";
 export * from "./forgotPasswordDto";
+export * from "./labelAvailabilityDto";
 export * from "./loginDto";
 export * from "./loginParams";
 export * from "./loginResponseDto";
@@ -19,9 +22,7 @@ export * from "./subdomainCreationDto";
 export * from "./subdomainDto";
 export * from "./subdomainDtoStatus";
 export * from "./subdomainUpdateDto";
+export * from "./updateUserDto";
 export * from "./userCreationDto";
 export * from "./userDto";
-export * from './billingPortalResponseDto';
-export * from './checkLabelAvailabilityParams';
-export * from './labelAvailabilityDto';
-export * from './userDtoPlan';
+export * from "./userDtoPlan";

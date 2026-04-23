@@ -5,11 +5,10 @@
  * OpenAPI spec version: v0
  */
 
-export type UserDtoPlan = typeof UserDtoPlan[keyof typeof UserDtoPlan];
-
+export type UserDtoPlan = (typeof UserDtoPlan)[keyof typeof UserDtoPlan];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const UserDtoPlan = {
-  FREE: 'FREE',
-  PLUS: 'PLUS',
+  FREE: "FREE",
+  PLUS: "PLUS",
 } as const;

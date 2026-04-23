@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { PasswordInput } from "@/components/auth/password-input";
 import { ErrorMessage } from "@/components/pixel/error-message";
 import { Button } from "@/components/ui/button";
+import { InputField } from "@/components/ui/input-field";
 
 import { useLoginFormLogic } from "./useLoginFormLogic";
 
@@ -27,22 +28,17 @@ export function LoginForm() {
         <h2 className="text-[22px]">{t("login.title")}</h2>
       </div>
 
-      <div className="flex flex-col gap-2">
-        <label className="plabel" htmlFor="email">
-          {t("login.email")}
-        </label>
-        <input
-          id="email"
-          data-testid="login-email-input"
-          className="pinput"
-          type="email"
-          autoComplete="email"
-          required
-          placeholder="your@email.com"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-      </div>
+      <InputField
+        id="email"
+        label={t("login.email")}
+        type="email"
+        autoComplete="email"
+        required
+        placeholder="your@email.com"
+        value={email}
+        onChange={setEmail}
+        testId="login-email-input"
+      />
 
       <div className="flex flex-col gap-2">
         <label className="plabel" htmlFor="password">

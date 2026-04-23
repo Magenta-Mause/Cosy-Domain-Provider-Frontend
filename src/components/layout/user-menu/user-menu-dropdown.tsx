@@ -1,4 +1,4 @@
-import { Link } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 
 import { Button } from "@/components/ui/button";
@@ -17,6 +17,7 @@ export function UserMenuDropdown({
   onDelete,
 }: UserMenuDropdownProps) {
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
   return (
     <div
@@ -31,22 +32,12 @@ export function UserMenuDropdown({
         variant="ghost"
         size="sm"
         className="justify-start"
-        title={t("nav.notImplemented")}
-        onClick={onClose}
-        disabled
+        onClick={() => {
+          navigate({ to: "/settings" });
+          onClose();
+        }}
       >
-        {t("nav.changeUsername")}
-      </Button>
-      <Button
-        type="button"
-        data-testid="user-menu-change-password-btn"
-        variant="ghost"
-        size="sm"
-        className="justify-start"
-        title={t("nav.notImplemented")}
-        disabled
-      >
-        {t("nav.changePassword")}
+        {t("nav.userSettings")}
       </Button>
       <Link
         to="/billing"

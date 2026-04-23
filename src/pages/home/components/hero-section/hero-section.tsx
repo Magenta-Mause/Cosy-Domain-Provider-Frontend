@@ -54,10 +54,10 @@ export function HeroSection() {
                   value={subdomain}
                   onChange={(e) => handleSubdomainChange(e.target.value)}
                   placeholder="my-castle"
-                  style={{ paddingRight: 170 }}
+                  style={{ paddingRight: 210 }}
                 />
                 <span className="absolute right-[14px] top-1/2 -translate-y-1/2 text-lg opacity-70 pointer-events-none">
-                  .cosy-hosting.net
+                  .play.cosy-hosting.net
                 </span>
               </div>
               <Button

@@ -9,6 +9,7 @@ const useAuthInformation = () => {
   const {
     logoutUser,
     refreshIdentityToken,
+    updateUser,
     deleteUser: deleteUserInteraction,
   } = useDataInteractions();
 
@@ -25,6 +26,7 @@ const useAuthInformation = () => {
       authState: auth.state,
       logoutUser,
       refreshIdentityToken,
+      updateUser,
       deleteUser,
       userIdentityToken: auth.identityToken,
       userName: auth.user?.username ?? null,
@@ -36,7 +38,7 @@ const useAuthInformation = () => {
       tokenExpiresAt: auth.user?.expiresAt ?? null,
       userClaims: auth.user?.claims ?? {},
     }),
-    [auth, logoutUser, refreshIdentityToken, deleteUser],
+    [auth, logoutUser, refreshIdentityToken, updateUser, deleteUser],
   );
 };
 

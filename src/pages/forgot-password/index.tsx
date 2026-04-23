@@ -2,8 +2,8 @@ import { Link } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 
 import { AuthPageLayout } from "@/components/auth/auth-page-layout";
-import { ErrorMessage } from "@/components/pixel/error-message";
 import { Button } from "@/components/ui/button";
+import { InputField } from "@/components/ui/input-field";
 
 import { useForgotPasswordLogic } from "./useForgotPasswordLogic";
 
@@ -31,23 +31,18 @@ const ForgotPasswordPage = () => {
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-            <div className="flex flex-col gap-2">
-              <label className="plabel" htmlFor="email">
-                {t("forgotPassword.email")}
-              </label>
-              <input
-                id="email"
-                data-testid="forgot-password-email-input"
-                className="pinput"
-                type="email"
-                autoComplete="email"
-                required
-                placeholder="your@email.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            </div>
-            {error ? <ErrorMessage>{error}</ErrorMessage> : null}
+            <InputField
+              id="email"
+              label={t("forgotPassword.email")}
+              type="email"
+              autoComplete="email"
+              required
+              placeholder="your@email.com"
+              value={email}
+              onChange={setEmail}
+              testId="forgot-password-email-input"
+              error={error}
+            />
             <Button
               type="submit"
               size="lg"
