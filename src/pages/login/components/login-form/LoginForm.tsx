@@ -82,7 +82,7 @@ export function LoginForm() {
         {submitting ? t("login.submitting") : t("login.submitButton")}
       </Button>
 
-      <p className="text-base text-center opacity-70">
+      <p className="text-lg text-center">
         {t("login.noAccount")}{" "}
         <Link to="/register" data-testid="login-register-link-footer">
           {t("login.registerLink")}
