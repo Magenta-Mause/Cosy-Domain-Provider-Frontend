@@ -241,6 +241,20 @@ const enCommon = {
     verifyRequired: "You need to verify your account before upgrading.",
     verifyLink: "Verify account →",
   },
+  verify: {
+    sendTitle: "Verify your account",
+    sendDescription:
+      "We'll send a 6-letter code to your email address. Click the button below when you're ready.",
+    sendBtn: "Send verification email",
+    sendingBtn: "Sending…",
+    sendError: "Couldn't send the email. Please try again.",
+    inputTitle: "Check your mailbox",
+    inputDescription:
+      "We sent a 6-letter code to {{email}}. Paste it below to move in.",
+    codeExpiredError: "That code has expired. Request a new one below.",
+    codeMismatchError: "That code didn't match. Double-check and try again.",
+    resendError: "Couldn't send a new code. Please try again later.",
+  },
   footer: {
     text: "Made with ❤️ by Medalheads · cosy-hosting.net",
   },
@@ -503,6 +517,23 @@ const deCommon: CommonSchema = {
     verifyRequired:
       "Du musst dein Konto verifizieren, bevor du upgraden kannst.",
     verifyLink: "Konto verifizieren →",
+  },
+  verify: {
+    sendTitle: "Dein Konto verifizieren",
+    sendDescription:
+      "Wir senden dir einen 6-stelligen Code an deine E-Mail-Adresse. Klicke unten, wenn du bereit bist.",
+    sendBtn: "Verifizierungs-E-Mail senden",
+    sendingBtn: "Wird gesendet…",
+    sendError: "E-Mail konnte nicht gesendet werden. Bitte versuche es erneut.",
+    inputTitle: "Überprüfe dein Postfach",
+    inputDescription:
+      "Wir haben einen 6-stelligen Code an {{email}} gesendet. Füge ihn unten ein.",
+    codeExpiredError:
+      "Dieser Code ist abgelaufen. Fordere unten einen neuen an.",
+    codeMismatchError:
+      "Dieser Code stimmt nicht überein. Bitte überprüfe ihn erneut.",
+    resendError:
+      "Ein neuer Code konnte nicht gesendet werden. Bitte versuche es später erneut.",
   },
   footer: {
     text: "Made with ❤️ by Medalheads · cosy-hosting.net",
