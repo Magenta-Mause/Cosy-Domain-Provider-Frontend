@@ -16,7 +16,7 @@ export function LandingNav() {
       <Link
         to="/dashboard"
         data-testid="home-logo-link"
-        className="flex items-center gap-2.5 no-underline"
+        className="flex items-center gap-2.5 no-underline hover:no-underline"
       >
         <img src={cosyIcon} alt="Cosy" className="h-12" />
         <div className="text-left pt-[3px]">
