@@ -6,10 +6,7 @@ import { Badge } from "@/components/pixel/badge";
 import { ErrorMessage } from "@/components/pixel/error-message";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import type {
-  LabelAvailability,
-  NamingMode,
-} from "@/pages/domain-detail/useDomainDetailLogic";
+import type { LabelAvailability, NamingMode } from "@/pages/domain-detail/lib";
 
 import { DomainMetaCards } from "./components/domain-meta-cards.tsx";
 

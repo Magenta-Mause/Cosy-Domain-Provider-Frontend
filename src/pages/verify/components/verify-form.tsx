@@ -49,6 +49,7 @@ export function VerifyForm({
           value={verificationToken}
           maxLength={6}
           onChange={onTokenChange}
+          onPasteCapture={console.log}
           disabled={isBusy}
         >
           <InputOTPGroup>

@@ -1,4 +1,5 @@
 import { useDropdown } from "@/hooks/useDropdown/useDropdown";
+import { getUserInitial } from "./lib";
 
 export function useUserMenuLogic(userName?: string | null) {
   const {
@@ -6,6 +7,6 @@ export function useUserMenuLogic(userName?: string | null) {
     setIsOpen: setMenuOpen,
     ref: menuRef,
   } = useDropdown();
-  const initial = userName?.[0]?.toUpperCase() ?? "?";
+  const initial = getUserInitial(userName);
   return { menuOpen, setMenuOpen, menuRef, initial };
 }

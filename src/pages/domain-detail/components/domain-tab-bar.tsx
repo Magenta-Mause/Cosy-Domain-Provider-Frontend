@@ -1,4 +1,4 @@
-type TabKey = "overview" | "dns" | "danger";
+import type { TabKey } from "@/pages/domain-detail/lib";
 
 interface DomainTabBarProps {
   activeTab: TabKey;

@@ -5,8 +5,8 @@ import { ErrorMessage } from "@/components/pixel/error-message";
 import { FlatPanel } from "@/components/pixel/panel";
 import { Button } from "@/components/ui/button";
 import { DomainDetailHeader } from "../components/domain-detail-header";
+import type { LabelAvailability } from "../lib";
 import { PlanSelector } from "./components/plan-selector";
-import type { LabelAvailability } from "./useCreateSubdomainLogic";
 import { useCreateSubdomainLogic } from "./useCreateSubdomainLogic";
 
 function LabelAvailabilityIndicator({

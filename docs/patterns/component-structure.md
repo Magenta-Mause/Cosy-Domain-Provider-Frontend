@@ -16,11 +16,19 @@ src/pages/dashboard/
       components/
         subdomain-list-item.tsx
 
+src/pages/domain-detail/
+  index.tsx
+  useDomainDetailLogic.ts     ← React hook: state, effects, handlers
+  lib.ts                      ← pure functions, constants, types (no React)
+  components/
+    ...
+
 src/components/layout/user-menu/
   index.ts                    ← re-exports UserMenu (keeps import paths stable)
   user-menu.tsx               ← component files: kebab-case
   user-menu-dropdown.tsx
   useUserMenuLogic.ts         ← hook files: camelCase
+  lib.ts                      ← getUserInitial and other pure helpers
 ```
 
 ## File naming
@@ -73,6 +81,36 @@ src/hooks/
   useDataLoading/useDataLoading.ts
   useDataInteractions/useDataInteractions.ts
   useAuthInformation/useAuthInformation.ts
+```
+
+## `lib.ts` — pure utilities per component
+
+When a hook contains pure functions, constants, or types that don't need React, extract them into a co-located `lib.ts`:
+
+```
+src/pages/domain-detail/
+  useDomainDetailLogic.ts   ← React hook (state, effects, handlers)
+  lib.ts                    ← pure: LabelAvailability, getLocale, formatCreatedAt, DEBOUNCE_MS
+```
+
+Rules:
+- **Only create `lib.ts` when there is meaningful pure logic to extract** — don't create one just to hold 1-2 trivial lines.
+- The hook imports from `./lib`. Other components that need the types import from the same `lib.ts` (not from the hook).
+- `lib.ts` exports pure functions, constants, and TypeScript types. No hooks, no React imports.
+- Re-export types from the hook file (`export type { Foo } from "./lib"`) if existing call sites depend on the hook's module path — this keeps the hook as the public API while the logic lives in `lib.ts`.
+
+```typescript
+// lib.ts — no React, no side effects
+export type LabelAvailability = "idle" | "checking" | "available" | "taken" | "reserved";
+export const DEBOUNCE_MS = 500;
+export function getLocale(language: string): "de-DE" | "en-US" { ... }
+
+// useDomainDetailLogic.ts
+import { DEBOUNCE_MS, getLocale } from "./lib";
+export type { LabelAvailability } from "./lib";   // re-export for backwards compat
+
+// overview-tab.tsx — imports type from the authoritative source
+import type { LabelAvailability } from "@/pages/domain-detail/lib";
 ```
 
 ## Validators

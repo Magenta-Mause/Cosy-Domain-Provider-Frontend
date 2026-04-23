@@ -6,16 +6,9 @@ import { checkLabelAvailability } from "@/api/billing-api";
 import useAuthInformation from "@/hooks/useAuthInformation/useAuthInformation";
 import useDataInteractions from "@/hooks/useDataInteractions/useDataInteractions";
 import { isValidIpv4, isValidSubdomainLabel } from "@/lib/validators";
+import { DEBOUNCE_MS } from "../lib";
 
-export type LabelAvailability =
-  | "idle"
-  | "checking"
-  | "available"
-  | "taken"
-  | "reserved";
-export type NamingMode = "random" | "custom";
-
-const DEBOUNCE_MS = 500;
+export type { LabelAvailability, NamingMode } from "../lib";
 
 export function useCreateSubdomainLogic() {
   const { t } = useTranslation();

@@ -41,7 +41,9 @@ const VerifyPage = () => {
         resendError={resendError}
         isBusy={isBusy}
         onTokenChange={(code) => {
-          setVerificationToken(code.toUpperCase().replaceAll("-", ""));
+          setVerificationToken(
+            code.toUpperCase().replaceAll("-", "").replaceAll(" ", ""),
+          );
           setVerifyError(null);
         }}
         onVerify={() => triggerVerification(verificationToken)}

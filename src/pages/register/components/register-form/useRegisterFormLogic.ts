@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import useDataInteractions from "@/hooks/useDataInteractions/useDataInteractions";
 import { isValidEmail } from "@/lib/validators";
 import { useAppSelector } from "@/store/hooks";
+import { isPasswordWeak, isValidPassword, isValidUsername } from "./lib";
 
 export function useRegisterFormLogic() {
   const { t } = useTranslation();
@@ -20,11 +21,10 @@ export function useRegisterFormLogic() {
   const [agreed, setAgreed] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  const usernameValid =
-    username.trim().length >= 3 && username.trim().length <= 20;
+  const usernameValid = isValidUsername(username);
   const emailValid = useMemo(() => isValidEmail(email), [email]);
-  const passwordValid = password.length >= 8;
-  const passwordWeak = password.length > 0 && password.length < 8;
+  const passwordValid = isValidPassword(password);
+  const passwordWeak = isPasswordWeak(password);
   const confirmValid = password === confirmPassword;
   const submitting = authState === "loading";
   const canSubmit =
