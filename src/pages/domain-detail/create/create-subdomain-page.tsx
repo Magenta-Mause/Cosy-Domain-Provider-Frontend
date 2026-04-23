@@ -75,7 +75,7 @@ export function CreateSubdomainPage() {
               <PlanSelector namingMode={namingMode} onSelect={setNamingMode} />
 
               {namingMode === "custom" && !isPlus && (
-                <div className="flex flex-col gap-3 p-4 rounded-radius border-[2px] border-foreground bg-secondary-background">
+                <div className="flex flex-col gap-2 p-4 rounded-radius border-[2px] border-foreground bg-secondary-background">
                   {isVerified ? (
                     <>
                       <p className="text-sm opacity-80">
@@ -112,7 +112,7 @@ export function CreateSubdomainPage() {
                     onChange={(e) =>
                       setLabel(e.target.value.toLowerCase().trim())
                     }
-                    placeholder="my-castle"
+                    placeholder="cosy-australania"
                   />
                   <div className="text-base opacity-[0.65]">
                     {t("createSubdomain.labelHint")}

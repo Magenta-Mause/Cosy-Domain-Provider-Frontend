@@ -40,7 +40,7 @@ interface PlanSelectorProps {
 export function PlanSelector({ namingMode, onSelect }: PlanSelectorProps) {
   const { t } = useTranslation();
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col gap-1">
       <span className="plabel">{t("createSubdomain.planSection")}</span>
       <div className="flex gap-3">
         <PlanCard

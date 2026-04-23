@@ -10,7 +10,8 @@ import type { AppLanguage } from "@/i18n/resources";
 export function AppHeader() {
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
-  const { logoutUser, userName, isUserLoggedIn } = useAuthInformation();
+  const { logoutUser, userName, isUserLoggedIn, deleteUser } =
+    useAuthInformation();
   const [isLoggingOut, setIsLoggingOut] = useState(false);
 
   async function handleLanguageChange(language: AppLanguage) {
@@ -58,6 +59,11 @@ export function AppHeader() {
               await navigate({ to: "/login" });
             } finally {
               setIsLoggingOut(false);
+            }
+          }}
+          onDelete={async () => {
+            if (confirm(t("nav.userDeletionConfirm"))) {
+              await deleteUser();
             }
           }}
         />

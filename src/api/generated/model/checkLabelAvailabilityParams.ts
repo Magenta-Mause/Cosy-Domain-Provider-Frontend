@@ -4,8 +4,7 @@
  * OpenAPI definition
  * OpenAPI spec version: v0
  */
-import type { LoginTokenMode } from './loginTokenMode';
 
-export type LoginParams = {
-tokenMode?: LoginTokenMode;
+export type CheckLabelAvailabilityParams = {
+label: string;
 };

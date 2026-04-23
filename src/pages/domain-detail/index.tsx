@@ -56,9 +56,7 @@ export function DomainDetailPage({ domainId }: { domainId: string }) {
         {!isCreateMode ? (
           <DomainTabBar activeTab={activeTab} onChange={setActiveTab} />
         ) : null}
-        <FlatPanel
-          className={`p-7${activeTab === "overview" ? " rounded-tl-none" : ""}`}
-        >
+        <FlatPanel className={`p-7 rounded-tl-none`}>
           {isCreateMode || activeTab === "overview" ? (
             <OverviewTab
               domain={domain}

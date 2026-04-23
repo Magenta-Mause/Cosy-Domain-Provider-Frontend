@@ -4,8 +4,8 @@
  * OpenAPI definition
  * OpenAPI spec version: v0
  */
-import type { RegisterTokenMode } from "./registerTokenMode";
+import type { RegisterTokenMode } from './registerTokenMode';
 
 export type RegisterParams = {
-  tokenMode?: RegisterTokenMode;
+tokenMode?: RegisterTokenMode;
 };

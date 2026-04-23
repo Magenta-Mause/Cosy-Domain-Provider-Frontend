@@ -4,6 +4,7 @@ import { getBillingPortalUrl, getCheckoutUrl } from "@/api/billing-api";
 import {
   createSubdomain,
   deleteSubdomain,
+  deleteUser,
   fetchToken,
   forgotPassword,
   login,
@@ -155,6 +156,10 @@ const useDataInteractions = () => {
     [],
   );
 
+  const deleteUserInteraction = useCallback(async () => {
+    await deleteUser();
+  }, []);
+
   const openBillingPortal = useCallback(async () => {
     const { url } = await getBillingPortalUrl();
     window.location.href = url;
@@ -177,6 +182,7 @@ const useDataInteractions = () => {
     createSubdomain: createSubdomainInteraction,
     updateSubdomain: updateSubdomainInteraction,
     deleteSubdomain: deleteSubdomainInteraction,
+    deleteUser: deleteUserInteraction,
     openBillingPortal,
     openCheckout,
   };

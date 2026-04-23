@@ -21,3 +21,7 @@ export * from "./subdomainDtoStatus";
 export * from "./subdomainUpdateDto";
 export * from "./userCreationDto";
 export * from "./userDto";
+export * from './billingPortalResponseDto';
+export * from './checkLabelAvailabilityParams';
+export * from './labelAvailabilityDto';
+export * from './userDtoPlan';

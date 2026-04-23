@@ -8,9 +8,15 @@ type UserMenuProps = {
   userName?: string | null;
   isLoggingOut: boolean;
   onLogout: () => Promise<void>;
+  onDelete: () => Promise<void>;
 };
 
-export function UserMenu({ userName, isLoggingOut, onLogout }: UserMenuProps) {
+export function UserMenu({
+  userName,
+  isLoggingOut,
+  onLogout,
+  onDelete,
+}: UserMenuProps) {
   const { t } = useTranslation();
   const { menuOpen, setMenuOpen, menuRef, initial } =
     useUserMenuLogic(userName);
@@ -40,6 +46,7 @@ export function UserMenu({ userName, isLoggingOut, onLogout }: UserMenuProps) {
           isLoggingOut={isLoggingOut}
           onClose={() => setMenuOpen(false)}
           onLogout={onLogout}
+          onDelete={onDelete}
         />
       ) : null}
     </div>

@@ -1,10 +1,22 @@
-import { useMemo } from "react";
+import { useNavigate } from "@tanstack/react-router";
+import { useCallback, useMemo } from "react";
 import useDataInteractions from "@/hooks/useDataInteractions/useDataInteractions";
 import { useAppSelector } from "@/store/hooks";
 
 const useAuthInformation = () => {
   const auth = useAppSelector((state) => state.auth);
-  const { logoutUser, refreshIdentityToken } = useDataInteractions();
+  const navigate = useNavigate();
+  const {
+    logoutUser,
+    refreshIdentityToken,
+    deleteUser: deleteUserInteraction,
+  } = useDataInteractions();
+
+  const deleteUser = useCallback(async () => {
+    await deleteUserInteraction();
+    await logoutUser();
+    navigate({ to: "/" });
+  }, [deleteUserInteraction, logoutUser, navigate]);
 
   return useMemo(
     () => ({
@@ -13,6 +25,7 @@ const useAuthInformation = () => {
       authState: auth.state,
       logoutUser,
       refreshIdentityToken,
+      deleteUser,
       userIdentityToken: auth.identityToken,
       userName: auth.user?.username ?? null,
       userEmail: auth.user?.email ?? null,
@@ -23,7 +36,7 @@ const useAuthInformation = () => {
       tokenExpiresAt: auth.user?.expiresAt ?? null,
       userClaims: auth.user?.claims ?? {},
     }),
-    [auth, logoutUser, refreshIdentityToken],
+    [auth, logoutUser, refreshIdentityToken, deleteUser],
   );
 };
 

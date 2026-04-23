@@ -122,35 +122,37 @@ export function OverviewTab({
       ) : null}
 
       <fieldset
-        className="border-none p-0 m-0 flex flex-col gap-4"
+        className="border-none p-0 m-0 flex flex-col gap-7"
         disabled={isSubmitting || isDeleting}
       >
         <legend className="sr-only">{t("domainDetail.formLegend")}</legend>
 
         {isCreateMode ? (
           <div className="flex flex-col gap-3">
-            <span className="plabel">{t("createSubdomain.planSection")}</span>
-            <div className="flex gap-3">
-              <PlanCard
-                selected={namingMode === "random"}
-                onClick={() => onNamingModeChange("random")}
-                badge={
-                  <Badge color="gray" className="py-1">
-                    Free
-                  </Badge>
-                }
-                label={t("createSubdomain.randomName")}
-              />
-              <PlanCard
-                selected={namingMode === "custom"}
-                onClick={() => onNamingModeChange("custom")}
-                badge={
-                  <Badge color="accent" className="py-1">
-                    Cosy+
-                  </Badge>
-                }
-                label={t("createSubdomain.customName")}
-              />
+            <div>
+              <span className="plabel">{t("createSubdomain.planSection")}</span>
+              <div className="flex gap-3">
+                <PlanCard
+                  selected={namingMode === "random"}
+                  onClick={() => onNamingModeChange("random")}
+                  badge={
+                    <Badge color="gray" className="py-1">
+                      Free
+                    </Badge>
+                  }
+                  label={t("createSubdomain.randomName")}
+                />
+                <PlanCard
+                  selected={namingMode === "custom"}
+                  onClick={() => onNamingModeChange("custom")}
+                  badge={
+                    <Badge color="accent" className="py-1">
+                      Cosy+
+                    </Badge>
+                  }
+                  label={t("createSubdomain.customName")}
+                />
+              </div>
             </div>
 
             {namingMode === "custom" && !isPlus && (
@@ -213,6 +215,7 @@ export function OverviewTab({
               data-testid="domain-detail-label-input"
               className="pinput"
               value={label}
+              disabled
               readOnly
             />
             <div className="text-base opacity-[0.65]">

@@ -7,12 +7,14 @@ type UserMenuDropdownProps = {
   isLoggingOut: boolean;
   onClose: () => void;
   onLogout: () => Promise<void>;
+  onDelete: () => Promise<void>;
 };
 
 export function UserMenuDropdown({
   isLoggingOut,
   onClose,
   onLogout,
+  onDelete,
 }: UserMenuDropdownProps) {
   const { t } = useTranslation();
 
@@ -78,8 +80,7 @@ export function UserMenuDropdown({
         size="sm"
         className="justify-start text-destructive"
         title={t("nav.notImplemented")}
-        onClick={onClose}
-        disabled
+        onClick={onDelete}
       >
         {t("nav.deleteUser")}
       </Button>
