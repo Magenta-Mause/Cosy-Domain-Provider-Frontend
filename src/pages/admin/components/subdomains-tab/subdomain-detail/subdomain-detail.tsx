@@ -71,7 +71,7 @@ export function SubdomainDetail({ subdomain }: SubdomainDetailProps) {
         <DetailField label={t("admin.colCreated")}>
           {new Date(subdomain.createdAt).toLocaleString()}
         </DetailField>
-        <DetailField label={t("admin.fieldUpdated")}>
+        <DetailField label={t("admin.fieldUpdatedAt")}>
           {new Date(subdomain.updatedAt).toLocaleString()}
         </DetailField>
       </FlatPanel>
