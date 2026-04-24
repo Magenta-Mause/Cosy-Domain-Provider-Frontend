@@ -35,11 +35,11 @@ export function TargetIpTabs({
 
   return (
     <div className="flex flex-col gap-3">
-      <div className="flex gap-0 border border-border rounded-radius-sm overflow-hidden w-fit">
+      <div className="flex gap-0 border border-foreground rounded-radius-sm overflow-hidden w-fit">
         <button
           type="button"
           onClick={() => onTabChange("ipv4")}
-          className={`px-4 py-1.5 text-sm font-medium transition-colors ${
+          className={`px-4 py-1.5 text-base font-medium transition-colors ${
             activeTab === "ipv4"
               ? "bg-foreground text-background"
               : "bg-transparent text-foreground/60 hover:text-foreground"
@@ -55,7 +55,7 @@ export function TargetIpTabs({
         <button
           type="button"
           onClick={() => onTabChange("ipv6")}
-          className={`px-4 py-1.5 text-sm font-medium transition-colors ${
+          className={`px-4 py-1.5 text-base font-medium transition-colors ${
             activeTab === "ipv6"
               ? "bg-foreground text-background"
               : "bg-transparent text-foreground/60 hover:text-foreground"
