@@ -28,7 +28,6 @@ export function PricingSection() {
                 <ul className="list-none p-0 m-0 stack-sm">
                   <li>{t("pricing.freeFeature1")}</li>
                   <li>{t("pricing.freeFeature2")}</li>
-                  <li>{t("pricing.freeFeature3")}</li>
                   <li className="opacity-[0.55]">
                     {t("pricing.freeLimitation")}
                   </li>
@@ -55,9 +54,7 @@ export function PricingSection() {
                 <ul className="list-none p-0 m-0 stack-sm">
                   <li>{t("pricing.plusFeature1")}</li>
                   <li>{t("pricing.plusFeature2")}</li>
-                  <li>{t("pricing.plusFeature3")}</li>
-                  <li>{t("pricing.plusFeature4")}</li>
-                  <li className="font-bold text-accent-4">
+                  <li className="font-bold text-accent-4 py-3">
                     {t("pricing.plusSupport")}
                   </li>
                 </ul>

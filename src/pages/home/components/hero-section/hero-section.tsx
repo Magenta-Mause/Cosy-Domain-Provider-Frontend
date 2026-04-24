@@ -11,7 +11,7 @@ export function HeroSection() {
 
   return (
     <section
-      className="relative z-[2] mx-auto"
+      className="relative z-[2] mx-auto min-h-[85vh] flex items-center justify-center"
       style={{ padding: "60px 32px 40px", maxWidth: 1200 }}
     >
       <div
@@ -19,9 +19,6 @@ export function HeroSection() {
         style={{ gridTemplateColumns: "1.1fr 1fr" }}
       >
         <div className="flex flex-col gap-6">
-          <div className="signpost self-start text-xs px-[14px] py-2">
-            {t("hero.badge")}
-          </div>
           <h1
             className="text-5xl leading-[1.3]"
             style={{
@@ -74,8 +71,6 @@ export function HeroSection() {
             style={{ color: "oklch(0.92 0.04 60)" }}
           >
             <span>{t("hero.benefit1")}</span>
-            <span>{t("hero.benefit2")}</span>
-            <span>{t("hero.benefit3")}</span>
           </div>
         </div>
 
