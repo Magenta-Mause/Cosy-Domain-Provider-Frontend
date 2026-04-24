@@ -18,7 +18,7 @@ export function SubdomainStatusBadge({
   if (status === SubdomainDtoStatus.ACTIVE) {
     return (
       <Badge color="green">
-        🔒 {variant === "detail" ? t("status.tlsActive") : t("status.active")}
+        {variant === "detail" ? t("status.tlsActive") : t("status.active")}
       </Badge>
     );
   }

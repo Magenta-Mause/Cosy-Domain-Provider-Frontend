@@ -53,14 +53,14 @@ export function DnsTab({ domain }: DnsTabProps) {
               return cells.map((cell, j) => (
                 <div
                   key={`${entry.type}-${headers[j]}`}
-                  className={`truncate px-[14px] py-3 border-t-2 border-t-foreground ${j === 0 ? "text-[11px] text-btn-primary" : "text-[17px]"}`}
+                  className={`flex items-center overflow-hidden px-[14px] py-3 border-t-2 border-t-foreground ${j === 0 ? "text-[11px] text-btn-primary" : "text-[17px]"}`}
                   style={
                     j === 0
                       ? { fontFamily: "'Press Start 2P', monospace" }
                       : undefined
                   }
                 >
-                  {cell}
+                  <span className="truncate w-full">{cell}</span>
                 </div>
               ));
             })}
