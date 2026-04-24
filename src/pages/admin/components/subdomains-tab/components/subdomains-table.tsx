@@ -1,4 +1,3 @@
-import { useNavigate } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 
 import { FlatPanel } from "@/components/pixel/panel";
@@ -12,6 +11,7 @@ interface SubdomainsTableProps {
   sortBy: SortKey;
   sortDir: SortDir;
   onToggleSort: (key: SortKey) => void;
+  onSubdomainClick: (subdomainId: string) => void;
 }
 
 export function SubdomainsTable({
@@ -19,9 +19,9 @@ export function SubdomainsTable({
   sortBy,
   sortDir,
   onToggleSort,
+  onSubdomainClick,
 }: SubdomainsTableProps) {
   const { t } = useTranslation();
-  const navigate = useNavigate();
 
   const headers: { label: string; sortKey?: SortKey }[] = [
     { label: t("admin.colLabel"), sortKey: "label" },
@@ -58,15 +58,11 @@ export function SubdomainsTable({
           </div>
         ))}
         {subdomains.map((s) => (
-          <div
+          <button
             key={s.uuid}
-            className="contents cursor-pointer group"
-            onClick={() =>
-              navigate({
-                to: "/admin/subdomains/$subdomainUuid",
-                params: { subdomainUuid: s.uuid },
-              })
-            }
+            type="button"
+            className="contents group cursor-pointer"
+            onClick={() => onSubdomainClick(s.uuid)}
           >
             <div className="px-3 py-2.5 border-t border-foreground/10 truncate font-mono group-hover:bg-foreground/5 transition-colors">
               {s.label}
@@ -91,7 +87,7 @@ export function SubdomainsTable({
             <div className="px-3 py-2.5 border-t border-foreground/10 opacity-70 group-hover:bg-foreground/5 transition-colors">
               {new Date(s.createdAt).toLocaleDateString()}
             </div>
-          </div>
+          </button>
         ))}
       </div>
     </FlatPanel>

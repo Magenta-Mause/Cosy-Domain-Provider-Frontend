@@ -51,7 +51,7 @@ export const adminApi = {
   getSubdomains: (key: string) =>
     request<AdminSubdomain[]>(`${BASE}/subdomains`, key),
 
-  getSubdomain: (key: string, uuid: string) =>
+  getSubdomainDetail: (key: string, uuid: string) =>
     request<AdminSubdomain>(`${BASE}/subdomains/${uuid}`, key),
 
   getUsers: (key: string) => request<AdminUser[]>(`${BASE}/users`, key),
