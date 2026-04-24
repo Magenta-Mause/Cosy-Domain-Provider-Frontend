@@ -20,6 +20,10 @@ export function DomainDetailPage({ domainId }: { domainId: string }) {
     setLabel,
     targetIp,
     setTargetIp,
+    targetIpv6,
+    setTargetIpv6,
+    ipTab,
+    setIpTab,
     errorMessage,
     isSubmitting,
     isDeleting,
@@ -30,7 +34,9 @@ export function DomainDetailPage({ domainId }: { domainId: string }) {
     labelAvailability,
     namingMode,
     setNamingMode,
-    ipValid,
+    ipv4Valid,
+    ipv6Valid,
+    atLeastOneIp,
     canSubmit,
     createdAt,
     handleSubmit,
@@ -66,6 +72,10 @@ export function DomainDetailPage({ domainId }: { domainId: string }) {
               onLabelChange={setLabel}
               targetIp={targetIp}
               onTargetIpChange={setTargetIp}
+              targetIpv6={targetIpv6}
+              onTargetIpv6Change={setTargetIpv6}
+              ipTab={ipTab}
+              onIpTabChange={setIpTab}
               errorMessage={errorMessage}
               isSubmitting={isSubmitting}
               isDeleting={isDeleting}
@@ -74,7 +84,9 @@ export function DomainDetailPage({ domainId }: { domainId: string }) {
               labelAvailability={labelAvailability}
               namingMode={namingMode}
               onNamingModeChange={setNamingMode}
-              ipValid={ipValid}
+              ipv4Valid={ipv4Valid}
+              ipv6Valid={ipv6Valid}
+              atLeastOneIp={atLeastOneIp}
               canSubmit={canSubmit}
               onSubmit={handleSubmit}
             />
@@ -85,11 +97,17 @@ export function DomainDetailPage({ domainId }: { domainId: string }) {
               label={label}
               targetIp={targetIp}
               onTargetIpChange={setTargetIp}
+              targetIpv6={targetIpv6}
+              onTargetIpv6Change={setTargetIpv6}
+              ipTab={ipTab}
+              onIpTabChange={setIpTab}
               errorMessage={activeTab === "overview" ? errorMessage : null}
               isSubmitting={isSubmitting}
               isDeleting={isDeleting}
               hasSubmitted={hasSubmitted}
-              ipValid={ipValid}
+              ipv4Valid={ipv4Valid}
+              ipv6Valid={ipv6Valid}
+              atLeastOneIp={atLeastOneIp}
               canSubmit={canSubmit}
               createdAt={createdAt}
               onSubmit={handleSubmit}

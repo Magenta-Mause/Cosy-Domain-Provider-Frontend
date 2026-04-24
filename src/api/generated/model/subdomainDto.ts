@@ -14,4 +14,5 @@ export interface SubdomainDto {
   status?: SubdomainDtoStatus;
   createdAt?: string;
   updatedAt?: string;
+  targetIpv6?: string;
 }

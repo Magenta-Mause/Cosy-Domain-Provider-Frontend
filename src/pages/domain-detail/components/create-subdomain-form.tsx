@@ -5,7 +5,7 @@ import type { LabelAvailability, NamingMode } from "@/pages/domain-detail/lib";
 
 import { CreateModeFields } from "./overview-tab/components/create-mode-fields";
 import { OverviewActions } from "./overview-tab/components/overview-actions";
-import { TargetIpField } from "./overview-tab/components/target-ip-field";
+import { TargetIpTabs } from "./overview-tab/components/target-ip-tabs";
 
 interface CreateSubdomainFormProps {
   isPlus: boolean;
@@ -14,6 +14,10 @@ interface CreateSubdomainFormProps {
   onLabelChange: (v: string) => void;
   targetIp: string;
   onTargetIpChange: (v: string) => void;
+  targetIpv6: string;
+  onTargetIpv6Change: (v: string) => void;
+  ipTab: "ipv4" | "ipv6";
+  onIpTabChange: (tab: "ipv4" | "ipv6") => void;
   errorMessage: string | null;
   isSubmitting: boolean;
   isDeleting: boolean;
@@ -22,7 +26,9 @@ interface CreateSubdomainFormProps {
   labelAvailability: LabelAvailability;
   namingMode: NamingMode;
   onNamingModeChange: (mode: NamingMode) => void;
-  ipValid: boolean;
+  ipv4Valid: boolean;
+  ipv6Valid: boolean;
+  atLeastOneIp: boolean;
   canSubmit: boolean;
   onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
 }
@@ -34,6 +40,10 @@ export function CreateSubdomainForm({
   onLabelChange,
   targetIp,
   onTargetIpChange,
+  targetIpv6,
+  onTargetIpv6Change,
+  ipTab,
+  onIpTabChange,
   errorMessage,
   isSubmitting,
   isDeleting,
@@ -42,7 +52,9 @@ export function CreateSubdomainForm({
   labelAvailability,
   namingMode,
   onNamingModeChange,
-  ipValid,
+  ipv4Valid,
+  ipv6Valid,
+  atLeastOneIp,
   canSubmit,
   onSubmit,
 }: CreateSubdomainFormProps) {
@@ -69,11 +81,17 @@ export function CreateSubdomainForm({
           onNamingModeChange={onNamingModeChange}
         />
 
-        <TargetIpField
+        <TargetIpTabs
           targetIp={targetIp}
           onTargetIpChange={onTargetIpChange}
+          targetIpv6={targetIpv6}
+          onTargetIpv6Change={onTargetIpv6Change}
+          activeTab={ipTab}
+          onTabChange={onIpTabChange}
           hasSubmitted={hasSubmitted}
-          ipValid={ipValid}
+          ipv4Valid={ipv4Valid}
+          ipv6Valid={ipv6Valid}
+          atLeastOneIp={atLeastOneIp}
         />
       </fieldset>
 

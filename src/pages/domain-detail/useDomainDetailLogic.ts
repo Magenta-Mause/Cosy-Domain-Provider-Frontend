@@ -6,7 +6,11 @@ import { checkLabelAvailability } from "@/api/billing-api";
 import useAuthInformation from "@/hooks/useAuthInformation/useAuthInformation";
 import useDataInteractions from "@/hooks/useDataInteractions/useDataInteractions";
 import useDataLoading from "@/hooks/useDataLoading/useDataLoading";
-import { isValidIpv4, isValidSubdomainLabel } from "@/lib/validators";
+import {
+  isValidIpv4,
+  isValidIpv6,
+  isValidSubdomainLabel,
+} from "@/lib/validators";
 import { useAppSelector } from "@/store/hooks";
 
 import {
@@ -40,6 +44,8 @@ export function useDomainDetailLogic(domainId: string) {
   const [isInitialLoading, setIsInitialLoading] = useState(false);
   const [label, setLabelRaw] = useState("");
   const [targetIp, setTargetIp] = useState("");
+  const [targetIpv6, setTargetIpv6] = useState("");
+  const [ipTab, setIpTab] = useState<"ipv4" | "ipv6">("ipv4");
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
@@ -94,6 +100,7 @@ export function useDomainDetailLogic(domainId: string) {
       setLoadedSubdomain(cachedSubdomain);
       setLabelRaw(cachedSubdomain.label ?? "");
       setTargetIp(cachedSubdomain.targetIp ?? "");
+      setTargetIpv6(cachedSubdomain.targetIpv6 ?? "");
       return;
     }
     let active = true;
@@ -109,6 +116,7 @@ export function useDomainDetailLogic(domainId: string) {
       setLoadedSubdomain(loaded);
       setLabelRaw(loaded.label ?? "");
       setTargetIp(loaded.targetIp ?? "");
+      setTargetIpv6(loaded.targetIpv6 ?? "");
     })();
     return () => {
       active = false;
@@ -123,10 +131,15 @@ export function useDomainDetailLogic(domainId: string) {
     return isValidSubdomainLabel(label) && labelAvailability === "available";
   }, [isCreateMode, namingMode, label, labelAvailability]);
 
+  const ipv4Valid = targetIp.trim() === "" || isValidIpv4(targetIp);
+  const ipv6Valid = targetIpv6.trim() === "" || isValidIpv6(targetIpv6);
+  const atLeastOneIp = targetIp.trim() !== "" || targetIpv6.trim() !== "";
   const ipValid = isValidIpv4(targetIp);
   const canSubmit =
     !isSubmitting &&
-    ipValid &&
+    ipv4Valid &&
+    ipv6Valid &&
+    atLeastOneIp &&
     (isCreateMode
       ? namingMode === "random" || (isPlus && labelAvailability === "available")
       : labelValid);
@@ -142,14 +155,15 @@ export function useDomainDetailLogic(domainId: string) {
     event.preventDefault();
     setHasSubmitted(true);
     setErrorMessage(null);
-    if (!ipValid) return;
+    if (!ipv4Valid || !ipv6Valid || !atLeastOneIp) return;
     if (isCreateMode && namingMode === "custom" && !labelValid) return;
     setIsSubmitting(true);
     try {
       if (isCreateMode) {
         const created = await createSubdomain({
           label: namingMode === "custom" ? label : "",
-          targetIp,
+          targetIp: targetIp.trim() || undefined,
+          targetIpv6: targetIpv6.trim() || undefined,
         });
         if (created.uuid) {
           await navigate({
@@ -160,7 +174,10 @@ export function useDomainDetailLogic(domainId: string) {
           await navigate({ to: "/dashboard" });
         }
       } else {
-        await updateSubdomain(domainId, { targetIp });
+        await updateSubdomain(domainId, {
+          targetIp: targetIp.trim() || undefined,
+          targetIpv6: targetIpv6.trim() || undefined,
+        });
       }
     } catch {
       setErrorMessage(
@@ -199,6 +216,10 @@ export function useDomainDetailLogic(domainId: string) {
     setLabel,
     targetIp,
     setTargetIp,
+    targetIpv6,
+    setTargetIpv6,
+    ipTab,
+    setIpTab,
     errorMessage,
     isSubmitting,
     isDeleting,
@@ -210,6 +231,9 @@ export function useDomainDetailLogic(domainId: string) {
     namingMode,
     setNamingMode,
     ipValid,
+    ipv4Valid,
+    ipv6Valid,
+    atLeastOneIp,
     canSubmit,
     createdAt,
     handleSubmit,

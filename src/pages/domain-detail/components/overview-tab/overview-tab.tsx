@@ -6,18 +6,24 @@ import { ErrorMessage } from "@/components/pixel/error-message";
 import { DomainMetaCards } from "./components/domain-meta-cards.tsx";
 import { OverviewActions } from "./components/overview-actions";
 import { ReadonlyLabelField } from "./components/readonly-label-field";
-import { TargetIpField } from "./components/target-ip-field";
+import { TargetIpTabs } from "./components/target-ip-tabs";
 
 interface OverviewTabProps {
   domain: SubdomainDto | undefined;
   label: string;
   targetIp: string;
   onTargetIpChange: (v: string) => void;
+  targetIpv6: string;
+  onTargetIpv6Change: (v: string) => void;
+  ipTab: "ipv4" | "ipv6";
+  onIpTabChange: (tab: "ipv4" | "ipv6") => void;
   errorMessage: string | null;
   isSubmitting: boolean;
   isDeleting: boolean;
   hasSubmitted: boolean;
-  ipValid: boolean;
+  ipv4Valid: boolean;
+  ipv6Valid: boolean;
+  atLeastOneIp: boolean;
   canSubmit: boolean;
   createdAt: string;
   onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
@@ -28,11 +34,17 @@ export function OverviewTab({
   label,
   targetIp,
   onTargetIpChange,
+  targetIpv6,
+  onTargetIpv6Change,
+  ipTab,
+  onIpTabChange,
   errorMessage,
   isSubmitting,
   isDeleting,
   hasSubmitted,
-  ipValid,
+  ipv4Valid,
+  ipv6Valid,
+  atLeastOneIp,
   canSubmit,
   createdAt,
   onSubmit,
@@ -51,11 +63,17 @@ export function OverviewTab({
 
         <ReadonlyLabelField label={label} fqdn={domain?.fqdn} />
 
-        <TargetIpField
+        <TargetIpTabs
           targetIp={targetIp}
           onTargetIpChange={onTargetIpChange}
+          targetIpv6={targetIpv6}
+          onTargetIpv6Change={onTargetIpv6Change}
+          activeTab={ipTab}
+          onTabChange={onIpTabChange}
           hasSubmitted={hasSubmitted}
-          ipValid={ipValid}
+          ipv4Valid={ipv4Valid}
+          ipv6Valid={ipv6Valid}
+          atLeastOneIp={atLeastOneIp}
         />
       </fieldset>
 
