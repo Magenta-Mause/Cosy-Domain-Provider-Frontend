@@ -45,6 +45,8 @@ export function useDomainDetailLogic(domainId: string) {
   const [label, setLabelRaw] = useState("");
   const [targetIp, setTargetIp] = useState("");
   const [targetIpv6, setTargetIpv6] = useState("");
+  const [originalTargetIp, setOriginalTargetIp] = useState("");
+  const [originalTargetIpv6, setOriginalTargetIpv6] = useState("");
   const [ipTab, setIpTab] = useState<"ipv4" | "ipv6">("ipv4");
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -101,6 +103,8 @@ export function useDomainDetailLogic(domainId: string) {
       setLabelRaw(cachedSubdomain.label ?? "");
       setTargetIp(cachedSubdomain.targetIp ?? "");
       setTargetIpv6(cachedSubdomain.targetIpv6 ?? "");
+      setOriginalTargetIp(cachedSubdomain.targetIp ?? "");
+      setOriginalTargetIpv6(cachedSubdomain.targetIpv6 ?? "");
       return;
     }
     let active = true;
@@ -117,6 +121,8 @@ export function useDomainDetailLogic(domainId: string) {
       setLabelRaw(loaded.label ?? "");
       setTargetIp(loaded.targetIp ?? "");
       setTargetIpv6(loaded.targetIpv6 ?? "");
+      setOriginalTargetIp(loaded.targetIp ?? "");
+      setOriginalTargetIpv6(loaded.targetIpv6 ?? "");
     })();
     return () => {
       active = false;
@@ -135,11 +141,16 @@ export function useDomainDetailLogic(domainId: string) {
   const ipv6Valid = targetIpv6.trim() === "" || isValidIpv6(targetIpv6);
   const atLeastOneIp = targetIp.trim() !== "" || targetIpv6.trim() !== "";
   const ipValid = isValidIpv4(targetIp);
+  const hasChanges =
+    isCreateMode ||
+    targetIp !== originalTargetIp ||
+    targetIpv6 !== originalTargetIpv6;
   const canSubmit =
     !isSubmitting &&
     ipv4Valid &&
     ipv6Valid &&
     atLeastOneIp &&
+    hasChanges &&
     (isCreateMode
       ? namingMode === "random" || (isPlus && labelAvailability === "available")
       : labelValid);
