@@ -5,12 +5,12 @@
  * OpenAPI spec version: v0
  */
 
-export type AdminSubdomainDtoStatus =
-  (typeof AdminSubdomainDtoStatus)[keyof typeof AdminSubdomainDtoStatus];
+export type AdminSubdomainDtoStatus = typeof AdminSubdomainDtoStatus[keyof typeof AdminSubdomainDtoStatus];
+
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const AdminSubdomainDtoStatus = {
-  PENDING: "PENDING",
-  ACTIVE: "ACTIVE",
-  FAILED: "FAILED",
+  PENDING: 'PENDING',
+  ACTIVE: 'ACTIVE',
+  FAILED: 'FAILED',
 } as const;

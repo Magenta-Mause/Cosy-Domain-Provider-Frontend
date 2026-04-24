@@ -41,3 +41,4 @@ export * from "./userCreationDto";
 export * from "./userDto";
 export * from "./userDtoPlan";
 export * from "./userDtoTier";
+export * from './oauthCallbackParams';

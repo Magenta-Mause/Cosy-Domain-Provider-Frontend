@@ -1,3 +1,4 @@
+import { Turnstile } from "@marsidev/react-turnstile";
 import { Link } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 
@@ -35,6 +36,8 @@ export function RegisterForm() {
     submitting,
     handleSubmit,
     goBack,
+    turnstileRef,
+    setCaptchaToken,
   } = useRegisterFormLogic();
 
   return (
@@ -164,6 +167,15 @@ export function RegisterForm() {
               {t("register.privacyPolicyLink")}
             </button>
           </label>
+
+          <Turnstile
+            ref={turnstileRef}
+            siteKey={import.meta.env.VITE_TURNSTILE_SITE_KEY}
+            options={{ size: "invisible" }}
+            onSuccess={setCaptchaToken}
+            onExpire={() => setCaptchaToken(null)}
+            onError={() => setCaptchaToken(null)}
+          />
 
           {errorMessage ? <ErrorMessage>{errorMessage}</ErrorMessage> : null}
 

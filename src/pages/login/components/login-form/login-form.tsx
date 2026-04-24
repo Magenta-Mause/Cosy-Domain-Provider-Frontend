@@ -1,3 +1,4 @@
+import { Turnstile } from "@marsidev/react-turnstile";
 import { Link } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 
@@ -24,6 +25,8 @@ export function LoginForm() {
     submitting,
     handleSubmit,
     goBack,
+    turnstileRef,
+    setCaptchaToken,
   } = useLoginFormLogic();
 
   return (
@@ -104,6 +107,15 @@ export function LoginForm() {
               {t("login.forgotPassword")}
             </Link>
           </div>
+
+          <Turnstile
+            ref={turnstileRef}
+            siteKey={import.meta.env.VITE_TURNSTILE_SITE_KEY}
+            options={{ size: "invisible" }}
+            onSuccess={setCaptchaToken}
+            onExpire={() => setCaptchaToken(null)}
+            onError={() => setCaptchaToken(null)}
+          />
 
           <Button
             type="submit"

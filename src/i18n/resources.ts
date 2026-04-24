@@ -39,6 +39,7 @@ const enCommon = {
     oauthError: "Sign-in failed. Please try again.",
     orEmail: "OR USE EMAIL",
     emailContinue: "Continue →",
+    captchaError: "Security check not ready yet. Please try again in a moment.",
   },
   forgotPassword: {
     title: "Forgot your password?",
@@ -77,6 +78,7 @@ const enCommon = {
     passwordMismatch: "Passwords do not match.",
     passwordTooShort: "Needs at least 8 characters",
     error: "Could not register. Please try again.",
+    captchaError: "Security check not ready yet. Please try again in a moment.",
     hasAccount: "Already have an account?",
     alreadyMovedIn: "Already moved in?",
     loginLink: "Log in",
@@ -452,6 +454,7 @@ const deCommon: CommonSchema = {
     oauthError: "Anmeldung fehlgeschlagen. Bitte erneut versuchen.",
     orEmail: "ODER E-MAIL NUTZEN",
     emailContinue: "Weiter →",
+    captchaError: "Sicherheitscheck noch nicht bereit. Bitte einen Moment warten.",
   },
   forgotPassword: {
     title: "Passwort vergessen?",
@@ -494,6 +497,7 @@ const deCommon: CommonSchema = {
     passwordMismatch: "Passwörter stimmen nicht überein.",
     passwordTooShort: "Mindestens 8 Zeichen erforderlich",
     error: "Registrierung fehlgeschlagen. Bitte erneut versuchen.",
+    captchaError: "Sicherheitscheck noch nicht bereit. Bitte einen Moment warten.",
     hasAccount: "Bereits ein Konto?",
     alreadyMovedIn: "Schon eingezogen?",
     loginLink: "Anmelden",

@@ -7,9 +7,7 @@ import {
   deleteUser,
   fetchToken,
   forgotPassword,
-  login,
   logout,
-  register,
   resendVerification,
   resetPassword,
   updateSubdomain,
@@ -17,7 +15,6 @@ import {
   verifyEmail,
 } from "@/api/generated/domain-provider-api";
 import type {
-  LoginDto,
   SubdomainCreationDto,
   SubdomainUpdateDto,
   UpdateUserDto,
@@ -58,10 +55,18 @@ const useDataInteractions = () => {
   }, [dispatch, loadSubdomains]);
 
   const loginUser = useCallback(
-    async (credentials: LoginDto) => {
+    async (credentials: {
+      email: string;
+      password: string;
+      captchaToken: string;
+    }) => {
       dispatch(setAuthState("loading"));
       try {
-        await login(credentials);
+        await customInstance({
+          method: "POST",
+          url: "/api/v1/auth/login",
+          data: credentials,
+        });
         const parsedToken = await refreshIdentityToken();
         dispatch(setAuthState("idle"));
         return parsedToken;
@@ -74,10 +79,19 @@ const useDataInteractions = () => {
   );
 
   const registerUser = useCallback(
-    async (payload: { username: string; email: string; password: string }) => {
+    async (payload: {
+      username: string;
+      email: string;
+      password: string;
+      captchaToken: string;
+    }) => {
       dispatch(setAuthState("loading"));
       try {
-        await register(payload);
+        await customInstance({
+          method: "POST",
+          url: "/api/v1/auth/register",
+          data: payload,
+        });
         await refreshIdentityToken();
         dispatch(setAuthState("idle"));
       } catch (error) {

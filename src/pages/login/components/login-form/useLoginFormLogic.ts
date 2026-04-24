@@ -1,6 +1,7 @@
 import { useNavigate } from "@tanstack/react-router";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
+import type { TurnstileInstance } from "@marsidev/react-turnstile";
 import useDataInteractions from "@/hooks/useDataInteractions/useDataInteractions";
 import { Route } from "@/routes/login";
 import { useAppSelector } from "@/store/hooks";
@@ -16,6 +17,8 @@ export function useLoginFormLogic() {
   const [password, setPassword] = useState("");
   const [showPw, setShowPw] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+  const turnstileRef = useRef<TurnstileInstance>(null);
 
   const submitting = authState === "loading";
 
@@ -25,9 +28,13 @@ export function useLoginFormLogic() {
       setStep(2);
       return;
     }
+    if (!captchaToken) {
+      setErrorMessage(t("login.captchaError"));
+      return;
+    }
     setErrorMessage(null);
     try {
-      const identityToken = await loginUser({ email, password });
+      const identityToken = await loginUser({ email, password, captchaToken });
       if (identityToken?.isVerified) {
         await navigate({ to: "/dashboard" });
       } else {
@@ -35,6 +42,8 @@ export function useLoginFormLogic() {
       }
     } catch {
       setErrorMessage(t("login.error"));
+      turnstileRef.current?.reset();
+      setCaptchaToken(null);
     }
   }
 
@@ -42,6 +51,7 @@ export function useLoginFormLogic() {
     setStep(1);
     setPassword("");
     setErrorMessage(null);
+    setCaptchaToken(null);
   }
 
   return {
@@ -57,5 +67,7 @@ export function useLoginFormLogic() {
     submitting,
     handleSubmit,
     goBack,
+    turnstileRef,
+    setCaptchaToken,
   };
 }

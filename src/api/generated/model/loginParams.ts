@@ -4,11 +4,11 @@
  * OpenAPI definition
  * OpenAPI spec version: v0
  */
-import type { LoginTokenMode } from "./loginTokenMode";
+import type { LoginTokenMode } from './loginTokenMode';
 
 export type LoginParams = {
-  /**
-   * COOKIE sets httpOnly cookie, DIRECT returns token in body
-   */
-  tokenMode?: LoginTokenMode;
+/**
+ * COOKIE sets httpOnly cookie, DIRECT returns token in body
+ */
+tokenMode?: LoginTokenMode;
 };

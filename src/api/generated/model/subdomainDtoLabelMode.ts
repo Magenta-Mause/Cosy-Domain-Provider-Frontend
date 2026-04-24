@@ -5,11 +5,11 @@
  * OpenAPI spec version: v0
  */
 
-export type SubdomainDtoLabelMode =
-  (typeof SubdomainDtoLabelMode)[keyof typeof SubdomainDtoLabelMode];
+export type SubdomainDtoLabelMode = typeof SubdomainDtoLabelMode[keyof typeof SubdomainDtoLabelMode];
+
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const SubdomainDtoLabelMode = {
-  CUSTOM: "CUSTOM",
-  RANDOM: "RANDOM",
+  CUSTOM: 'CUSTOM',
+  RANDOM: 'RANDOM',
 } as const;

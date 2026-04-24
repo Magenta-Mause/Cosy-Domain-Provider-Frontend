@@ -18,4 +18,6 @@ export interface UserCreationDto {
    * @maxLength 2147483647
    */
   password?: string;
+  /** @minLength 1 */
+  captchaToken: string;
 }

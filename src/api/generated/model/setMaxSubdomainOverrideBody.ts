@@ -5,4 +5,4 @@
  * OpenAPI spec version: v0
  */
 
-export type SetMaxSubdomainOverrideBody = { [key: string]: number };
+export type SetMaxSubdomainOverrideBody = {[key: string]: number};

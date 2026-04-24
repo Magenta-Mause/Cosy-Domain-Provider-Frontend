@@ -1,6 +1,7 @@
 import { useNavigate } from "@tanstack/react-router";
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
+import type { TurnstileInstance } from "@marsidev/react-turnstile";
 
 import useDataInteractions from "@/hooks/useDataInteractions/useDataInteractions";
 import { isValidEmail } from "@/lib/validators";
@@ -22,6 +23,8 @@ export function useRegisterFormLogic() {
   const [showConfirmPw, setShowConfirmPw] = useState(false);
   const [agreed, setAgreed] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+  const turnstileRef = useRef<TurnstileInstance>(null);
 
   const usernameValid = isValidUsername(username);
   const emailValid = useMemo(() => isValidEmail(email), [email]);
@@ -35,6 +38,7 @@ export function useRegisterFormLogic() {
     passwordValid &&
     confirmValid &&
     agreed &&
+    !!captchaToken &&
     !submitting;
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -44,16 +48,23 @@ export function useRegisterFormLogic() {
       return;
     }
     setErrorMessage(null);
+    if (!captchaToken) {
+      setErrorMessage(t("register.captchaError"));
+      return;
+    }
     if (!canSubmit) return;
     try {
       await registerUser({
         username: username.trim(),
         email: email.trim(),
         password,
+        captchaToken,
       });
       await navigate({ to: "/dashboard" });
     } catch {
       setErrorMessage(t("register.error"));
+      turnstileRef.current?.reset();
+      setCaptchaToken(null);
     }
   }
 
@@ -62,6 +73,7 @@ export function useRegisterFormLogic() {
     setPassword("");
     setConfirmPassword("");
     setErrorMessage(null);
+    setCaptchaToken(null);
   }
 
   return {
@@ -87,5 +99,7 @@ export function useRegisterFormLogic() {
     submitting,
     handleSubmit,
     goBack,
+    turnstileRef,
+    setCaptchaToken,
   };
 }
