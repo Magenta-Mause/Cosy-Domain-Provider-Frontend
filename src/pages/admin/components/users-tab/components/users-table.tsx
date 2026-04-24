@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
 
-import { FlatPanel } from "@/components/pixel/panel";
+import { type ColumnDef, Table } from "@/components/ui/table";
 
 import type { AdminUser } from "../../../lib";
 
@@ -12,64 +12,73 @@ interface UsersTableProps {
 export function UsersTable({ users, onUserClick }: UsersTableProps) {
   const { t } = useTranslation();
 
+  const columns: ColumnDef<AdminUser>[] = [
+    {
+      id: "email",
+      header: t("admin.colEmail"),
+      width: "2fr",
+      compare: (a, b) => a.email.localeCompare(b.email),
+      cell: (u) => u.email,
+      cellClassName: "truncate",
+    },
+    {
+      id: "uuid",
+      header: t("admin.colUuid"),
+      width: "2fr",
+      compare: (a, b) => a.uuid.localeCompare(b.uuid),
+      cell: (u) => <span className="truncate w-full">{u.uuid}</span>,
+      cellClassName: "font-mono text-xs opacity-60 flex items-center overflow-hidden",
+    },
+    {
+      id: "tier",
+      header: t("admin.colTier"),
+      compare: (a, b) => a.tier.localeCompare(b.tier),
+      cell: (u) => u.tier,
+      cellClassName: (u) =>
+        `font-semibold ${u.tier === "PLUS" ? "text-btn-primary" : "opacity-70"}`,
+    },
+    {
+      id: "subdomains",
+      header: t("admin.colSubdomains"),
+      compare: (a, b) => a.subdomainCount - b.subdomainCount,
+      cell: (u) => (
+        <>
+          {u.subdomainCount}/{u.maxSubdomainCount}
+          {u.maxSubdomainCountOverride !== null && (
+            <span className="ml-1 text-xs opacity-50">*</span>
+          )}
+        </>
+      ),
+    },
+    {
+      id: "verified",
+      header: t("admin.colVerified"),
+      compare: (a, b) => Number(a.verified) - Number(b.verified),
+      cell: (u) => (u.verified ? t("admin.yes") : t("admin.no")),
+      cellClassName: (u) => (u.verified ? "text-green-600" : "opacity-40"),
+    },
+    {
+      id: "planExpires",
+      header: t("admin.colPlanExpires"),
+      width: "1.5fr",
+      compare: (a, b) =>
+        (a.planExpiresAt ? new Date(a.planExpiresAt).getTime() : 0) -
+        (b.planExpiresAt ? new Date(b.planExpiresAt).getTime() : 0),
+      cell: (u) =>
+        u.planExpiresAt
+          ? new Date(u.planExpiresAt).toLocaleDateString()
+          : "—",
+      cellClassName: "opacity-60",
+    },
+  ];
+
   return (
-    <FlatPanel className="p-0 overflow-hidden">
-      <div
-        className="grid text-sm"
-        style={{ gridTemplateColumns: "2fr 2fr 1fr 1fr 1fr 1.5fr" }}
-      >
-        {[
-          t("admin.colEmail"),
-          t("admin.colUuid"),
-          t("admin.colTier"),
-          t("admin.colSubdomains"),
-          t("admin.colVerified"),
-          t("admin.colPlanExpires"),
-        ].map((h) => (
-          <div
-            key={h}
-            className="px-3 py-2 bg-btn-primary text-btn-secondary font-bold"
-          >
-            {h}
-          </div>
-        ))}
-        {users.map((u) => (
-          <button
-            key={u.uuid}
-            type="button"
-            className="contents group cursor-pointer"
-            onClick={() => onUserClick(u.uuid)}
-          >
-            <div className="px-3 py-2.5 border-t border-foreground/10 truncate group-hover:bg-foreground/5 transition-colors">
-              {u.email}
-            </div>
-            <div className="px-3 py-2.5 border-t border-foreground/10 font-mono text-xs truncate opacity-60 group-hover:bg-foreground/5 transition-colors flex items-center">
-              {u.uuid}
-            </div>
-            <div
-              className={`px-3 py-2.5 border-t border-foreground/10 font-semibold group-hover:bg-foreground/5 transition-colors ${u.tier === "PLUS" ? "text-btn-primary" : "opacity-70"}`}
-            >
-              {u.tier}
-            </div>
-            <div className="px-3 py-2.5 border-t border-foreground/10 group-hover:bg-foreground/5 transition-colors">
-              {u.subdomainCount}/{u.maxSubdomainCount}
-              {u.maxSubdomainCountOverride !== null && (
-                <span className="ml-1 text-xs opacity-50">*</span>
-              )}
-            </div>
-            <div
-              className={`px-3 py-2.5 border-t border-foreground/10 group-hover:bg-foreground/5 transition-colors ${u.verified ? "text-green-600" : "opacity-40"}`}
-            >
-              {u.verified ? t("admin.yes") : t("admin.no")}
-            </div>
-            <div className="px-3 py-2.5 border-t border-foreground/10 opacity-60 group-hover:bg-foreground/5 transition-colors">
-              {u.planExpiresAt
-                ? new Date(u.planExpiresAt).toLocaleDateString()
-                : "—"}
-            </div>
-          </button>
-        ))}
-      </div>
-    </FlatPanel>
+    <Table
+      columns={columns}
+      rows={users}
+      getRowKey={(u) => u.uuid}
+      onRowClick={(u) => onUserClick(u.uuid)}
+      initialSortColId="email"
+    />
   );
 }

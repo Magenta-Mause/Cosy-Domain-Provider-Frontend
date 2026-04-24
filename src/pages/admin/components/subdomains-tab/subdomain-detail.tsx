@@ -1,3 +1,4 @@
+import { useRouter } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 
 import { FlatPanel } from "@/components/pixel/panel";
@@ -5,7 +6,6 @@ import { FlatPanel } from "@/components/pixel/panel";
 import { DetailField } from "../detail-field";
 import type { AdminSubdomain } from "../../lib";
 import { subdomainStatusColor } from "./lib";
-import { useSubdomainDetailLogic } from "./useSubdomainDetailLogic";
 
 interface SubdomainDetailProps {
   subdomain: AdminSubdomain;
@@ -13,12 +13,12 @@ interface SubdomainDetailProps {
 
 export function SubdomainDetail({ subdomain }: SubdomainDetailProps) {
   const { t } = useTranslation();
-  const { handleBack } = useSubdomainDetailLogic();
+  const router = useRouter();
 
   return (
     <div className="flex flex-col gap-5">
       <div className="flex flex-col gap-3 items-start">
-        <button type="button" onClick={handleBack} className="pbtn sm secondary">
+        <button type="button" onClick={() => router.history.back()} className="pbtn sm secondary">
           {t("admin.back")}
         </button>
       </div>

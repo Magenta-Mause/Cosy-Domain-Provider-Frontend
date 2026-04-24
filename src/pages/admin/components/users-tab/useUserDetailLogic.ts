@@ -39,6 +39,12 @@ export function useUserDetailLogic(
 
   const handleBack = () => void navigate({ to: "/admin/users" });
 
+  const handleSubdomainClick = (subdomainId: string) =>
+    void navigate({
+      to: "/admin/subdomains/$subdomainId",
+      params: { subdomainId },
+    });
+
   return {
     overrideInput,
     setOverrideInput,
@@ -47,5 +53,6 @@ export function useUserDetailLogic(
     isUnchanged,
     handleSaveOverride,
     handleBack,
+    handleSubdomainClick,
   };
 }

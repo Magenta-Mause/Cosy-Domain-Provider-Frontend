@@ -10,17 +10,8 @@ interface SubdomainsTabProps {
 
 export function SubdomainsTab({ adminKey }: SubdomainsTabProps) {
   const { t } = useTranslation();
-  const {
-    isLoading,
-    error,
-    sorted,
-    total,
-    failed,
-    sortBy,
-    sortDir,
-    toggleSort,
-    handleSubdomainClick,
-  } = useSubdomainsTabLogic(adminKey);
+  const { isLoading, error, subdomains, total, failed, handleSubdomainClick } =
+    useSubdomainsTabLogic(adminKey);
 
   if (isLoading)
     return <p className="text-sm opacity-60 py-4">{t("admin.loading")}</p>;
@@ -31,10 +22,7 @@ export function SubdomainsTab({ adminKey }: SubdomainsTabProps) {
     <div className="flex flex-col gap-4">
       <SubdomainStats total={total} failed={failed} />
       <SubdomainsTable
-        subdomains={sorted}
-        sortBy={sortBy}
-        sortDir={sortDir}
-        onToggleSort={toggleSort}
+        subdomains={subdomains}
         onSubdomainClick={handleSubdomainClick}
       />
     </div>

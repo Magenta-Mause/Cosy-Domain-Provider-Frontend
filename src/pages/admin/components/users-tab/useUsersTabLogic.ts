@@ -20,9 +20,13 @@ export function useUsersTabLogic(adminKey: string) {
       .finally(() => setIsLoading(false));
   }, [adminKey, t]);
 
+  const total = users.length;
+  const unverified = users.filter((u) => !u.verified).length;
+  const plus = users.filter((u) => u.tier === "PLUS").length;
+
   const handleUserClick = (userId: string) => {
     void navigate({ to: "/admin/users/$userId", params: { userId } });
   };
 
-  return { users, isLoading, error, handleUserClick };
+  return { users, isLoading, error, total, unverified, plus, handleUserClick };
 }

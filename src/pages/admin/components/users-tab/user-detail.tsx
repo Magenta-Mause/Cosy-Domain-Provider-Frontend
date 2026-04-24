@@ -25,6 +25,7 @@ export function UserDetail({ detail, adminKey, onSaved }: UserDetailProps) {
     isUnchanged,
     handleSaveOverride,
     handleBack,
+    handleSubdomainClick,
   } = useUserDetailLogic(detail, adminKey, onSaved);
 
   return (
@@ -103,7 +104,10 @@ export function UserDetail({ detail, adminKey, onSaved }: UserDetailProps) {
         <h3 className="text-base font-semibold mb-2">
           {t("admin.subdomainsSection", { count: detail.subdomains.length })}
         </h3>
-        <UserSubdomainsTable subdomains={detail.subdomains} />
+        <UserSubdomainsTable
+          subdomains={detail.subdomains}
+          onSubdomainClick={handleSubdomainClick}
+        />
       </div>
     </div>
   );

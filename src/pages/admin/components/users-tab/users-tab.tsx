@@ -1,5 +1,6 @@
 import { useTranslation } from "react-i18next";
 
+import { UserStats } from "./components/user-stats";
 import { UsersTable } from "./components/users-table";
 import { useUsersTabLogic } from "./useUsersTabLogic";
 
@@ -9,7 +10,7 @@ interface UsersTabProps {
 
 export function UsersTab({ adminKey }: UsersTabProps) {
   const { t } = useTranslation();
-  const { users, isLoading, error, handleUserClick } =
+  const { users, isLoading, error, total, unverified, plus, handleUserClick } =
     useUsersTabLogic(adminKey);
 
   if (isLoading)
@@ -17,5 +18,10 @@ export function UsersTab({ adminKey }: UsersTabProps) {
   if (error)
     return <p className="text-sm text-destructive py-4">{error}</p>;
 
-  return <UsersTable users={users} onUserClick={handleUserClick} />;
+  return (
+    <div className="flex flex-col gap-4">
+      <UserStats total={total} unverified={unverified} plus={plus} />
+      <UsersTable users={users} onUserClick={handleUserClick} />
+    </div>
+  );
 }

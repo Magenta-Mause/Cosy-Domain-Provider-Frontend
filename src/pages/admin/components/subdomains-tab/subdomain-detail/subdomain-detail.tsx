@@ -1,4 +1,4 @@
-import { useNavigate } from "@tanstack/react-router";
+import { useNavigate, useRouter } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 
 import { FlatPanel } from "@/components/pixel/panel";
@@ -26,6 +26,7 @@ function deriveDnsEntries(subdomain: AdminSubdomain) {
 export function SubdomainDetail({ subdomain }: SubdomainDetailProps) {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const router = useRouter();
   const dnsEntries = deriveDnsEntries(subdomain);
 
   return (
@@ -33,7 +34,7 @@ export function SubdomainDetail({ subdomain }: SubdomainDetailProps) {
       <div>
         <button
           type="button"
-          onClick={() => navigate({ to: "/admin/subdomains" })}
+          onClick={() => router.history.back()}
           className="pbtn sm secondary"
         >
           {t("admin.back")}
