@@ -6,10 +6,15 @@ import { useAppSelector } from "@/store/hooks";
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const { bootstrapAuth } = useDataLoading();
   const bootstrapped = useAppSelector((state) => state.auth.bootstrapped);
+  const userSubject = useAppSelector((state) => state.auth.user?.subject);
   const needsPasswordSetup = useAppSelector(
     (state) => state.auth.user?.needsPasswordSetup === true,
   );
   const [dismissed, setDismissed] = useState(false);
+
+  useEffect(() => {
+    setDismissed(false);
+  }, [userSubject]);
 
   useEffect(() => {
     let cancelled = false;

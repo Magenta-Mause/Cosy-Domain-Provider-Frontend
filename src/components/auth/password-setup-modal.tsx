@@ -30,7 +30,7 @@ export function PasswordSetupModal({ onDismiss }: PasswordSetupModalProps) {
     try {
       await setupPassword(password);
     } catch {
-      setError(t("passwordSetup.mismatch"));
+      setError(t("passwordSetup.error"));
     } finally {
       setSubmitting(false);
     }
@@ -38,9 +38,14 @@ export function PasswordSetupModal({ onDismiss }: PasswordSetupModalProps) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-      <div className="bg-background border border-border rounded-lg p-6 w-full max-w-sm flex flex-col gap-4 shadow-xl">
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="password-setup-title"
+        className="bg-background border border-border rounded-lg p-6 w-full max-w-sm flex flex-col gap-4 shadow-xl"
+      >
         <div className="flex flex-col gap-1">
-          <h2 className="text-[18px] font-semibold">
+          <h2 id="password-setup-title" className="text-[18px] font-semibold">
             {t("passwordSetup.title")}
           </h2>
           <p className="text-sm opacity-70">{t("passwordSetup.description")}</p>
@@ -90,7 +95,7 @@ export function PasswordSetupModal({ onDismiss }: PasswordSetupModalProps) {
             disabled={!password || !confirm || submitting}
             data-testid="setup-submit-btn"
           >
-            {submitting ? "..." : t("passwordSetup.submit")}
+            {submitting ? t("passwordSetup.submitting") : t("passwordSetup.submit")}
           </Button>
         </form>
 

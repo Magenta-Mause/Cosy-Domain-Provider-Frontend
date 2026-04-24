@@ -1,12 +1,13 @@
 # Form Inputs
 
-## FormField (not yet implemented)
+## FormField (planned — not yet implemented)
 
-Every form field gets: `label`, `placeholder`, a `validate` function, a `showError` flag, and optional an `endDecorator` and/or `startDecorator` slot.
+The target pattern for form fields is a `FormField` component that wraps: `label`, `placeholder`, a `validate` function, a `showError` flag, and optional `endDecorator`/`startDecorator` slots.
 
 - Validation logic lives in the `validate` prop — not scattered in component state. Return an error string or `null`.
 - `showError` is controlled by the parent — flip to `true` on the first submit attempt, not on every keystroke.
-- `endDecorator` is the slot for things like a password visibility toggle. Replaces the current `PasswordInput` pattern.
-- No raw `<input>` with manual label/error wiring.
+- `endDecorator` is the slot for things like a password visibility toggle. This would replace the current `PasswordInput` pattern.
 
-Refactor existing forms to `FormField` when touching them, not proactively.
+**Current practice:** Existing forms use raw `<input>` elements with manual label/error wiring. This is the interim state while `FormField` does not exist.
+
+When `FormField` is implemented: refactor existing forms to it when touching them, not proactively.

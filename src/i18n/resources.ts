@@ -277,8 +277,10 @@ const enCommon = {
     password: "Password",
     confirm: "Confirm password",
     submit: "Save password",
+    submitting: "Saving...",
     skip: "Skip for now",
     mismatch: "Passwords do not match",
+    error: "Unable to set password. Please try again.",
     success: "Password saved",
   },
   settings: {
@@ -599,8 +601,10 @@ const deCommon: CommonSchema = {
     password: "Passwort",
     confirm: "Passwort bestätigen",
     submit: "Passwort speichern",
+    submitting: "Wird gespeichert...",
     skip: "Jetzt überspringen",
     mismatch: "Passwörter stimmen nicht überein",
+    error: "Passwort konnte nicht gesetzt werden. Bitte erneut versuchen.",
     success: "Passwort gespeichert",
   },
   settings: {
