@@ -29,8 +29,8 @@ export function useDomainDetailLogic(domainId: string) {
   const navigate = useNavigate();
   const isCreateMode = domainId === "new";
 
-  const { userPlan, isVerified } = useAuthInformation();
-  const isPlus = userPlan === "PLUS";
+  const { userTier, isVerified } = useAuthInformation();
+  const isPlus = userTier === "PLUS";
 
   const { createSubdomain, updateSubdomain, deleteSubdomain } =
     useDataInteractions();

@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
 
-import eyeClosedIcon from "@/assets/eyeClosed.webp";
-import eyeOpenIcon from "@/assets/eyeOpen.webp";
+import eyeClosedIcon from "@/assets/eye-closed.webp";
+import eyeOpenIcon from "@/assets/eye-open.webp";
 import { ErrorMessage } from "@/components/pixel/error-message";
 import { Button } from "@/components/ui/button";
 import { FormField } from "@/components/ui/form-field";

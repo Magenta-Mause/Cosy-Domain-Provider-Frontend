@@ -5,14 +5,24 @@ import { Button } from "@/components/ui/button";
 
 interface DashboardBannerProps {
   isVerified: boolean;
+  isSlotsExhausted: boolean;
+  userTier: "FREE" | "PLUS" | null;
   onCreateNew: () => void;
 }
 
 export function DashboardBanner({
   isVerified,
+  isSlotsExhausted,
+  userTier,
   onCreateNew,
 }: DashboardBannerProps) {
   const { t } = useTranslation();
+
+  const tooltipText = isSlotsExhausted
+    ? userTier === "PLUS"
+      ? t("dashboard.slotsExhaustedPlus")
+      : t("dashboard.slotsExhaustedFree")
+    : null;
 
   return (
     <PageHeader>
@@ -33,14 +43,27 @@ export function DashboardBanner({
             {t("dashboard.title")}
           </h1>
         </div>
-        <Button
-          type="button"
-          data-testid="dashboard-create-new-btn"
-          size="lg"
-          onClick={onCreateNew}
-        >
-          {isVerified ? <>+ {t("dashboard.createNew")}</> : <>Verify Account</>}
-        </Button>
+
+        <div className="relative group shrink-0">
+          <Button
+            type="button"
+            data-testid="dashboard-create-new-btn"
+            size="lg"
+            onClick={onCreateNew}
+            disabled={isSlotsExhausted}
+          >
+            {isVerified ? (
+              <>+ {t("dashboard.createNew")}</>
+            ) : (
+              <>Verify Account</>
+            )}
+          </Button>
+          {tooltipText && (
+            <div className="pointer-events-none absolute bottom-full right-0 mb-2 w-64 rounded-radius-sm bg-foreground px-3 py-2 text-xs text-background opacity-0 group-hover:opacity-100 transition-opacity duration-150 z-10">
+              {tooltipText}
+            </div>
+          )}
+        </div>
       </div>
     </PageHeader>
   );

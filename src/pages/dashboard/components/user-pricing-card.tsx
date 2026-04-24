@@ -6,23 +6,15 @@ import { Badge } from "@/components/pixel/badge";
 import { FlatPanel } from "@/components/pixel/panel";
 import useAuthInformation from "@/hooks/useAuthInformation/useAuthInformation";
 
-type PricingModel = "FREE" | "COSY+";
-
-const MAX_SUBDOMAINS: Record<PricingModel, number> = {
-  "COSY+": 5,
-  FREE: 1,
-};
-
 interface UserPricingCardProps {
   serverCount: number;
 }
 
 const UserPricingCard = ({ serverCount }: UserPricingCardProps) => {
-  const { isVerified, userPlan } = useAuthInformation();
+  const { isVerified, userTier, maxSubdomainCount } = useAuthInformation();
   const { t } = useTranslation();
 
-  const pricingModel: PricingModel = userPlan === "PLUS" ? "COSY+" : "FREE";
-  const isPlus = pricingModel === "COSY+";
+  const isPlus = userTier === "PLUS";
 
   return (
     <FlatPanel className="px-5 py-4 flex items-center justify-between gap-6">
@@ -48,7 +40,7 @@ const UserPricingCard = ({ serverCount }: UserPricingCardProps) => {
             )}
           </div>
           <div className="text-sm opacity-60 italic">
-            {serverCount}/{MAX_SUBDOMAINS[pricingModel]}{" "}
+            {serverCount}/{maxSubdomainCount ?? "—"}{" "}
             {t("dashboard.planCardSubdomains")}
           </div>
         </div>

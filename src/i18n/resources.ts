@@ -119,6 +119,10 @@ const enCommon = {
     planCardNotVerified: "Account not verified",
     planCardSubdomains: "Subdomains",
     planCardManage: "Manage plan →",
+    slotsExhaustedFree:
+      "You have used all your subdomain slots. Upgrade to Cosy+ to get access to 5 subdomains.",
+    slotsExhaustedPlus:
+      "You have used all your subdomain slots. If you need more subdomains, please contact the Cosy team.",
   },
   createSubdomain: {
     title: "Register a new subdomain",
@@ -445,6 +449,10 @@ const deCommon: CommonSchema = {
     planCardNotVerified: "Konto nicht verifiziert",
     planCardSubdomains: "Subdomains",
     planCardManage: "Plan verwalten →",
+    slotsExhaustedFree:
+      "Du hast alle deine Subdomain-Slots belegt. Upgrade auf Cosy+, um Zugang zu 5 Subdomains zu erhalten.",
+    slotsExhaustedPlus:
+      "Du hast alle deine Subdomain-Slots belegt. Falls du mehr Subdomains benötigst, kontaktiere bitte das Cosy-Team.",
   },
   createSubdomain: {
     title: "Neue Subdomain registrieren",

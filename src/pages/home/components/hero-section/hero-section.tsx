@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import mailBoxImage from "@/assets/mailBox.png";
+import mailBoxImage from "@/assets/mail-box.png";
 import { FlatPanel } from "@/components/pixel/panel";
 import { Button } from "@/components/ui/button";
 import { useHeroSectionLogic } from "./useHeroSectionLogic";

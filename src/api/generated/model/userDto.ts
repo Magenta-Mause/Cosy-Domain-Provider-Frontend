@@ -4,12 +4,13 @@
  * OpenAPI definition
  * OpenAPI spec version: v0
  */
-import type { UserDtoPlan } from "./userDtoPlan";
+import type { UserDtoTier } from "./userDtoTier";
 
 export interface UserDto {
   uuid?: string;
   username?: string;
   email?: string;
-  plan?: UserDtoPlan;
   verified?: boolean;
+  tier?: UserDtoTier;
+  maxSubdomainCount?: number;
 }

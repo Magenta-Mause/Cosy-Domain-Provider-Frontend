@@ -5,12 +5,12 @@ import useDataInteractions from "@/hooks/useDataInteractions/useDataInteractions
 
 export function useBillingLogic() {
   const { t } = useTranslation();
-  const { userPlan, isVerified } = useAuthInformation();
+  const { userTier, isVerified } = useAuthInformation();
   const { openBillingPortal, openCheckout } = useDataInteractions();
   const [isRedirecting, setIsRedirecting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const isPlus = userPlan === "PLUS";
+  const isPlus = userTier === "PLUS";
 
   const handlePortalClick = async () => {
     if (!isVerified) {

@@ -1,5 +1,5 @@
-import eyeClosedIcon from "@/assets/eyeClosed.webp";
-import eyeOpenIcon from "@/assets/eyeOpen.webp";
+import eyeClosedIcon from "@/assets/eye-closed.webp";
+import eyeOpenIcon from "@/assets/eye-open.webp";
 import { Icon } from "@/components/ui/icon";
 
 interface PasswordInputProps {

@@ -14,7 +14,10 @@ export function useDashboardLogic() {
     useAppSelector((state) => state.subdomains.state) === "loading";
   const isError =
     useAppSelector((state) => state.subdomains.state) === "failed";
-  const { isVerified } = useAuthInformation();
+  const { isVerified, userTier, maxSubdomainCount } = useAuthInformation();
+
+  const isSlotsExhausted =
+    maxSubdomainCount !== null && subdomains.length >= maxSubdomainCount;
 
   const handleCreateNew = useCallback(() => {
     if (!isVerified) {
@@ -29,6 +32,8 @@ export function useDashboardLogic() {
     isLoading,
     isError,
     isVerified: isVerified ?? false,
+    userTier,
+    isSlotsExhausted,
     handleCreateNew,
   };
 }
