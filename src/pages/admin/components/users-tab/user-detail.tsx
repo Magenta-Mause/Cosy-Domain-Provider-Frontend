@@ -1,5 +1,6 @@
-import { useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
+import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { FlatPanel } from "@/components/pixel/panel";
 import { Button } from "@/components/ui/button";
 import { FormField } from "@/components/ui/form-field";
@@ -12,14 +13,19 @@ interface UserDetailProps {
 }
 
 export function UserDetail({ detail, adminKey, onSaved }: UserDetailProps) {
+  const { t } = useTranslation();
   const navigate = useNavigate();
-  const [overrideInput, setOverrideInput] = useState(
+
+  const savedValue =
     detail.maxSubdomainCountOverride !== null
       ? String(detail.maxSubdomainCountOverride)
-      : "",
-  );
+      : "";
+
+  const [overrideInput, setOverrideInput] = useState(savedValue);
   const [isSaving, setIsSaving] = useState(false);
   const [saveError, setSaveError] = useState<string | null>(null);
+
+  const isUnchanged = overrideInput === savedValue;
 
   const handleSaveOverride = async () => {
     setIsSaving(true);
@@ -29,7 +35,7 @@ export function UserDetail({ detail, adminKey, onSaved }: UserDetailProps) {
       await adminApi.setMaxSubdomainOverride(adminKey, detail.uuid, value);
       onSaved();
     } catch {
-      setSaveError("Failed to save override.");
+      setSaveError(t("admin.saveOverrideError"));
     } finally {
       setIsSaving(false);
     }
@@ -45,129 +51,122 @@ export function UserDetail({ detail, adminKey, onSaved }: UserDetailProps) {
     return <span className={`text-sm ${color}`}>{status}</span>;
   };
 
+  const Field = ({
+    label,
+    children,
+  }: {
+    label: string;
+    children: React.ReactNode;
+  }) => (
+    <div className="flex flex-col gap-1">
+      <div className="text-[10px] opacity-50 uppercase tracking-wide">
+        {label}
+      </div>
+      <div className="text-base">{children}</div>
+    </div>
+  );
+
   return (
     <div className="flex flex-col gap-5">
-      <div className="flex items-center gap-3">
+      <div className="flex flex-col gap-3 items-start">
         <button
           type="button"
           onClick={() => navigate({ to: "/admin/users" })}
           className="pbtn sm secondary"
         >
-          ← Back
+          {t("admin.back")}
         </button>
-        <h2 className="text-lg font-bold">{detail.email}</h2>
       </div>
 
-      <FlatPanel className="px-5 py-4 grid grid-cols-2 gap-x-8 gap-y-3">
-        <div className="flex flex-col gap-0.5">
+      <FlatPanel className="px-5 py-4 grid grid-cols-2 gap-x-8 gap-y-4">
+        <div className="flex flex-col gap-1">
           <div className="text-[10px] opacity-50 uppercase tracking-wide">
-            User ID
+            {t("admin.fieldUserId")}
           </div>
-          <div className="text-xs font-mono">{detail.uuid}</div>
+          <div className="text-sm font-mono">{detail.uuid}</div>
         </div>
-        <div className="flex flex-col gap-0.5">
-          <div className="text-[10px] opacity-50 uppercase tracking-wide">
-            Email
-          </div>
-          <div className="text-sm">{detail.email}</div>
-        </div>
-        <div className="flex flex-col gap-0.5">
-          <div className="text-[10px] opacity-50 uppercase tracking-wide">
-            Username
-          </div>
-          <div className="text-sm">{detail.username}</div>
-        </div>
-        <div className="flex flex-col gap-0.5">
-          <div className="text-[10px] opacity-50 uppercase tracking-wide">
-            Verified
-          </div>
-          <div className="text-sm">{detail.verified ? "Yes" : "No"}</div>
-        </div>
-        <div className="flex flex-col gap-0.5">
-          <div className="text-[10px] opacity-50 uppercase tracking-wide">
-            Tier
-          </div>
-          <div className="text-sm font-semibold">{detail.tier}</div>
-        </div>
-        <div className="flex flex-col gap-0.5">
-          <div className="text-[10px] opacity-50 uppercase tracking-wide">
-            Plan expires
-          </div>
-          <div className="text-sm">
-            {detail.planExpiresAt
-              ? new Date(detail.planExpiresAt).toLocaleDateString()
-              : "—"}
-          </div>
-        </div>
-        <div className="flex flex-col gap-0.5">
-          <div className="text-[10px] opacity-50 uppercase tracking-wide">
-            Joined
-          </div>
-          <div className="text-sm">
-            {detail.createdAt
-              ? new Date(detail.createdAt).toLocaleDateString()
-              : "—"}
-          </div>
-        </div>
-        <div className="flex flex-col gap-0.5">
-          <div className="text-[10px] opacity-50 uppercase tracking-wide">
-            Max subdomains
-          </div>
-          <div className="text-sm">
-            {detail.maxSubdomainCount}
-            {detail.maxSubdomainCountOverride !== null && (
-              <span className="ml-1 opacity-50">
-                (override: {detail.maxSubdomainCountOverride})
-              </span>
-            )}
-          </div>
-        </div>
+        <Field label={t("admin.fieldEmail")}>{detail.email}</Field>
+        <Field label={t("admin.fieldUsername")}>{detail.username}</Field>
+        <Field label={t("admin.fieldVerified")}>
+          {detail.verified ? t("admin.yes") : t("admin.no")}
+        </Field>
+        <Field label={t("admin.fieldTier")}>
+          <span className="font-semibold">{detail.tier}</span>
+        </Field>
+        <Field label={t("admin.fieldPlanExpires")}>
+          {detail.planExpiresAt
+            ? new Date(detail.planExpiresAt).toLocaleDateString()
+            : "—"}
+        </Field>
+        <Field label={t("admin.fieldJoined")}>
+          {detail.createdAt
+            ? new Date(detail.createdAt).toLocaleDateString()
+            : "—"}
+        </Field>
+        <Field label={t("admin.fieldMaxSubdomains")}>
+          {detail.maxSubdomainCount}
+          {detail.maxSubdomainCountOverride !== null && (
+            <span className="ml-2 opacity-50 text-sm">
+              (
+              {t("admin.overrideValueLabel", {
+                value: String(detail.maxSubdomainCountOverride),
+              })}
+              )
+            </span>
+          )}
+        </Field>
       </FlatPanel>
 
-      <FlatPanel className="px-5 py-4 flex items-end gap-3">
-        <div className="flex-1 max-w-[200px]">
+      <FlatPanel className="px-5 py-4 flex gap-3 flex-col">
+        <div className="flex-1 w-full flex items-end gap-5">
           <FormField
             id="max-override"
-            label="Max subdomain override"
+            label={t("admin.fieldOverrideLabel")}
             type="number"
             value={overrideInput}
             onChange={setOverrideInput}
-            placeholder="Leave empty to clear"
+            placeholder={t("admin.fieldOverridePlaceholder")}
             error={saveError}
           />
+          <Button
+            type="button"
+            size="sm"
+            onClick={handleSaveOverride}
+            disabled={isSaving || isUnchanged}
+            className="h-[50px] mt-auto"
+          >
+            {isSaving ? t("admin.savingOverride") : t("admin.saveOverride")}
+          </Button>
         </div>
-        <Button
-          type="button"
-          size="sm"
-          onClick={handleSaveOverride}
-          disabled={isSaving}
-        >
-          {isSaving ? "Saving..." : "Save"}
-        </Button>
       </FlatPanel>
 
       <div>
-        <h3 className="text-sm font-semibold mb-2">
-          Subdomains ({detail.subdomains.length})
+        <h3 className="text-base font-semibold mb-2">
+          {t("admin.subdomainsSection", { count: detail.subdomains.length })}
         </h3>
         <FlatPanel className="p-0 overflow-hidden">
           <div
             className="grid text-sm"
             style={{ gridTemplateColumns: "2fr 2.5fr 1fr 1fr 1fr 1fr" }}
           >
-            {["Label", "FQDN", "Status", "Mode", "Target IP", "Created"].map(
-              (h) => (
-                <div
-                  key={h}
-                  className="px-3 py-2 bg-btn-primary text-btn-secondary font-bold"
-                >
-                  {h}
-                </div>
-              ),
-            )}
+            {[
+              t("admin.colLabel"),
+              t("admin.colFqdn"),
+              t("admin.colStatus"),
+              t("admin.colMode"),
+              t("admin.colTargetIp"),
+              t("admin.colCreated"),
+            ].map((h) => (
+              <div
+                key={h}
+                className="px-3 py-2 bg-btn-primary text-btn-secondary font-bold"
+              >
+                {h}
+              </div>
+            ))}
             {detail.subdomains.length === 0 && (
               <div className="col-span-6 px-3 py-4 opacity-50 text-center">
-                No subdomains
+                {t("admin.noSubdomains")}
               </div>
             )}
             {detail.subdomains.map((s) => [

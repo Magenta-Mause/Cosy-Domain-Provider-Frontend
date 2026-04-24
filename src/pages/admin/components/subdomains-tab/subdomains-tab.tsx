@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { FlatPanel } from "@/components/pixel/panel";
 import { type AdminSubdomain, adminApi } from "../../lib";
 
@@ -9,6 +10,7 @@ interface SubdomainsTabProps {
 }
 
 export function SubdomainsTab({ adminKey }: SubdomainsTabProps) {
+  const { t } = useTranslation();
   const [subdomains, setSubdomains] = useState<AdminSubdomain[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -20,9 +22,9 @@ export function SubdomainsTab({ adminKey }: SubdomainsTabProps) {
     adminApi
       .getSubdomains(adminKey)
       .then(setSubdomains)
-      .catch(() => setError("Failed to load subdomains."))
+      .catch(() => setError(t("admin.loadSubdomainsError")))
       .finally(() => setIsLoading(false));
-  }, [adminKey]);
+  }, [adminKey, t]);
 
   const toggleSort = (key: SortKey) => {
     if (sortBy === key) {
@@ -44,7 +46,7 @@ export function SubdomainsTab({ adminKey }: SubdomainsTabProps) {
   const total = subdomains.length;
   const failed = subdomains.filter((s) => s.status === "FAILED").length;
 
-  if (isLoading) return <p className="text-sm opacity-60 py-4">Loading...</p>;
+  if (isLoading) return <p className="text-sm opacity-60 py-4">{t("admin.loading")}</p>;
   if (error) return <p className="text-sm text-destructive py-4">{error}</p>;
 
   const SortBtn = ({ k, label }: { k: SortKey; label: string }) => (
@@ -66,24 +68,9 @@ export function SubdomainsTab({ adminKey }: SubdomainsTabProps) {
     <div className="flex flex-col gap-4">
       <div className="flex gap-4">
         {[
-          {
-            label: "TOTAL",
-            value: total,
-            sub: "subdomains registered",
-            color: "text-btn-primary",
-          },
-          {
-            label: "FAILED",
-            value: failed,
-            sub: "provisioning errors",
-            color: "text-destructive",
-          },
-          {
-            label: "ACTIVE",
-            value: total - failed,
-            sub: "online",
-            color: "text-green-600",
-          },
+          { label: t("admin.statTotal"), value: total, sub: t("admin.statTotalSub"), color: "text-btn-primary" },
+          { label: t("admin.statFailed"), value: failed, sub: t("admin.statFailedSub"), color: "text-destructive" },
+          { label: t("admin.statActive"), value: total - failed, sub: t("admin.statActiveSub"), color: "text-green-600" },
         ].map((s) => (
           <FlatPanel key={s.label} className="p-4 flex-1">
             <div className="pixel text-[10px] opacity-70">{s.label}</div>
@@ -98,27 +85,25 @@ export function SubdomainsTab({ adminKey }: SubdomainsTabProps) {
           className="grid text-sm"
           style={{ gridTemplateColumns: "2fr 2.5fr 1fr 1fr 1fr 1.5fr 1fr" }}
         >
-          {(
-            [
-              "Label ↕",
-              "FQDN",
-              "Status",
-              "Mode",
-              "Target IPv4",
-              "Owner",
-              "Created ↕",
-            ] as const
-          ).map((h, i) => (
+          {[
+            t("admin.colLabel"),
+            t("admin.colFqdn"),
+            t("admin.colStatus"),
+            t("admin.colMode"),
+            t("admin.colTargetIpv4"),
+            t("admin.colOwner"),
+            t("admin.colCreated"),
+          ].map((h, i) => (
             <div
               key={h}
               className="px-3 py-2 bg-btn-primary text-btn-secondary font-bold"
             >
               {i === 0 ? (
-                <SortBtn k="label" label="Label" />
+                <SortBtn k="label" label={h} />
               ) : i === 6 ? (
-                <SortBtn k="createdAt" label="Created" />
+                <SortBtn k="createdAt" label={h} />
               ) : (
-                h.replace(" ↕", "")
+                h
               )}
             </div>
           ))}

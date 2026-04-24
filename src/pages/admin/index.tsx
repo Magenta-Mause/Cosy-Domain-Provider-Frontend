@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { useState } from "react";
 import { Link, useNavigate } from "@tanstack/react-router";
+import { useTranslation } from "react-i18next";
 import { PageHeader } from "@/components/layout/page-header";
 import { FlatPanel } from "@/components/pixel/panel";
 import { Button } from "@/components/ui/button";
@@ -13,6 +14,7 @@ interface AdminAuthGateProps {
 }
 
 export function AdminAuthGate({ activeTab, outlet }: AdminAuthGateProps) {
+  const { t } = useTranslation();
   const { isAuthenticated, loginError, login, logout } = useAdminLogic();
   const navigate = useNavigate();
 
@@ -36,7 +38,7 @@ export function AdminAuthGate({ activeTab, outlet }: AdminAuthGateProps) {
               className="pixel text-[11px] mb-1"
               style={{ color: "oklch(0.92 0.05 70)" }}
             >
-              ADMIN
+              {t("admin.label")}
             </div>
             <h1
               style={{
@@ -44,23 +46,23 @@ export function AdminAuthGate({ activeTab, outlet }: AdminAuthGateProps) {
                 textShadow: "3px 3px 0 oklch(0.25 0.08 30)",
               }}
             >
-              Admin Dashboard
+              {t("admin.title")}
             </h1>
           </div>
           <FlatPanel className="px-5 py-5">
             <form onSubmit={handleLogin} className="flex flex-col gap-4">
               <FormField
                 id="admin-key"
-                label="Admin Key"
+                label={t("admin.adminKey")}
                 type="password"
                 value={inputKey}
                 onChange={setInputKey}
-                placeholder="Enter admin key"
+                placeholder={t("admin.adminKeyPlaceholder")}
                 autoComplete="off"
-                error={loginError ? "Invalid admin key." : null}
+                error={loginError ? t("admin.adminKeyError") : null}
               />
               <Button type="submit" disabled={isLogging || !inputKey}>
-                {isLogging ? "Verifying..." : "Sign in"}
+                {isLogging ? t("admin.signingIn") : t("admin.signIn")}
               </Button>
             </form>
           </FlatPanel>
@@ -68,6 +70,11 @@ export function AdminAuthGate({ activeTab, outlet }: AdminAuthGateProps) {
       </div>
     );
   }
+
+  const tabs = [
+    { key: "subdomains" as const, label: t("admin.tabSubdomains"), to: "/admin/subdomains" },
+    { key: "users" as const, label: t("admin.tabUsers"), to: "/admin/users" },
+  ];
 
   return (
     <div className="min-h-screen bg-background">
@@ -78,7 +85,7 @@ export function AdminAuthGate({ activeTab, outlet }: AdminAuthGateProps) {
               className="pixel text-[11px]"
               style={{ color: "oklch(0.92 0.05 70)" }}
             >
-              ADMIN
+              {t("admin.label")}
             </div>
             <h1
               style={{
@@ -86,7 +93,7 @@ export function AdminAuthGate({ activeTab, outlet }: AdminAuthGateProps) {
                 textShadow: "3px 3px 0 oklch(0.25 0.08 30)",
               }}
             >
-              Admin Dashboard
+              {t("admin.title")}
             </h1>
           </div>
           <button
@@ -94,7 +101,7 @@ export function AdminAuthGate({ activeTab, outlet }: AdminAuthGateProps) {
             onClick={logout}
             className="pbtn sm secondary shrink-0"
           >
-            Sign out
+            {t("admin.signOut")}
           </button>
         </div>
 
@@ -102,12 +109,12 @@ export function AdminAuthGate({ activeTab, outlet }: AdminAuthGateProps) {
           className="flex gap-1"
           style={{ borderBottom: "2px solid oklch(0.95 0.05 70 / 30%)" }}
         >
-          {(["subdomains", "users"] as const).map((tab) => (
+          {tabs.map((tab) => (
             <Link
-              key={tab}
-              to={tab === "subdomains" ? "/admin/subdomains" : "/admin/users"}
+              key={tab.key}
+              to={tab.to}
               style={
-                activeTab === tab
+                activeTab === tab.key
                   ? {
                       color: "oklch(0.97 0.05 70)",
                       borderBottom: "2px solid oklch(0.97 0.05 70)",
@@ -117,9 +124,9 @@ export function AdminAuthGate({ activeTab, outlet }: AdminAuthGateProps) {
                       borderBottom: "2px solid transparent",
                     }
               }
-              className="px-5 py-2.5 text-sm font-semibold capitalize -mb-[2px] hover:opacity-100 no-underline! transition-colors"
+              className="px-5 py-2.5 text-sm font-semibold -mb-[2px] hover:opacity-100 no-underline! transition-colors"
             >
-              {tab.charAt(0).toUpperCase() + tab.slice(1)}
+              {tab.label}
             </Link>
           ))}
         </div>

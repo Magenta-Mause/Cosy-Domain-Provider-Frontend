@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
+import { useTranslation } from "react-i18next";
 import { FlatPanel } from "@/components/pixel/panel";
 import { type AdminUser, adminApi } from "../../lib";
 
@@ -8,6 +9,7 @@ interface UsersTabProps {
 }
 
 export function UsersTab({ adminKey }: UsersTabProps) {
+  const { t } = useTranslation();
   const [users, setUsers] = useState<AdminUser[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -18,11 +20,11 @@ export function UsersTab({ adminKey }: UsersTabProps) {
     adminApi
       .getUsers(adminKey)
       .then(setUsers)
-      .catch(() => setError("Failed to load users."))
+      .catch(() => setError(t("admin.loadUsersError")))
       .finally(() => setIsLoading(false));
-  }, [adminKey]);
+  }, [adminKey, t]);
 
-  if (isLoading) return <p className="text-sm opacity-60 py-4">Loading...</p>;
+  if (isLoading) return <p className="text-sm opacity-60 py-4">{t("admin.loading")}</p>;
   if (error) return <p className="text-sm text-destructive py-4">{error}</p>;
 
   return (
@@ -31,16 +33,21 @@ export function UsersTab({ adminKey }: UsersTabProps) {
         className="grid text-sm"
         style={{ gridTemplateColumns: "2fr 2fr 1fr 1fr 1fr 1.5fr" }}
       >
-        {["Email", "UUID", "Tier", "Subdomains", "Verified", "Plan expires"].map(
-          (h) => (
-            <div
-              key={h}
-              className="px-3 py-2 bg-btn-primary text-btn-secondary font-bold"
-            >
-              {h}
-            </div>
-          ),
-        )}
+        {[
+          t("admin.colEmail"),
+          t("admin.colUuid"),
+          t("admin.colTier"),
+          t("admin.colSubdomains"),
+          t("admin.colVerified"),
+          t("admin.colPlanExpires"),
+        ].map((h) => (
+          <div
+            key={h}
+            className="px-3 py-2 bg-btn-primary text-btn-secondary font-bold"
+          >
+            {h}
+          </div>
+        ))}
         {users.map((u) => (
           <button
             key={u.uuid}
@@ -82,7 +89,7 @@ export function UsersTab({ adminKey }: UsersTabProps) {
                 key="verified"
                 className={`px-3 py-2.5 border-t border-foreground/10 group-hover:bg-foreground/5 transition-colors ${u.verified ? "text-green-600" : "opacity-40"}`}
               >
-                {u.verified ? "Yes" : "No"}
+                {u.verified ? t("admin.yes") : t("admin.no")}
               </div>,
               <div
                 key="expires"
