@@ -1,10 +1,10 @@
-import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { PasswordInput } from "@/components/auth/password-input";
 import { ErrorMessage } from "@/components/pixel/error-message";
 import { Button } from "@/components/ui/button";
-import useDataInteractions from "@/hooks/useDataInteractions/useDataInteractions";
+
+import { usePasswordSetupModalLogic } from "./usePasswordSetupModalLogic";
 
 interface PasswordSetupModalProps {
   onDismiss: () => void;
@@ -12,29 +12,17 @@ interface PasswordSetupModalProps {
 
 export function PasswordSetupModal({ onDismiss }: PasswordSetupModalProps) {
   const { t } = useTranslation();
-  const { setupPassword } = useDataInteractions();
-  const [password, setPassword] = useState("");
-  const [confirm, setConfirm] = useState("");
-  const [showPw, setShowPw] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [submitting, setSubmitting] = useState(false);
-
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    if (password !== confirm) {
-      setError(t("passwordSetup.mismatch"));
-      return;
-    }
-    setError(null);
-    setSubmitting(true);
-    try {
-      await setupPassword(password);
-    } catch {
-      setError(t("passwordSetup.error"));
-    } finally {
-      setSubmitting(false);
-    }
-  }
+  const {
+    password,
+    setPassword,
+    confirm,
+    setConfirm,
+    showPw,
+    setShowPw,
+    error,
+    submitting,
+    handleSubmit,
+  } = usePasswordSetupModalLogic();
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
@@ -95,7 +83,9 @@ export function PasswordSetupModal({ onDismiss }: PasswordSetupModalProps) {
             disabled={!password || !confirm || submitting}
             data-testid="setup-submit-btn"
           >
-            {submitting ? t("passwordSetup.submitting") : t("passwordSetup.submit")}
+            {submitting
+              ? t("passwordSetup.submitting")
+              : t("passwordSetup.submit")}
           </Button>
         </form>
 

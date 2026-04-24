@@ -1,11 +1,12 @@
 import type { ReactNode } from "react";
-import { useState } from "react";
-import { Link, useNavigate } from "@tanstack/react-router";
+import { Link } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
+
 import { PageHeader } from "@/components/layout/page-header";
 import { FlatPanel } from "@/components/pixel/panel";
 import { Button } from "@/components/ui/button";
 import { FormField } from "@/components/ui/form-field";
+
 import { useAdminLogic } from "./useAdminLogic";
 
 interface AdminAuthGateProps {
@@ -15,19 +16,15 @@ interface AdminAuthGateProps {
 
 export function AdminAuthGate({ activeTab, outlet }: AdminAuthGateProps) {
   const { t } = useTranslation();
-  const { isAuthenticated, loginError, login, logout } = useAdminLogic();
-  const navigate = useNavigate();
-
-  const [inputKey, setInputKey] = useState("");
-  const [isLogging, setIsLogging] = useState(false);
-
-  const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsLogging(true);
-    await login(inputKey);
-    setIsLogging(false);
-    await navigate({ to: "/admin/subdomains" });
-  };
+  const {
+    isAuthenticated,
+    loginError,
+    logout,
+    inputKey,
+    setInputKey,
+    isLogging,
+    handleLogin,
+  } = useAdminLogic();
 
   if (!isAuthenticated) {
     return (
@@ -72,8 +69,16 @@ export function AdminAuthGate({ activeTab, outlet }: AdminAuthGateProps) {
   }
 
   const tabs = [
-    { key: "subdomains" as const, label: t("admin.tabSubdomains"), to: "/admin/subdomains" },
-    { key: "users" as const, label: t("admin.tabUsers"), to: "/admin/users" },
+    {
+      key: "subdomains" as const,
+      label: t("admin.tabSubdomains"),
+      to: "/admin/subdomains",
+    },
+    {
+      key: "users" as const,
+      label: t("admin.tabUsers"),
+      to: "/admin/users",
+    },
   ];
 
   return (

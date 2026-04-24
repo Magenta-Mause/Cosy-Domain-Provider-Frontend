@@ -38,15 +38,13 @@ export function LoginForm() {
 
           <div className="flex items-center gap-3 my-1">
             <div
-              className="flex-1 h-[3px] opacity-40"
-              style={{ background: "var(--foreground)" }}
+              className="flex-1 h-[3px] opacity-40 bg-foreground"
             />
             <span className="pixel text-[10px] opacity-70">
               {t("login.orEmail")}
             </span>
             <div
-              className="flex-1 h-[3px] opacity-40"
-              style={{ background: "var(--foreground)" }}
+              className="flex-1 h-[3px] opacity-40 bg-foreground"
             />
           </div>
 

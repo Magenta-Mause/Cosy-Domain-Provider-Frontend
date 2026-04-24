@@ -21,7 +21,7 @@ export function DangerTab({
     <div className="flex flex-col gap-4">
       <h3 className="text-destructive">{t("domainDetail.dangerZone")}</h3>
       {errorMessage ? <ErrorMessage>{errorMessage}</ErrorMessage> : null}
-      <Panel className="p-[18px]" style={{ borderColor: "var(--destructive)" }}>
+      <Panel className="p-[18px] border-destructive">
         <div className="flex gap-4 items-center">
           <div className="flex-1 flex flex-col gap-1.5">
             <div className="pixel text-[13px] text-destructive">

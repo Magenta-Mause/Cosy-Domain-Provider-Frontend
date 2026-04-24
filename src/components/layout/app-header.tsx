@@ -1,18 +1,22 @@
-import { Link, useNavigate } from "@tanstack/react-router";
-import { useState } from "react";
+import { Link } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
+
 import { CosyLogo } from "@/components/layout/cosy-logo";
 import { LanguageMenu } from "@/components/layout/language-menu";
 import { UserMenu } from "@/components/layout/user-menu";
-import { useLanguageChange } from "@/hooks/useLanguageChange/useLanguageChange";
-import useAuthInformation from "@/hooks/useAuthInformation/useAuthInformation";
+
+import { useAppHeaderLogic } from "./useAppHeaderLogic";
 
 export function AppHeader() {
   const { t } = useTranslation();
-  const navigate = useNavigate();
-  const { logoutUser, userName, isUserLoggedIn, deleteUser } = useAuthInformation();
-  const { handleLanguageChange } = useLanguageChange();
-  const [isLoggingOut, setIsLoggingOut] = useState(false);
+  const {
+    userName,
+    isUserLoggedIn,
+    isLoggingOut,
+    handleLanguageChange,
+    handleLogout,
+    handleDelete,
+  } = useAppHeaderLogic();
 
   return (
     <header className="px-7 py-4 flex items-center gap-4 relative z-[5]">
@@ -25,23 +29,15 @@ export function AppHeader() {
         <UserMenu
           userName={userName}
           isLoggingOut={isLoggingOut}
-          onLogout={async () => {
-            setIsLoggingOut(true);
-            try {
-              await logoutUser();
-              await navigate({ to: "/login" });
-            } finally {
-              setIsLoggingOut(false);
-            }
-          }}
-          onDelete={async () => {
-            if (confirm(t("nav.userDeletionConfirm"))) {
-              await deleteUser();
-            }
-          }}
+          onLogout={handleLogout}
+          onDelete={handleDelete}
         />
       ) : (
-        <Link to="/login" data-testid="header-login-link" className="pbtn sm secondary">
+        <Link
+          to="/login"
+          data-testid="header-login-link"
+          className="pbtn sm secondary"
+        >
           {t("nav.login")}
         </Link>
       )}

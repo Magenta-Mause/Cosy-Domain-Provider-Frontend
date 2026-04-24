@@ -44,7 +44,7 @@ export function PricingSection() {
             </div>
           </Panel>
 
-          <Panel className="p-7" style={{ borderColor: "var(--accent)" }}>
+          <Panel className="p-7 border-accent">
             <div className="flex flex-col gap-4">
               <div className="w-full flex flex-col gap-3">
                 <Badge>{t("pricing.plusBadge")}</Badge>
