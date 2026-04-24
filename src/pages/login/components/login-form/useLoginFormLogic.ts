@@ -21,8 +21,12 @@ export function useLoginFormLogic() {
     event.preventDefault();
     setErrorMessage(null);
     try {
-      await loginUser({ email, password });
-      await navigate({ to: "/dashboard" });
+      const identityToken = await loginUser({ email, password });
+      if (identityToken?.isVerified) {
+        await navigate({ to: "/dashboard" });
+      } else {
+        await navigate({ to: "/verify" });
+      }
     } catch {
       setErrorMessage(t("login.error"));
     }

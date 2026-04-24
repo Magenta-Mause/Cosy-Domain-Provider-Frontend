@@ -41,9 +41,10 @@ const useDataInteractions = () => {
     try {
       const token = await fetchToken();
       setIdentityToken(token);
-      dispatch(setIdentity({ token, user: parseIdentityToken(token) }));
+      const parsedToken = parseIdentityToken(token);
+      dispatch(setIdentity({ token, user: parsedToken }));
       await loadSubdomains();
-      return token;
+      return parsedToken;
     } catch {
       setIdentityToken(null);
       dispatch(clearIdentity());
@@ -56,8 +57,9 @@ const useDataInteractions = () => {
       dispatch(setAuthState("loading"));
       try {
         await login(credentials);
-        await refreshIdentityToken();
+        const parsedToken = await refreshIdentityToken();
         dispatch(setAuthState("idle"));
+        return parsedToken;
       } catch (error) {
         dispatch(setAuthState("failed"));
         throw error;
