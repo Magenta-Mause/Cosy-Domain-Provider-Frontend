@@ -1,4 +1,4 @@
-import mailBoxImageSmall from "@/assets/cosy-mailbox-small.png";
+import mailBoxImageSmall from "@/assets/castle.png";
 
 interface MailboxProps {
   size?: number;

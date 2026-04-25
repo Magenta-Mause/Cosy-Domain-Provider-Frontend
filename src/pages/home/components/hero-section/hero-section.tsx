@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import mailBoxImage from "@/assets/mail-box.png";
+import mailBoxImage from "@/assets/castle.png";
 import { FlatPanel } from "@/components/pixel/panel";
 import { Button } from "@/components/ui/button";
 import { useHeroSectionLogic } from "./useHeroSectionLogic";
@@ -92,7 +92,7 @@ export function HeroSection() {
               <img
                 src={mailBoxImage}
                 alt={"Cosy Mailbox"}
-                className={"w-[110%] select-none"}
+                className={"w-[80%] select-none translate-x-7"}
                 draggable={false}
               />
             </div>
