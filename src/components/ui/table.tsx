@@ -49,7 +49,8 @@ export function Table<T>({
     const col = columns.find((c) => c.id === sortColId);
     if (!col?.compare) return rows;
     const mult = sortDir === "asc" ? 1 : -1;
-    return [...rows].sort((a, b) => mult * col.compare?.(a, b));
+    const compare = col.compare;
+    return [...rows].sort((a, b) => mult * compare(a, b));
   }, [rows, sortColId, sortDir, columns]);
 
   return (
