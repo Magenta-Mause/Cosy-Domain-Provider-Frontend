@@ -37,7 +37,7 @@ jobs:
           context: .
           push: true
           build-args: |
-            VITE_TURNSTILE_SITE_KEY=1x00000000000000000000AA
+            VITE_TURNSTILE_SITE_KEY=${{ secrets.VITE_TURNSTILE_SITE_KEY }}
           tags: |
             ghcr.io/${{ env.IMAGE_NAME }}:staging-${{ env.SHORT_SHA }}
             ghcr.io/${{ env.IMAGE_NAME }}:staging-latest
