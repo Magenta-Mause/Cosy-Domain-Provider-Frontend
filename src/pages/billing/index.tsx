@@ -60,8 +60,6 @@ export function BillingPage() {
             <ul className="flex flex-col gap-1 text-sm opacity-80">
               <li>{t("pricing.plusFeature1")}</li>
               <li>{t("pricing.plusFeature2")}</li>
-              <li>{t("pricing.plusFeature3")}</li>
-              <li>{t("pricing.plusFeature4")}</li>
             </ul>
             <p className="text-xs mt-2 opacity-60">
               {t("pricing.plusPrice")} &mdash; {t("pricing.plusSupport")}
