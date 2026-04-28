@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 
 type UserMenuDropdownProps = {
   isLoggingOut: boolean;
+  restricted?: boolean;
   onClose: () => void;
   onLogout: () => Promise<void>;
   onDelete: () => Promise<void>;
@@ -12,6 +13,7 @@ type UserMenuDropdownProps = {
 
 export function UserMenuDropdown({
   isLoggingOut,
+  restricted = false,
   onClose,
   onLogout,
   onDelete,
@@ -32,6 +34,7 @@ export function UserMenuDropdown({
         variant="ghost"
         size="sm"
         className="justify-start"
+        disabled={restricted}
         onClick={() => {
           navigate({ to: "/settings" });
           onClose();
@@ -42,8 +45,9 @@ export function UserMenuDropdown({
       <Link
         to="/billing"
         data-testid="user-menu-billing-btn"
-        className="pbtn ghost sm justify-start"
-        onClick={onClose}
+        className={`pbtn ghost sm justify-start${restricted ? " opacity-40 pointer-events-none" : ""}`}
+        onClick={restricted ? undefined : onClose}
+        aria-disabled={restricted}
       >
         {t("nav.billing")}
       </Link>

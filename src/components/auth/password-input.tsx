@@ -1,3 +1,4 @@
+import { useState } from "react";
 import eyeClosedIcon from "@/assets/eye-closed.webp";
 import eyeOpenIcon from "@/assets/eye-open.webp";
 import { Icon } from "@/components/ui/icon";
@@ -10,8 +11,6 @@ interface PasswordInputProps {
   placeholder?: string;
   value: string;
   onChange: (value: string) => void;
-  showPw: boolean;
-  onToggleShow: () => void;
   style?: React.CSSProperties;
   testId?: string;
   toggleTestId?: string;
@@ -25,12 +24,12 @@ export function PasswordInput({
   placeholder = "••••••••",
   value,
   onChange,
-  showPw,
-  onToggleShow,
   style,
   testId,
   toggleTestId,
 }: PasswordInputProps) {
+  const [showPw, setShowPw] = useState(false);
+
   return (
     <div className="relative">
       <input
@@ -50,7 +49,7 @@ export function PasswordInput({
         type="button"
         data-testid={toggleTestId}
         aria-label={showPw ? "Hide password" : "Show password"}
-        onClick={onToggleShow}
+        onClick={() => setShowPw((v) => !v)}
         className="absolute right-[10px] top-1/2 -translate-y-1/2 opacity-70 hover:opacity-100 flex items-center"
       >
         <Icon src={showPw ? eyeOpenIcon : eyeClosedIcon} className="size-6" />

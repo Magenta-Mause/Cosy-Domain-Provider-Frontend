@@ -7,6 +7,7 @@ import { useUserMenuLogic } from "./useUserMenuLogic";
 type UserMenuProps = {
   userName?: string | null;
   isLoggingOut: boolean;
+  restricted?: boolean;
   onLogout: () => Promise<void>;
   onDelete: () => Promise<void>;
 };
@@ -14,6 +15,7 @@ type UserMenuProps = {
 export function UserMenu({
   userName,
   isLoggingOut,
+  restricted = false,
   onLogout,
   onDelete,
 }: UserMenuProps) {
@@ -44,6 +46,7 @@ export function UserMenu({
       {menuOpen ? (
         <UserMenuDropdown
           isLoggingOut={isLoggingOut}
+          restricted={restricted}
           onClose={() => setMenuOpen(false)}
           onLogout={onLogout}
           onDelete={onDelete}

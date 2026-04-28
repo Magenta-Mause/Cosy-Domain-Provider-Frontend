@@ -14,7 +14,7 @@ export function useDashboardLogic() {
     useAppSelector((state) => state.subdomains.state) === "loading";
   const isError =
     useAppSelector((state) => state.subdomains.state) === "failed";
-  const { isVerified, userTier, maxSubdomainCount } = useAuthInformation();
+  const { isVerified, isMfaEnabled, userTier, maxSubdomainCount } = useAuthInformation();
 
   const isSlotsExhausted =
     maxSubdomainCount !== null && subdomains.length >= maxSubdomainCount;
@@ -22,16 +22,19 @@ export function useDashboardLogic() {
   const handleCreateNew = useCallback(() => {
     if (!isVerified) {
       void navigate({ to: "/verify" });
+    } else if (!isMfaEnabled) {
+      void navigate({ to: "/mfa-setup" });
     } else {
       void navigate({ to: "/domain/$domainId", params: { domainId: "new" } });
     }
-  }, [navigate, isVerified]);
+  }, [navigate, isVerified, isMfaEnabled]);
 
   return {
     subdomains,
     isLoading,
     isError,
     isVerified: isVerified ?? false,
+    isMfaEnabled,
     userTier,
     isSlotsExhausted,
     handleCreateNew,

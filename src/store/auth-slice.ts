@@ -5,6 +5,7 @@ export interface AuthUser {
   email: string | null;
   isVerified: boolean | null;
   needsPasswordSetup: boolean;
+  isMfaEnabled: boolean;
   tier: "FREE" | "PLUS" | null;
   maxSubdomainCount: number | null;
   subject: string | null;

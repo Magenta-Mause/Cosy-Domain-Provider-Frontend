@@ -10,6 +10,7 @@ export function DashboardPage() {
     isLoading,
     isError,
     isVerified,
+    isMfaEnabled,
     userTier,
     isSlotsExhausted,
     handleCreateNew,
@@ -19,6 +20,7 @@ export function DashboardPage() {
     <div className="min-h-screen bg-background">
       <DashboardBanner
         isVerified={isVerified}
+        isMfaEnabled={isMfaEnabled}
         isSlotsExhausted={isSlotsExhausted}
         userTier={userTier}
         onCreateNew={handleCreateNew}
@@ -30,6 +32,7 @@ export function DashboardPage() {
           isLoading={isLoading}
           isError={isError}
           isVerified={isVerified}
+          isMfaEnabled={isMfaEnabled}
         />
       </div>
     </div>

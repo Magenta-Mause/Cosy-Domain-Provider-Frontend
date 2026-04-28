@@ -1,17 +1,24 @@
 import { useCallback, useEffect, useState } from "react";
+import { useNavigate } from "@tanstack/react-router";
+import { useTranslation } from "react-i18next";
 
 import useAuthInformation from "@/hooks/useAuthInformation/useAuthInformation";
 import useDataInteractions from "@/hooks/useDataInteractions/useDataInteractions";
 import { Route } from "@/routes/verify";
 
-type Stage = "send" | "input";
+type Stage = "password" | "send" | "input";
 
 export function useVerifyLogic() {
-  const { userEmail, isVerified } = useAuthInformation();
+  const { t } = useTranslation();
+  const { userEmail, isVerified, needsPasswordSetup } = useAuthInformation();
   const { token: urlToken } = Route.useSearch();
-  const { verifyAccount, resendVerificationCode } = useDataInteractions();
+  const { verifyAccount, resendVerificationCode, setupPassword } =
+    useDataInteractions();
+  const navigate = useNavigate();
 
-  const [stage, setStage] = useState<Stage>("send");
+  const [stage, setStage] = useState<Stage>(
+    needsPasswordSetup ? "password" : "send",
+  );
   const [verificationToken, setVerificationToken] = useState("");
   const [isVerifying, setIsVerifying] = useState(false);
   const [isSending, setIsSending] = useState(false);
@@ -20,20 +27,27 @@ export function useVerifyLogic() {
   const [sendError, setSendError] = useState<string | null>(null);
   const [resendError, setResendError] = useState<string | null>(null);
 
+  // Password setup state
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [passwordError, setPasswordError] = useState<string | null>(null);
+  const [isSettingPassword, setIsSettingPassword] = useState(false);
+
   const triggerVerification = useCallback(
     async (token: string) => {
       setIsVerifying(true);
       setVerifyError(null);
       try {
         await verifyAccount(token);
+        await navigate({ to: "/mfa-setup" });
       } catch {
-        setVerifyError("That code didn't match. Double-check and try again.");
+        setVerifyError(t("verify.codeMismatchError"));
         setVerificationToken("");
       } finally {
         setIsVerifying(false);
       }
     },
-    [verifyAccount],
+    [verifyAccount, navigate, t],
   );
 
   useEffect(() => {
@@ -44,6 +58,24 @@ export function useVerifyLogic() {
     }
   }, [urlToken, triggerVerification]);
 
+  const triggerPasswordSetup = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (password !== confirmPassword) {
+      setPasswordError(t("passwordSetup.mismatch"));
+      return;
+    }
+    setPasswordError(null);
+    setIsSettingPassword(true);
+    try {
+      await setupPassword(password);
+      setStage("send");
+    } catch {
+      setPasswordError(t("passwordSetup.error"));
+    } finally {
+      setIsSettingPassword(false);
+    }
+  };
+
   const triggerSendEmail = async () => {
     setIsSending(true);
     setSendError(null);
@@ -51,7 +83,7 @@ export function useVerifyLogic() {
       await resendVerificationCode();
       setStage("input");
     } catch {
-      setSendError("Couldn't send the email. Please try again.");
+      setSendError(t("verify.sendError"));
     } finally {
       setIsSending(false);
     }
@@ -65,7 +97,7 @@ export function useVerifyLogic() {
       await resendVerificationCode();
       setResendSent(true);
     } catch {
-      setResendError("Couldn't send a new code. Please try again later.");
+      setResendError(t("verify.resendError"));
     } finally {
       setIsSending(false);
     }
@@ -84,9 +116,17 @@ export function useVerifyLogic() {
     setVerifyError,
     sendError,
     resendError,
-    isBusy: isVerifying || isSending,
+    isBusy: isVerifying || isSending || isSettingPassword,
     triggerVerification,
     triggerSendEmail,
     triggerResend,
+    // password stage
+    password,
+    setPassword,
+    confirmPassword,
+    setConfirmPassword,
+    passwordError,
+    isSettingPassword,
+    triggerPasswordSetup,
   };
 }

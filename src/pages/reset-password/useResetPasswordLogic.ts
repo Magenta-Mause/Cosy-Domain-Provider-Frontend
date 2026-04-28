@@ -12,7 +12,6 @@ export function useResetPasswordLogic() {
   const { confirmPasswordReset } = useDataInteractions();
 
   const [newPassword, setNewPassword] = useState("");
-  const [showPw, setShowPw] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -36,8 +35,6 @@ export function useResetPasswordLogic() {
     token,
     newPassword,
     setNewPassword,
-    showPw,
-    setShowPw,
     isSubmitting,
     success,
     error,

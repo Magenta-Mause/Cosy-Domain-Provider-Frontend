@@ -14,8 +14,6 @@ const ResetPasswordPage = () => {
     token,
     newPassword,
     setNewPassword,
-    showPw,
-    setShowPw,
     isSubmitting,
     success,
     error,
@@ -66,8 +64,6 @@ const ResetPasswordPage = () => {
                 minLength={8}
                 value={newPassword}
                 onChange={setNewPassword}
-                showPw={showPw}
-                onToggleShow={() => setShowPw(!showPw)}
                 testId="reset-password-input"
               />
             </div>

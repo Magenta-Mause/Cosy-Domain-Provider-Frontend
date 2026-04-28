@@ -62,11 +62,18 @@ const useDataInteractions = () => {
     }) => {
       dispatch(setAuthState("loading"));
       try {
-        await customInstance({
+        const response = await customInstance<{
+          mfaRequired?: boolean;
+          challengeToken?: string;
+        }>({
           method: "POST",
           url: "/api/v1/auth/login",
           data: credentials,
         });
+        if (response?.mfaRequired && response.challengeToken) {
+          dispatch(setAuthState("idle"));
+          return { mfaRequired: true as const, challengeToken: response.challengeToken };
+        }
         const parsedToken = await refreshIdentityToken();
         dispatch(setAuthState("idle"));
         return parsedToken;
@@ -221,6 +228,37 @@ const useDataInteractions = () => {
     window.location.href = url;
   }, []);
 
+  const setupMfa = useCallback(
+    async (): Promise<{ totpUri: string; secret: string }> => {
+      return await customInstance({ method: "POST", url: "/api/v1/auth/mfa/setup" });
+    },
+    [],
+  );
+
+  const confirmMfa = useCallback(
+    async (totpCode: string) => {
+      await customInstance({
+        method: "POST",
+        url: "/api/v1/auth/mfa/confirm",
+        data: { totpCode },
+      });
+      await refreshIdentityToken();
+    },
+    [refreshIdentityToken],
+  );
+
+  const completeMfaChallenge = useCallback(
+    async (challengeToken: string, totpCode: string) => {
+      await customInstance({
+        method: "POST",
+        url: "/api/v1/auth/mfa/challenge",
+        data: { challengeToken, totpCode },
+      });
+      return await refreshIdentityToken();
+    },
+    [refreshIdentityToken],
+  );
+
   return {
     refreshIdentityToken,
     loginUser,
@@ -239,6 +277,9 @@ const useDataInteractions = () => {
     deleteUser: deleteUserInteraction,
     openBillingPortal,
     openCheckout,
+    setupMfa,
+    confirmMfa,
+    completeMfaChallenge,
   };
 };
 

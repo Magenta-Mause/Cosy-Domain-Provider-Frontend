@@ -12,6 +12,7 @@ export function parseIdentityToken(token: string): AuthUser | null {
       email?: string;
       isVerified?: boolean;
       needsPasswordSetup?: boolean;
+      isMfaEnabled?: boolean;
       tier?: string;
       maxSubdomainCount?: number;
       iat?: number;
@@ -30,6 +31,7 @@ export function parseIdentityToken(token: string): AuthUser | null {
       subject: decoded.sub ?? null,
       isVerified: decoded.isVerified ?? null,
       needsPasswordSetup: decoded.needsPasswordSetup === true,
+      isMfaEnabled: decoded.isMfaEnabled === true,
       tier:
         decoded.tier === "PLUS" || decoded.tier === "FREE"
           ? decoded.tier

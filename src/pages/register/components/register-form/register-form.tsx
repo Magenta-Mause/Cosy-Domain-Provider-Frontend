@@ -23,10 +23,6 @@ export function RegisterForm() {
     setPassword,
     confirmPassword,
     setConfirmPassword,
-    showPw,
-    setShowPw,
-    showConfirmPw,
-    setShowConfirmPw,
     agreed,
     setAgreed,
     errorMessage,
@@ -114,8 +110,6 @@ export function RegisterForm() {
               minLength={8}
               value={password}
               onChange={setPassword}
-              showPw={showPw}
-              onToggleShow={() => setShowPw(!showPw)}
               testId="register-password-input"
               toggleTestId="register-toggle-password-btn"
             />
@@ -135,8 +129,6 @@ export function RegisterForm() {
               required
               value={confirmPassword}
               onChange={setConfirmPassword}
-              showPw={showConfirmPw}
-              onToggleShow={() => setShowConfirmPw(!showConfirmPw)}
               testId="register-confirm-password-input"
             />
             {!confirmValid && confirmPassword.length > 0 ? (

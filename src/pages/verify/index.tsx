@@ -1,14 +1,13 @@
 import { AuthPageLayout } from "@/components/auth/auth-page-layout";
 import { sanitizeVerificationCode } from "@/pages/verify/lib.ts";
 import { SendEmailView } from "./components/send-email-view";
-import { VerifiedView } from "./components/verified-view";
+import { SetPasswordView } from "./components/set-password-view";
 import { VerifyForm } from "./components/verify-form";
 import { useVerifyLogic } from "./useVerifyLogic";
 
 const VerifyPage = () => {
   const {
     userEmail,
-    isVerified,
     stage,
     verificationToken,
     setVerificationToken,
@@ -23,19 +22,28 @@ const VerifyPage = () => {
     triggerVerification,
     triggerSendEmail,
     triggerResend,
+    password,
+    setPassword,
+    confirmPassword,
+    setConfirmPassword,
+    passwordError,
+    isSettingPassword,
+    triggerPasswordSetup,
   } = useVerifyLogic();
 
-  if (isVerified) {
-    return (
-      <AuthPageLayout backButtonLink="/dashboard">
-        <VerifiedView />
-      </AuthPageLayout>
-    );
-  }
-
   return (
-    <AuthPageLayout backButtonLink="/dashboard">
-      {stage === "send" ? (
+    <AuthPageLayout backButtonLink={null}>
+      {stage === "password" ? (
+        <SetPasswordView
+          password={password}
+          confirmPassword={confirmPassword}
+          passwordError={passwordError}
+          isSettingPassword={isSettingPassword}
+          onPasswordChange={setPassword}
+          onConfirmChange={setConfirmPassword}
+          onSubmit={(e) => void triggerPasswordSetup(e)}
+        />
+      ) : stage === "send" ? (
         <SendEmailView
           userEmail={userEmail}
           isSending={isSending}

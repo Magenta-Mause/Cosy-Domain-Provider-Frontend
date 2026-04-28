@@ -19,8 +19,6 @@ export function useRegisterFormLogic() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [showPw, setShowPw] = useState(false);
-  const [showConfirmPw, setShowConfirmPw] = useState(false);
   const [agreed, setAgreed] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [captchaToken, setCaptchaToken] = useState<string | null>(null);
@@ -86,10 +84,6 @@ export function useRegisterFormLogic() {
     setPassword,
     confirmPassword,
     setConfirmPassword,
-    showPw,
-    setShowPw,
-    showConfirmPw,
-    setShowConfirmPw,
     agreed,
     setAgreed,
     errorMessage,

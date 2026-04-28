@@ -8,10 +8,10 @@ export const Route = createFileRoute("/verify")({
     token: z.string().optional(),
   }),
   beforeLoad: () => {
-    const { identityToken } = store.getState().auth;
-    if (!identityToken) {
-      throw redirect({ to: "/login" });
-    }
+    const { identityToken, user } = store.getState().auth;
+    if (!identityToken) throw redirect({ to: "/login" });
+    if (user?.isVerified && user?.isMfaEnabled) throw redirect({ to: "/dashboard" });
+    if (user?.isVerified && !user?.isMfaEnabled) throw redirect({ to: "/mfa-setup" });
   },
   component: VerifyPage,
 });

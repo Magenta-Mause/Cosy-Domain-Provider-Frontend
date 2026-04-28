@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 
 interface DashboardBannerProps {
   isVerified: boolean;
+  isMfaEnabled: boolean;
   isSlotsExhausted: boolean;
   userTier: "FREE" | "PLUS" | null;
   onCreateNew: () => void;
@@ -12,6 +13,7 @@ interface DashboardBannerProps {
 
 export function DashboardBanner({
   isVerified,
+  isMfaEnabled,
   isSlotsExhausted,
   userTier,
   onCreateNew,
@@ -52,10 +54,12 @@ export function DashboardBanner({
             onClick={onCreateNew}
             disabled={isSlotsExhausted}
           >
-            {isVerified ? (
-              <>+ {t("dashboard.createNew")}</>
+            {!isVerified ? (
+              <>{t("dashboard.verifyAccount")}</>
+            ) : !isMfaEnabled ? (
+              <>{t("dashboard.setupMfa")}</>
             ) : (
-              <>Verify Account</>
+              <>+ {t("dashboard.createNew")}</>
             )}
           </Button>
           {tooltipText && (

@@ -7,6 +7,12 @@ import { PasswordInput } from "@/components/auth/password-input";
 import { ErrorMessage } from "@/components/pixel/error-message";
 import { Button } from "@/components/ui/button";
 import { FormField } from "@/components/ui/form-field";
+import {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSeparator,
+  InputOTPSlot,
+} from "@/components/ui/input-otp";
 
 import { useLoginFormLogic } from "./useLoginFormLogic";
 
@@ -18,8 +24,6 @@ export function LoginForm() {
     setEmail,
     password,
     setPassword,
-    showPw,
-    setShowPw,
     errorMessage,
     oauthError,
     submitting,
@@ -27,7 +31,59 @@ export function LoginForm() {
     goBack,
     turnstileRef,
     setCaptchaToken,
+    totpCode,
+    setTotpCode,
+    totpError,
   } = useLoginFormLogic();
+
+  if (step === 3) {
+    return (
+      <div className="flex flex-col gap-4">
+        <button
+          type="button"
+          onClick={goBack}
+          data-testid="login-mfa-back-btn"
+          className="flex items-center gap-2 text-sm opacity-60 hover:opacity-100 transition-opacity w-fit cursor-pointer"
+        >
+          ← {email}
+        </button>
+
+        <h2 className="text-[22px]">{t("login.mfaTitle")}</h2>
+        <p className="text-base opacity-70">{t("login.mfaDescription")}</p>
+
+        <div className="flex justify-center">
+          <InputOTP
+            maxLength={6}
+            value={totpCode}
+            onChange={setTotpCode}
+            data-testid="login-totp-input"
+            autoFocus
+          >
+            <InputOTPGroup>
+              <InputOTPSlot index={0} />
+              <InputOTPSlot index={1} />
+              <InputOTPSlot index={2} />
+            </InputOTPGroup>
+            <InputOTPSeparator />
+            <InputOTPGroup>
+              <InputOTPSlot index={3} />
+              <InputOTPSlot index={4} />
+              <InputOTPSlot index={5} />
+            </InputOTPGroup>
+          </InputOTP>
+        </div>
+
+        {totpError ? <ErrorMessage>{totpError}</ErrorMessage> : null}
+
+        <p className="text-lg text-center">
+          {t("login.noAccount")}{" "}
+          <Link to="/register" data-testid="login-register-link-footer">
+            {t("login.registerLink")}
+          </Link>
+        </p>
+      </div>
+    );
+  }
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-4">
@@ -90,8 +146,6 @@ export function LoginForm() {
               required
               value={password}
               onChange={setPassword}
-              showPw={showPw}
-              onToggleShow={() => setShowPw(!showPw)}
               testId="login-password-input"
               toggleTestId="login-toggle-password-btn"
             />

@@ -11,6 +11,7 @@ interface SubdomainListProps {
   isLoading: boolean;
   isError: boolean;
   isVerified: boolean;
+  isMfaEnabled: boolean;
 }
 
 export function SubdomainList({
@@ -18,6 +19,7 @@ export function SubdomainList({
   isLoading,
   isError,
   isVerified,
+  isMfaEnabled,
 }: SubdomainListProps) {
   const { t } = useTranslation();
 
@@ -40,7 +42,11 @@ export function SubdomainList({
   if (subdomains.length === 0) {
     return (
       <FlatPanel className="p-6 text-center text-lg">
-        {isVerified ? t("dashboard.empty") : t("dashboard.emptyUnverified")}
+        {!isVerified
+          ? t("dashboard.emptyUnverified")
+          : !isMfaEnabled
+            ? t("dashboard.emptyMfaRequired")
+            : t("dashboard.empty")}
       </FlatPanel>
     );
   }

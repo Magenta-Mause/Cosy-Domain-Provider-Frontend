@@ -13,6 +13,8 @@ import { Route as VerifyRouteImport } from './routes/verify'
 import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as RegisterRouteImport } from './routes/register'
+import { Route as MfaSetupRouteImport } from './routes/mfa-setup'
+import { Route as MfaChallengeRouteImport } from './routes/mfa-challenge'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as ImpressumRouteImport } from './routes/impressum'
 import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
@@ -49,6 +51,16 @@ const ResetPasswordRoute = ResetPasswordRouteImport.update({
 const RegisterRoute = RegisterRouteImport.update({
   id: '/register',
   path: '/register',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MfaSetupRoute = MfaSetupRouteImport.update({
+  id: '/mfa-setup',
+  path: '/mfa-setup',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MfaChallengeRoute = MfaChallengeRouteImport.update({
+  id: '/mfa-challenge',
+  path: '/mfa-challenge',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LoginRoute = LoginRouteImport.update({
@@ -148,6 +160,8 @@ export interface FileRoutesByFullPath {
   '/forgot-password': typeof ForgotPasswordRoute
   '/impressum': typeof ImpressumRoute
   '/login': typeof LoginRoute
+  '/mfa-challenge': typeof MfaChallengeRoute
+  '/mfa-setup': typeof MfaSetupRoute
   '/register': typeof RegisterRoute
   '/reset-password': typeof ResetPasswordRoute
   '/settings': typeof SettingsRoute
@@ -170,6 +184,8 @@ export interface FileRoutesByTo {
   '/forgot-password': typeof ForgotPasswordRoute
   '/impressum': typeof ImpressumRoute
   '/login': typeof LoginRoute
+  '/mfa-challenge': typeof MfaChallengeRoute
+  '/mfa-setup': typeof MfaSetupRoute
   '/register': typeof RegisterRoute
   '/reset-password': typeof ResetPasswordRoute
   '/settings': typeof SettingsRoute
@@ -192,6 +208,8 @@ export interface FileRoutesById {
   '/forgot-password': typeof ForgotPasswordRoute
   '/impressum': typeof ImpressumRoute
   '/login': typeof LoginRoute
+  '/mfa-challenge': typeof MfaChallengeRoute
+  '/mfa-setup': typeof MfaSetupRoute
   '/register': typeof RegisterRoute
   '/reset-password': typeof ResetPasswordRoute
   '/settings': typeof SettingsRoute
@@ -217,6 +235,8 @@ export interface FileRouteTypes {
     | '/forgot-password'
     | '/impressum'
     | '/login'
+    | '/mfa-challenge'
+    | '/mfa-setup'
     | '/register'
     | '/reset-password'
     | '/settings'
@@ -239,6 +259,8 @@ export interface FileRouteTypes {
     | '/forgot-password'
     | '/impressum'
     | '/login'
+    | '/mfa-challenge'
+    | '/mfa-setup'
     | '/register'
     | '/reset-password'
     | '/settings'
@@ -260,6 +282,8 @@ export interface FileRouteTypes {
     | '/forgot-password'
     | '/impressum'
     | '/login'
+    | '/mfa-challenge'
+    | '/mfa-setup'
     | '/register'
     | '/reset-password'
     | '/settings'
@@ -284,6 +308,8 @@ export interface RootRouteChildren {
   ForgotPasswordRoute: typeof ForgotPasswordRoute
   ImpressumRoute: typeof ImpressumRoute
   LoginRoute: typeof LoginRoute
+  MfaChallengeRoute: typeof MfaChallengeRoute
+  MfaSetupRoute: typeof MfaSetupRoute
   RegisterRoute: typeof RegisterRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
   SettingsRoute: typeof SettingsRoute
@@ -319,6 +345,20 @@ declare module '@tanstack/react-router' {
       path: '/register'
       fullPath: '/register'
       preLoaderRoute: typeof RegisterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/mfa-setup': {
+      id: '/mfa-setup'
+      path: '/mfa-setup'
+      fullPath: '/mfa-setup'
+      preLoaderRoute: typeof MfaSetupRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/mfa-challenge': {
+      id: '/mfa-challenge'
+      path: '/mfa-challenge'
+      fullPath: '/mfa-challenge'
+      preLoaderRoute: typeof MfaChallengeRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/login': {
@@ -495,6 +535,8 @@ const rootRouteChildren: RootRouteChildren = {
   ForgotPasswordRoute: ForgotPasswordRoute,
   ImpressumRoute: ImpressumRoute,
   LoginRoute: LoginRoute,
+  MfaChallengeRoute: MfaChallengeRoute,
+  MfaSetupRoute: MfaSetupRoute,
   RegisterRoute: RegisterRoute,
   ResetPasswordRoute: ResetPasswordRoute,
   SettingsRoute: SettingsRoute,
