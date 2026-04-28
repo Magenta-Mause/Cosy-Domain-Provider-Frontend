@@ -153,19 +153,25 @@ export function RegisterForm() {
               onChange={() => setAgreed(!agreed)}
             />
             {t("register.termsPrefix")}{" "}
-            <button
-              type="button"
-              className="bg-transparent border-none p-0 cursor-pointer underline text-inherit [font-size:inherit]"
+            <Link
+              to="/agb"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline text-inherit [font-size:inherit]"
+              onClick={(e) => e.stopPropagation()}
             >
               {t("register.termsLink")}
-            </button>{" "}
-            &{" "}
-            <button
-              type="button"
-              className="bg-transparent border-none p-0 cursor-pointer underline text-inherit [font-size:inherit]"
+            </Link>
+            {" "}&{" "}
+            <Link
+              to="/datenschutz"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline text-inherit [font-size:inherit]"
+              onClick={(e) => e.stopPropagation()}
             >
               {t("register.privacyPolicyLink")}
-            </button>
+            </Link>
           </label>
 
           <Turnstile

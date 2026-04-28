@@ -3,7 +3,6 @@ import { Scenery } from "@/components/pixel/scenery";
 import { FeaturesSection } from "./components/features-section";
 import { HeroSection } from "./components/hero-section";
 import { LandingNav } from "./components/landing-nav";
-import { PageFooter } from "./components/page-footer";
 import { PricingSection } from "./components/pricing-section";
 
 export function HomePage() {
@@ -14,7 +13,6 @@ export function HomePage() {
         <HeroSection />
         <FeaturesSection />
         <PricingSection />
-        <PageFooter />
       </Scenery>
     </div>
   );

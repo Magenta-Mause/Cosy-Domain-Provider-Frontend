@@ -280,6 +280,24 @@ const enCommon = {
   },
   footer: {
     text: "Made with ❤️ by Medalheads · cosy-hosting.net",
+    madeBy: "Made with ❤️ by Medalheads",
+    githubLabel: "Medalheads on GitHub",
+    legalNav: "Legal",
+    impressum: "Impressum",
+    datenschutz: "Privacy Policy",
+    agb: "Terms of Service",
+  },
+  legal: {
+    back: "← Back",
+    impressum: {
+      title: "Legal Notice",
+    },
+    datenschutz: {
+      title: "Privacy Policy",
+    },
+    agb: {
+      title: "Terms of Service",
+    },
   },
   passwordSetup: {
     title: "Set a password",
@@ -716,6 +734,24 @@ const deCommon: CommonSchema = {
   },
   footer: {
     text: "Made with ❤️ by Medalheads · cosy-hosting.net",
+    madeBy: "Made with ❤️ by Medalheads",
+    githubLabel: "Medalheads auf GitHub",
+    legalNav: "Rechtliches",
+    impressum: "Impressum",
+    datenschutz: "Datenschutz",
+    agb: "AGB",
+  },
+  legal: {
+    back: "← Zurück",
+    impressum: {
+      title: "Impressum",
+    },
+    datenschutz: {
+      title: "Datenschutzerklärung",
+    },
+    agb: {
+      title: "Allgemeine Geschäftsbedingungen",
+    },
   },
   passwordSetup: {
     title: "Passwort festlegen",
