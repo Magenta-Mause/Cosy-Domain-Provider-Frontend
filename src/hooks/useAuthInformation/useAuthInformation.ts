@@ -16,7 +16,7 @@ const useAuthInformation = () => {
   const deleteUser = useCallback(async () => {
     await deleteUserInteraction();
     await logoutUser();
-    navigate({ to: "/" });
+    await navigate({ to: "/" });
   }, [deleteUserInteraction, logoutUser, navigate]);
 
   return useMemo(
