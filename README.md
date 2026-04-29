@@ -42,7 +42,7 @@ Translation keys are compile-time checked:
 
 ## OpenAPI + Orval flow
 
-1. Start the backend so OpenAPI is exposed at `http://localhost:8080/v3/api-docs` (see [Backend README](https://github.com/Magenta-Mause/Cosy-Domain-Provider-Backend)).
+1. Start the backend so OpenAPI is exposed at `http://localhost:8080/api/v3/api-docs` (see [Backend README](https://github.com/Magenta-Mause/Cosy-Domain-Provider-Backend)).
 2. In this frontend, run `bun gen:api`.
 3. Orval generates:
    - client: `src/api/generated/domain-provider-api.ts`
