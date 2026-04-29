@@ -54,6 +54,7 @@ export function VerifyForm({
           pasteTransformer={(text) => text.replace(/[-\s]/g, "")}
           onChange={onTokenChange}
           disabled={isBusy}
+          data-testid="verify-code-input"
         >
           <InputOTPGroup>
             <InputOTPSlot index={0} />
@@ -76,6 +77,7 @@ export function VerifyForm({
         <Button
           onClick={onVerify}
           disabled={verificationToken.length !== 6 || isBusy}
+          data-testid="verify-submit-btn"
         >
           {isVerifying ? "Verifying…" : "Verify"}
         </Button>
