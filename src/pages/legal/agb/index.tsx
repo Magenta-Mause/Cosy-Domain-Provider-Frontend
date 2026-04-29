@@ -13,7 +13,7 @@ export function AgbPage() {
         </h2>
         <p>
           Diese Allgemeinen Geschäftsbedingungen gelten für die Nutzung des
-          Subdomain-Dienstes Cosy Domain Provider, betrieben von Medalheads
+          Subdomain-Dienstes Cosy Domain Provider, betrieben von Janne Keipert
           (nachfolgend „Anbieter"). Mit der Registrierung eines Kontos
           akzeptierst du diese AGB in der jeweils gültigen Fassung.
         </p>
@@ -64,7 +64,7 @@ export function AgbPage() {
           Das Cosy+-Abonnement läuft monatlich und verlängert sich automatisch.
           Die Kündigung ist jederzeit zum Ende der aktuellen Abrechnungsperiode
           möglich, über das Kundenportal (Stripe Billing Portal) oder per
-          E-Mail an kontakt@cosy-hosting.net. Nach Ablauf des Abonnements
+          E-Mail an cosy-hosting.manliness639@passmail.net. Nach Ablauf des Abonnements
           wechselt das Konto in den Free-Tarif; bestehende Subdomains bleiben
           erhalten, sofern die Anzahl den Free-Limits entspricht.
         </p>

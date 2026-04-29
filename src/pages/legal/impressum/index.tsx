@@ -12,11 +12,11 @@ export function ImpressumPage() {
           Angaben gemäß § 5 TMG
         </h2>
         <p>
-          Medalheads
+          Janne Keipert
           <br />
-          [Straße und Hausnummer]
+          Marchlewskistraße 102
           <br />
-          [PLZ Ort]
+          10243 Berlin
           <br />
           Deutschland
         </p>
@@ -27,10 +27,10 @@ export function ImpressumPage() {
         <p>
           E-Mail:{" "}
           <a
-            href="mailto:kontakt@cosy-hosting.net"
+            href="mailto:cosy-hosting.manliness639@passmail.net"
             className="underline opacity-80 hover:opacity-100"
           >
-            kontakt@cosy-hosting.net
+            cosy-hosting.manliness639@passmail.net
           </a>
         </p>
       </section>
@@ -40,11 +40,11 @@ export function ImpressumPage() {
           Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV
         </h2>
         <p>
-          Medalheads
+          Janne Keipert
           <br />
-          [Straße und Hausnummer]
+          Marchlewskistraße 102
           <br />
-          [PLZ Ort]
+          10243 Berlin
         </p>
       </section>
 

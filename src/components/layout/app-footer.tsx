@@ -9,7 +9,8 @@ export function AppFooter() {
   return (
     <footer
       role="contentinfo"
-      className="border-t border-foreground/10 py-5 px-6 bg-background"
+      className="border-t py-5 px-6 bg-background"
+      style={{ borderTopColor: "var(--foreground-muted)" }}
     >
       <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm opacity-60">
         <a

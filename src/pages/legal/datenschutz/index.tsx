@@ -10,7 +10,8 @@ export function DatenschutzPage() {
       <section>
         <h2 className="font-semibold text-lg mb-2">1. Verantwortlicher</h2>
         <p>
-          Medalheads, [Anschrift] — kontakt@cosy-hosting.net
+          Janne Keipert, Marchlewskistraße 102, 10243 Berlin —{" "}
+          cosy-hosting.manliness639@passmail.net
         </p>
       </section>
 
@@ -71,10 +72,10 @@ export function DatenschutzPage() {
           Einschränkung der Verarbeitung, Datenübertragbarkeit und Widerspruch.
           Wende dich dazu an:{" "}
           <a
-            href="mailto:kontakt@cosy-hosting.net"
+            href="mailto:cosy-hosting.manliness639@passmail.net"
             className="underline opacity-80 hover:opacity-100"
           >
-            kontakt@cosy-hosting.net
+            cosy-hosting.manliness639@passmail.net
           </a>
           . Du hast außerdem das Recht, bei der zuständigen Aufsichtsbehörde
           Beschwerde einzulegen.

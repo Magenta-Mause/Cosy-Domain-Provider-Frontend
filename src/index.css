@@ -9,6 +9,7 @@
     --background: oklch(79.608% 0.11291 58.181);
     --secondary-background: oklch(88.286% 0.07567 58.775);
     --foreground: oklch(37.839% 0.10139 23.236);
+    --foreground-muted: oklch(37.839% 0.10139 23.236 / 60%);
     --outline: oklab(29.729% 0.08376 0.03852);
     --alarm: oklch(55.842% 0.20891 17.11);
     --accent: oklch(72.99% 0.13226 56.19);
