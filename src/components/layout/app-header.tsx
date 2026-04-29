@@ -11,9 +11,10 @@ import { useAppHeaderLogic } from "./useAppHeaderLogic";
 
 interface AppHeaderProps {
   rightSlot?: ReactNode;
+  logoLinkTo?: "/dashboard" | "/" | "/admin/subdomains";
 }
 
-export function AppHeader({ rightSlot }: AppHeaderProps = {}) {
+export function AppHeader({ rightSlot, logoLinkTo }: AppHeaderProps = {}) {
   const { t } = useTranslation();
   const {
     userName,
@@ -25,10 +26,13 @@ export function AppHeader({ rightSlot }: AppHeaderProps = {}) {
 
   const { userTier } = useAuthInformation();
 
+  const resolvedLogoLink =
+    logoLinkTo ?? (isUserLoggedIn ? "/dashboard" : "/");
+
   return (
     <header className="px-7 py-4 flex items-center gap-4 relative z-[5]">
       <CosyLogo
-        linkTo={isUserLoggedIn ? "/dashboard" : "/"}
+        linkTo={resolvedLogoLink}
         testId="header-logo-link"
       />
       <div className="flex-1" />
