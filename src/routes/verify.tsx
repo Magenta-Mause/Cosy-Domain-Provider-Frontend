@@ -8,8 +8,7 @@ export const Route = createFileRoute("/verify")({
     token: z.string().optional(),
   }),
   beforeLoad: () => {
-    const { identityToken, user } = store.getState().auth;
-    if (!identityToken) throw redirect({ to: "/login" });
+    const { user } = store.getState().auth;
     if (user?.isVerified && user?.isMfaEnabled)
       throw redirect({ to: "/dashboard" });
     if (user?.isVerified && !user?.isMfaEnabled)
