@@ -298,6 +298,10 @@ const enCommon = {
     codeExpiredError: "That code has expired. Request a new one below.",
     codeMismatchError: "That code didn't match. Double-check and try again.",
     resendError: "Couldn't send a new code. Please try again later.",
+    successTitle: "You're verified!",
+    successDescription:
+      "Your email is confirmed. Set up two-factor authentication to finish securing your account.",
+    successBtn: "Continue to MFA setup →",
   },
   footer: {
     text: "Made with ❤️ by Medalheads · cosy-hosting.net",
@@ -790,6 +794,10 @@ const deCommon: CommonSchema = {
       "Dieser Code stimmt nicht überein. Bitte überprüfe ihn erneut.",
     resendError:
       "Ein neuer Code konnte nicht gesendet werden. Bitte versuche es später erneut.",
+    successTitle: "Konto verifiziert!",
+    successDescription:
+      "Deine E-Mail-Adresse ist bestätigt. Richte jetzt die Zwei-Faktor-Authentifizierung ein.",
+    successBtn: "Weiter zur MFA-Einrichtung →",
   },
   footer: {
     text: "Made with ❤️ by Medalheads · cosy-hosting.net",
