@@ -29,6 +29,7 @@ export function RegisterForm() {
     passwordWeak,
     confirmValid,
     canSubmit,
+    captchaReady,
     submitting,
     handleSubmit,
     goBack,
@@ -166,15 +167,6 @@ export function RegisterForm() {
             </Link>
           </label>
 
-          <Turnstile
-            ref={turnstileRef}
-            siteKey={import.meta.env.VITE_TURNSTILE_SITE_KEY}
-            options={{ size: "invisible" }}
-            onSuccess={setCaptchaToken}
-            onExpire={() => setCaptchaToken(null)}
-            onError={() => setCaptchaToken(null)}
-          />
-
           {errorMessage ? <ErrorMessage>{errorMessage}</ErrorMessage> : null}
 
           <Button
@@ -184,8 +176,13 @@ export function RegisterForm() {
             className="w-full"
             disabled={!canSubmit}
           >
-            {submitting ? t("register.submitting") : t("register.submitButton")}
+            {submitting
+              ? t("register.submitting")
+              : !captchaReady
+                ? t("register.captchaLoading")
+                : t("register.submitButton")}
           </Button>
+
         </>
       )}
 
@@ -195,6 +192,15 @@ export function RegisterForm() {
           {t("register.loginLink")}
         </Link>
       </p>
+
+      <Turnstile
+        ref={turnstileRef}
+        siteKey={import.meta.env.VITE_TURNSTILE_SITE_KEY}
+        options={{ size: "invisible" }}
+        onSuccess={setCaptchaToken}
+        onExpire={() => setCaptchaToken(null)}
+        onError={() => setCaptchaToken(null)}
+      />
     </form>
   );
 }

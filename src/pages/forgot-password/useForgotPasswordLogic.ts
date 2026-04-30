@@ -2,11 +2,13 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import useDataInteractions from "@/hooks/useDataInteractions/useDataInteractions";
+import { Route } from "@/routes/forgot-password";
 
 export function useForgotPasswordLogic() {
   const { t } = useTranslation();
   const { requestPasswordReset } = useDataInteractions();
-  const [email, setEmail] = useState("");
+  const { email: prefillEmail } = Route.useSearch();
+  const [email, setEmail] = useState(prefillEmail ?? "");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState<string | null>(null);

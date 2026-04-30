@@ -23,7 +23,7 @@ export function DomainDetailHeader({
       <Link
         to="/dashboard"
         data-testid="domain-detail-back-link"
-        className="block mb-3 text-base"
+        className="block mb-4 text-base opacity-80 hover:opacity-100 transition-opacity"
         style={{ color: "oklch(0.95 0.08 70)" }}
       >
         ← {t("domainDetail.backToDomains")}

@@ -6,6 +6,7 @@ import { CosyLogo } from "@/components/layout/cosy-logo";
 import { LanguageMenu } from "@/components/layout/language-menu";
 import { UserMenu } from "@/components/layout/user-menu";
 import TierBadge from "@/components/pixel/tier-badge.tsx";
+import { ConfirmModal } from "@/components/ui/confirm-modal";
 import useAuthInformation from "@/hooks/useAuthInformation/useAuthInformation.ts";
 import { useAppHeaderLogic } from "./useAppHeaderLogic";
 
@@ -22,6 +23,9 @@ export function AppHeader({ rightSlot, logoLinkTo }: AppHeaderProps = {}) {
     isLoggingOut,
     handleLogout,
     handleDelete,
+    showDeleteModal,
+    handleConfirmDelete,
+    handleCancelDelete,
   } = useAppHeaderLogic();
 
   const { userTier } = useAuthInformation();
@@ -30,34 +34,46 @@ export function AppHeader({ rightSlot, logoLinkTo }: AppHeaderProps = {}) {
     logoLinkTo ?? (isUserLoggedIn ? "/dashboard" : "/");
 
   return (
-    <header className="px-7 py-4 flex items-center gap-4 relative z-[5]">
-      <CosyLogo
-        linkTo={resolvedLogoLink}
-        testId="header-logo-link"
+    <>
+      <header className="px-7 py-4 flex items-center gap-4 relative z-[5]">
+        <CosyLogo
+          linkTo={resolvedLogoLink}
+          testId="header-logo-link"
+        />
+        <div className="flex-1" />
+
+        {!rightSlot && <TierBadge tier={userTier ?? "FREE"} />}
+
+        <LanguageMenu />
+        {rightSlot ?? (
+          isUserLoggedIn ? (
+            <UserMenu
+              userName={userName}
+              isLoggingOut={isLoggingOut}
+              onLogout={handleLogout}
+              onDelete={handleDelete}
+            />
+          ) : (
+            <Link
+              to="/login"
+              data-testid="header-login-link"
+              className="pbtn sm secondary"
+            >
+              {t("nav.login")}
+            </Link>
+          )
+        )}
+      </header>
+
+      <ConfirmModal
+        isOpen={showDeleteModal}
+        title={t("nav.deleteUserTitle")}
+        description={t("nav.userDeletionConfirm")}
+        confirmLabel={t("nav.deleteUserConfirm")}
+        cancelLabel={t("nav.deleteUserCancel")}
+        onConfirm={() => void handleConfirmDelete()}
+        onCancel={handleCancelDelete}
       />
-      <div className="flex-1" />
-
-      {!rightSlot && <TierBadge tier={userTier ?? "FREE"} />}
-
-      <LanguageMenu />
-      {rightSlot ?? (
-        isUserLoggedIn ? (
-          <UserMenu
-            userName={userName}
-            isLoggingOut={isLoggingOut}
-            onLogout={handleLogout}
-            onDelete={handleDelete}
-          />
-        ) : (
-          <Link
-            to="/login"
-            data-testid="header-login-link"
-            className="pbtn sm secondary"
-          >
-            {t("nav.login")}
-          </Link>
-        )
-      )}
-    </header>
+    </>
   );
 }

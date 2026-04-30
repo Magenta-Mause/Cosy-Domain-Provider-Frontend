@@ -24,9 +24,11 @@ export function LoginForm() {
     setEmail,
     password,
     setPassword,
+    emailError,
     errorMessage,
     oauthError,
     submitting,
+    captchaReady,
     handleSubmit,
     goBack,
     turnstileRef,
@@ -38,7 +40,7 @@ export function LoginForm() {
 
   if (step === 3) {
     return (
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-6">
         <button
           type="button"
           onClick={goBack}
@@ -48,8 +50,10 @@ export function LoginForm() {
           ← {email}
         </button>
 
-        <h2 className="text-[22px]">{t("login.mfaTitle")}</h2>
-        <p className="text-base opacity-70">{t("login.mfaDescription")}</p>
+        <div className="flex flex-col gap-2">
+          <h2 className="text-[22px]">{t("login.mfaTitle")}</h2>
+          <p className="text-base opacity-70 mt-1">{t("login.mfaDescription")}</p>
+        </div>
 
         <div className="flex justify-center">
           <InputOTP
@@ -74,6 +78,13 @@ export function LoginForm() {
         </div>
 
         {totpError ? <ErrorMessage>{totpError}</ErrorMessage> : null}
+
+        <p className="text-sm text-center opacity-60">
+          {t("login.mfaResetHint")}{" "}
+          <Link to="/forgot-password" search={{ email }} className="underline opacity-80">
+            {t("login.mfaResetLink")}
+          </Link>
+        </p>
 
         <p className="text-lg text-center">
           {t("login.noAccount")}{" "}
@@ -113,6 +124,7 @@ export function LoginForm() {
             value={email}
             onChange={setEmail}
             testId="login-email-input"
+            error={emailError}
           />
 
           <Button
@@ -155,12 +167,27 @@ export function LoginForm() {
           <div className="flex items-center justify-end">
             <Link
               to="/forgot-password"
+              search={{ email }}
               data-testid="login-forgot-password-link"
               className="text-base"
             >
               {t("login.forgotPassword")}
             </Link>
           </div>
+
+          <Button
+            type="submit"
+            data-testid="login-submit-btn"
+            size="lg"
+            className="w-full"
+            disabled={!password || submitting || !captchaReady}
+          >
+            {submitting
+              ? t("login.submitting")
+              : !captchaReady
+                ? t("login.captchaLoading")
+                : t("login.submitButton")}
+          </Button>
 
           <Turnstile
             ref={turnstileRef}
@@ -170,16 +197,6 @@ export function LoginForm() {
             onExpire={() => setCaptchaToken(null)}
             onError={() => setCaptchaToken(null)}
           />
-
-          <Button
-            type="submit"
-            data-testid="login-submit-btn"
-            size="lg"
-            className="w-full"
-            disabled={!password || submitting}
-          >
-            {submitting ? t("login.submitting") : t("login.submitButton")}
-          </Button>
         </>
       )}
 

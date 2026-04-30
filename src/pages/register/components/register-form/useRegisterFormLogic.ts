@@ -90,6 +90,7 @@ export function useRegisterFormLogic() {
     passwordWeak,
     confirmValid,
     canSubmit,
+    captchaReady: !!captchaToken,
     submitting,
     handleSubmit,
     goBack,

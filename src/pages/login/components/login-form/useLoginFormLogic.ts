@@ -3,6 +3,7 @@ import { useNavigate } from "@tanstack/react-router";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import useDataInteractions from "@/hooks/useDataInteractions/useDataInteractions";
+import { isValidEmail } from "@/lib/validators";
 import { Route } from "@/routes/login";
 import { useAppSelector } from "@/store/hooks";
 
@@ -15,6 +16,7 @@ export function useLoginFormLogic() {
   const [step, setStep] = useState<1 | 2 | 3>(1);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [emailError, setEmailError] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [captchaToken, setCaptchaToken] = useState<string | null>(null);
   const turnstileRef = useRef<TurnstileInstance>(null);
@@ -28,6 +30,12 @@ export function useLoginFormLogic() {
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (step === 1) {
+      if (!isValidEmail(email)) {
+        setEmailError(t("login.emailInvalid"));
+        return;
+      }
+      setEmailError(null);
+      setPassword("");
       setStep(2);
       return;
     }
@@ -80,6 +88,7 @@ export function useLoginFormLogic() {
   function goBack() {
     setStep(1);
     setPassword("");
+    setEmailError(null);
     setErrorMessage(null);
     setCaptchaToken(null);
     setChallengeToken(null);
@@ -93,9 +102,11 @@ export function useLoginFormLogic() {
     setEmail,
     password,
     setPassword,
+    emailError,
     errorMessage,
     oauthError: oauthError === true,
     submitting,
+    captchaReady: !!captchaToken,
     handleSubmit,
     goBack,
     turnstileRef,

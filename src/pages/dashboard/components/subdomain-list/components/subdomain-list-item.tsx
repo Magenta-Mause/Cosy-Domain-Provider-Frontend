@@ -26,11 +26,11 @@ export function SubdomainListItem({ domain }: { domain: SubdomainDto }) {
         <Mailbox size={60} />
         <div className="flex-1 flex flex-col gap-1">
           <div className="flex gap-2.5 items-center">
-            <div className="pixel text-base text-btn-primary">
+            <div className="pixel text-[15px] text-btn-primary">
               {domain.fqdn ?? domain.label}
             </div>
           </div>
-          <div className="flex gap-3.5 text-base opacity-[0.85] items-center">
+          <div className="flex gap-3.5 text-sm opacity-[0.85] items-center">
             {domain.status ? <StatusDot status={domain.status} /> : null}
             {domain.targetIp ? (
               <span>→ {domain.targetIp}</span>

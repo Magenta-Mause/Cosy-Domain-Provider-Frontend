@@ -64,6 +64,7 @@ export function ChangePasswordForm({ onSave }: ChangePasswordFormProps) {
         type={showCurrentPw ? "text" : "password"}
         autoComplete="current-password"
         required
+        placeholder="••••••••"
         value={currentPassword}
         onChange={setCurrentPassword}
         testId="settings-current-password-input"
@@ -82,6 +83,7 @@ export function ChangePasswordForm({ onSave }: ChangePasswordFormProps) {
         autoComplete="new-password"
         required
         minLength={8}
+        placeholder="••••••••"
         value={newPassword}
         onChange={setNewPassword}
         testId="settings-new-password-input"
@@ -100,6 +102,7 @@ export function ChangePasswordForm({ onSave }: ChangePasswordFormProps) {
         type={showConfirmPw ? "text" : "password"}
         autoComplete="new-password"
         required
+        placeholder="••••••••"
         value={confirmPassword}
         onChange={setConfirmPassword}
         testId="settings-confirm-password-input"

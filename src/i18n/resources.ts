@@ -13,6 +13,9 @@ const enCommon = {
     userSettings: "User Settings",
     userDeletionConfirm:
       "Are you sure you want to delete your account? This will also delete all your dns entries.",
+    deleteUserTitle: "Delete account",
+    deleteUserConfirm: "Yes, delete my account",
+    deleteUserCancel: "Cancel",
   },
   language: {
     label: "Language",
@@ -40,10 +43,14 @@ const enCommon = {
     orEmail: "OR USE EMAIL",
     emailContinue: "Continue →",
     captchaError: "Security check not ready yet. Please try again in a moment.",
+    captchaLoading: "Security check…",
     mfaTitle: "Two-factor authentication",
     mfaDescription: "Enter the 6-digit code from your authenticator app.",
     mfaError: "Invalid code. Please try again.",
     mfaSubmit: "Verify →",
+    mfaResetHint: "Lost access to your authenticator?",
+    mfaResetLink: "Reset via email",
+    emailInvalid: "Please enter a valid email address.",
   },
   mfaSetup: {
     title: "Secure your account",
@@ -94,6 +101,7 @@ const enCommon = {
     passwordTooShort: "Needs at least 8 characters",
     error: "Could not register. Please try again.",
     captchaError: "Security check not ready yet. Please try again in a moment.",
+    captchaLoading: "Security check…",
     hasAccount: "Already have an account?",
     alreadyMovedIn: "Already moved in?",
     loginLink: "Log in",
@@ -492,6 +500,9 @@ const deCommon: CommonSchema = {
     userSettings: "Kontoeinstellungen",
     userDeletionConfirm:
       "Bist du dir sicher, dass du deinen Account löschen willst? Dadurch werden auch alle deine Subdomains gelöscht.",
+    deleteUserTitle: "Konto löschen",
+    deleteUserConfirm: "Ja, Konto löschen",
+    deleteUserCancel: "Abbrechen",
   },
   language: {
     label: "Sprache",
@@ -520,11 +531,15 @@ const deCommon: CommonSchema = {
     emailContinue: "Weiter →",
     captchaError:
       "Sicherheitscheck noch nicht bereit. Bitte einen Moment warten.",
+    captchaLoading: "Sicherheitscheck…",
     mfaTitle: "Zwei-Faktor-Authentifizierung",
     mfaDescription:
       "Gib den 6-stelligen Code aus deiner Authenticator-App ein.",
     mfaError: "Ungültiger Code. Bitte erneut versuchen.",
     mfaSubmit: "Bestätigen →",
+    mfaResetHint: "Zugang zu deiner Authenticator-App verloren?",
+    mfaResetLink: "Per E-Mail zurücksetzen",
+    emailInvalid: "Bitte eine gültige E-Mail-Adresse eingeben.",
   },
   mfaSetup: {
     title: "Konto absichern",
@@ -582,6 +597,7 @@ const deCommon: CommonSchema = {
     error: "Registrierung fehlgeschlagen. Bitte erneut versuchen.",
     captchaError:
       "Sicherheitscheck noch nicht bereit. Bitte einen Moment warten.",
+    captchaLoading: "Sicherheitscheck…",
     hasAccount: "Bereits ein Konto?",
     alreadyMovedIn: "Schon eingezogen?",
     loginLink: "Anmelden",

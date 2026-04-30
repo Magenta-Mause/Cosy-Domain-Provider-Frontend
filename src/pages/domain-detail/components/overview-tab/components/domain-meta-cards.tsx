@@ -12,18 +12,18 @@ export function DomainMetaCards({ domain, createdAt }: DomainMetaCardsProps) {
   const { t } = useTranslation();
 
   return (
-    <div className="grid grid-cols-2 gap-4 mb-2">
+    <div className="grid grid-cols-2 gap-4 mb-4">
       <FlatPanel className="p-4">
         <div className="pixel text-[10px] opacity-70">
           {t("domainDetail.domainFqdn")}
         </div>
-        <div className="text-lg mt-1.5 select-all">{domain?.fqdn ?? "—"}</div>
+        <div className="text-xl mt-2 select-all font-mono">{domain?.fqdn ?? "—"}</div>
       </FlatPanel>
       <FlatPanel className="p-4">
         <div className="pixel text-[10px] opacity-70">
           {t("domainDetail.createdLabel")}
         </div>
-        <div className="text-lg mt-1.5">{createdAt}</div>
+        <div className="text-base mt-2 opacity-80">{createdAt}</div>
       </FlatPanel>
     </div>
   );

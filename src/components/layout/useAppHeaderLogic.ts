@@ -1,14 +1,13 @@
 import { useState } from "react";
-import { useTranslation } from "react-i18next";
 
 import useAuthInformation from "@/hooks/useAuthInformation/useAuthInformation";
 import { router } from "@/router";
 
 export function useAppHeaderLogic() {
-  const { t } = useTranslation();
   const { logoutUser, deleteUser, userName, isUserLoggedIn, userTier } =
     useAuthInformation();
   const [isLoggingOut, setIsLoggingOut] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   const handleLogout = async () => {
     setIsLoggingOut(true);
@@ -21,10 +20,17 @@ export function useAppHeaderLogic() {
   };
 
   const handleDelete = async () => {
-    if (confirm(t("nav.userDeletionConfirm"))) {
-      await deleteUser();
-      await router.navigate({ to: "/login" });
-    }
+    setShowDeleteModal(true);
+  };
+
+  const handleConfirmDelete = async () => {
+    await deleteUser();
+    setShowDeleteModal(false);
+    await router.navigate({ to: "/" });
+  };
+
+  const handleCancelDelete = () => {
+    setShowDeleteModal(false);
   };
 
   return {
@@ -34,5 +40,8 @@ export function useAppHeaderLogic() {
     isLoggingOut,
     handleLogout,
     handleDelete,
+    showDeleteModal,
+    handleConfirmDelete,
+    handleCancelDelete,
   };
 }

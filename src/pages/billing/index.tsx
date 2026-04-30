@@ -18,13 +18,13 @@ export function BillingPage() {
       <div className="flex flex-col p-[20px] max-w-[600px] mx-auto gap-5">
         <FlatPanel className="px-5 py-5 flex flex-col gap-4">
           <div className="flex items-center gap-5">
-            <span className="pixel text-xs">{t("billing.currentPlan")}</span>
+            <span className="pixel text-sm">{t("billing.currentPlan")}</span>
             <Badge color={isPlus ? "accent" : "gray"} className="py-1">
               {isPlus ? t("billing.plus") : t("billing.free")}
             </Badge>
           </div>
 
-          <p className="text-sm opacity-80">
+          <p className="text-base opacity-80">
             {isPlus ? t("billing.plusPlanDesc") : t("billing.freePlanDesc")}
           </p>
 
@@ -56,12 +56,12 @@ export function BillingPage() {
 
         {!isPlus && (
           <FlatPanel className="px-5 py-5 flex flex-col gap-2">
-            <span className="pixel text-xs mb-2">Cosy+</span>
-            <ul className="flex flex-col gap-1 text-sm opacity-80">
+            <span className="pixel text-sm mb-2">Cosy+</span>
+            <ul className="flex flex-col gap-2 text-base opacity-80">
               <li>{t("pricing.plusFeature1")}</li>
               <li>{t("pricing.plusFeature2")}</li>
             </ul>
-            <p className="text-xs mt-2 opacity-60">
+            <p className="text-sm mt-3 opacity-60">
               {t("pricing.plusPrice")} &mdash; {t("pricing.plusSupport")}
             </p>
           </FlatPanel>
