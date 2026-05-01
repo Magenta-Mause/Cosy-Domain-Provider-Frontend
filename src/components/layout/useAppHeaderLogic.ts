@@ -7,6 +7,7 @@ export function useAppHeaderLogic() {
   const { logoutUser, deleteUser, userName, isUserLoggedIn, userTier } =
     useAuthInformation();
   const [isLoggingOut, setIsLoggingOut] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   const handleLogout = async () => {
@@ -24,9 +25,14 @@ export function useAppHeaderLogic() {
   };
 
   const handleConfirmDelete = async () => {
-    await deleteUser();
-    setShowDeleteModal(false);
-    await router.navigate({ to: "/" });
+    setIsDeleting(true);
+    try {
+      await deleteUser();
+      setShowDeleteModal(false);
+      await router.navigate({ to: "/login" });
+    } finally {
+      setIsDeleting(false);
+    }
   };
 
   const handleCancelDelete = () => {
@@ -38,6 +44,7 @@ export function useAppHeaderLogic() {
     isUserLoggedIn,
     userTier,
     isLoggingOut,
+    isDeleting,
     handleLogout,
     handleDelete,
     showDeleteModal,

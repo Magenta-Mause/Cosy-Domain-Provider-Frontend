@@ -154,8 +154,8 @@ export function RegisterForm() {
               onClick={(e) => e.stopPropagation()}
             >
               {t("register.termsLink")}
-            </Link>
-            {" "}&{" "}
+            </Link>{" "}
+            &{" "}
             <Link
               to="/privacy"
               target="_blank"
@@ -182,7 +182,6 @@ export function RegisterForm() {
                 ? t("register.captchaLoading")
                 : t("register.submitButton")}
           </Button>
-
         </>
       )}
 

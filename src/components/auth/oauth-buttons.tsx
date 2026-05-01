@@ -1,4 +1,8 @@
-import { DiscordIcon, GitHubIcon, GoogleIcon } from "@/components/ui/brand-icons";
+import {
+  DiscordIcon,
+  GitHubIcon,
+  GoogleIcon,
+} from "@/components/ui/brand-icons";
 import { Button } from "@/components/ui/button";
 import useDataInteractions from "@/hooks/useDataInteractions/useDataInteractions";
 

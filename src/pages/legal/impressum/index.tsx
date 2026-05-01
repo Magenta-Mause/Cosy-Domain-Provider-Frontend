@@ -8,9 +8,7 @@ export function ImpressumPage() {
   return (
     <LegalPageLayout title={t("legal.impressum.title")}>
       <section>
-        <h2 className="font-semibold text-lg mb-2">
-          Angaben gemäß § 5 TMG
-        </h2>
+        <h2 className="font-semibold text-lg mb-2">Angaben gemäß § 5 TMG</h2>
         <p>
           Janne Keipert
           <br />

@@ -26,7 +26,10 @@ export function AppFooter() {
         <span className="opacity-40 text-xl">·</span>
         <span>{t("footer.madeBy")}</span>
         <span className="opacity-40 text-xl">·</span>
-        <nav aria-label={t("footer.legalNav")} className="flex items-center gap-3">
+        <nav
+          aria-label={t("footer.legalNav")}
+          className="flex items-center gap-3"
+        >
           <Link
             to="/legal-notice"
             className="text-foreground hover:opacity-100 transition-opacity"

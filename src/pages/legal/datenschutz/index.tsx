@@ -17,17 +17,24 @@ export function DatenschutzPage() {
 
       <section>
         <h2 className="font-semibold text-lg mb-2">2. Erhobene Daten</h2>
-        <p>Beim Erstellen eines Kontos und der Nutzung des Dienstes werden folgende Daten verarbeitet:</p>
+        <p>
+          Beim Erstellen eines Kontos und der Nutzung des Dienstes werden
+          folgende Daten verarbeitet:
+        </p>
         <ul className="list-disc list-inside mt-2 space-y-1 opacity-80">
           <li>E-Mail-Adresse und Benutzername</li>
           <li>Subdomain-Konfigurationen (Label, Ziel-IP)</li>
           <li>IP-Adresse bei Zugriffen (Server-Logs)</li>
-          <li>OAuth-Profildaten bei Anmeldung via Google, GitHub oder Discord</li>
+          <li>
+            OAuth-Profildaten bei Anmeldung via Google, GitHub oder Discord
+          </li>
         </ul>
       </section>
 
       <section>
-        <h2 className="font-semibold text-lg mb-2">3. Zweck der Verarbeitung</h2>
+        <h2 className="font-semibold text-lg mb-2">
+          3. Zweck der Verarbeitung
+        </h2>
         <ul className="list-disc list-inside space-y-1 opacity-80">
           <li>Erbringung und Verwaltung des Subdomain-Dienstes</li>
           <li>Abwicklung kostenpflichtiger Abonnements (Cosy+)</li>
@@ -45,8 +52,8 @@ export function DatenschutzPage() {
             verarbeitet Zahlungsdaten gemäß eigener Datenschutzrichtlinie.
           </li>
           <li>
-            <strong>Cloudflare Turnstile</strong> — Bot-Schutz bei
-            Registrierung und Login.
+            <strong>Cloudflare Turnstile</strong> — Bot-Schutz bei Registrierung
+            und Login.
           </li>
           <li>
             <strong>Google / GitHub / Discord</strong> — OAuth-Login, sofern
@@ -68,9 +75,9 @@ export function DatenschutzPage() {
       <section>
         <h2 className="font-semibold text-lg mb-2">6. Deine Rechte</h2>
         <p>
-          Du hast das Recht auf Auskunft, Berichtigung, Löschung,
-          Einschränkung der Verarbeitung, Datenübertragbarkeit und Widerspruch.
-          Wende dich dazu an:{" "}
+          Du hast das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung
+          der Verarbeitung, Datenübertragbarkeit und Widerspruch. Wende dich
+          dazu an:{" "}
           <a
             href="mailto:cosy-hosting.manliness639@passmail.net"
             className="underline opacity-80 hover:opacity-100"

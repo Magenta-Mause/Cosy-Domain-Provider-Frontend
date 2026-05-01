@@ -52,7 +52,9 @@ export function LoginForm() {
 
         <div className="flex flex-col gap-2">
           <h2 className="text-[22px]">{t("login.mfaTitle")}</h2>
-          <p className="text-base opacity-70 mt-1">{t("login.mfaDescription")}</p>
+          <p className="text-base opacity-70 mt-1">
+            {t("login.mfaDescription")}
+          </p>
         </div>
 
         <div className="flex justify-center">
@@ -79,16 +81,20 @@ export function LoginForm() {
 
         {totpError ? <ErrorMessage>{totpError}</ErrorMessage> : null}
 
-        <p className="text-sm text-center opacity-60">
+        <p className="text-base text-center opacity-70">
           {t("login.mfaResetHint")}{" "}
-          <Link to="/forgot-password" search={{ email }} className="underline opacity-80">
+          <Link to="/forgot-password" search={{ email }} className="underline">
             {t("login.mfaResetLink")}
           </Link>
         </p>
 
-        <p className="text-lg text-center">
+        <p className="text-base text-center opacity-70">
           {t("login.noAccount")}{" "}
-          <Link to="/register" data-testid="login-register-link-footer">
+          <Link
+            to="/register"
+            data-testid="login-register-link-footer"
+            className="underline"
+          >
             {t("login.registerLink")}
           </Link>
         </p>
@@ -200,7 +206,7 @@ export function LoginForm() {
         </>
       )}
 
-      <p className="text-lg text-center">
+      <p className="text-base text-center opacity-70">
         {t("login.noAccount")}{" "}
         <Link to="/register" data-testid="login-register-link-footer">
           {t("login.registerLink")}

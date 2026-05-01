@@ -9,7 +9,8 @@ type Stage = "password" | "send" | "input" | "success";
 
 export function useVerifyLogic() {
   const { t } = useTranslation();
-  const { userEmail, isVerified, needsPasswordSetup, isUserLoggedIn } = useAuthInformation();
+  const { userEmail, isVerified, needsPasswordSetup, isUserLoggedIn } =
+    useAuthInformation();
   const { token: urlToken } = Route.useSearch();
   const { verifyAccount, resendVerificationCode, setupPassword } =
     useDataInteractions();

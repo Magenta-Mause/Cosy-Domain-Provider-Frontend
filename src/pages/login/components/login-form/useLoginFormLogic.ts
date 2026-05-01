@@ -22,7 +22,10 @@ export function useLoginFormLogic() {
   const turnstileRef = useRef<TurnstileInstance>(null);
   const [challengeToken, setChallengeToken] = useState<string | null>(null);
   const [totpCode, setTotpCodeRaw] = useState("");
-  const setTotpCode = (value: string) => setTotpCodeRaw(value.toUpperCase());
+  const setTotpCode = useCallback(
+    (value: string) => setTotpCodeRaw(value.toUpperCase()),
+    [],
+  );
   const [totpError, setTotpError] = useState<string | null>(null);
 
   const submitting = authState === "loading";
@@ -77,7 +80,14 @@ export function useLoginFormLogic() {
       setTotpError(t("login.mfaError"));
       setTotpCode("");
     }
-  }, [challengeToken, totpCode, completeMfaChallenge, navigate, t]);
+  }, [
+    challengeToken,
+    totpCode,
+    completeMfaChallenge,
+    navigate,
+    t,
+    setTotpCode,
+  ]);
 
   useEffect(() => {
     if (totpCode.length === 6 && step === 3) {

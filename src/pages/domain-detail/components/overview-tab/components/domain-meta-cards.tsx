@@ -17,7 +17,9 @@ export function DomainMetaCards({ domain, createdAt }: DomainMetaCardsProps) {
         <div className="pixel text-[10px] opacity-70">
           {t("domainDetail.domainFqdn")}
         </div>
-        <div className="text-xl mt-2 select-all font-mono">{domain?.fqdn ?? "—"}</div>
+        <div className="text-base mt-2 select-all font-mono opacity-80">
+          {domain?.fqdn ?? "—"}
+        </div>
       </FlatPanel>
       <FlatPanel className="p-4">
         <div className="pixel text-[10px] opacity-70">

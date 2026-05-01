@@ -95,7 +95,11 @@ export function AdminAuthGate({ activeTab, outlet }: AdminAuthGateProps) {
 
   return (
     <div className="min-h-screen bg-background">
-      <PageHeader maxWidth={1200} headerRightSlot={exitButton} headerLogoLinkTo="/admin/subdomains">
+      <PageHeader
+        maxWidth={1200}
+        headerRightSlot={exitButton}
+        headerLogoLinkTo="/admin/subdomains"
+      >
         <div className="flex flex-col gap-2 mb-4">
           <div
             className="pixel text-[11px]"

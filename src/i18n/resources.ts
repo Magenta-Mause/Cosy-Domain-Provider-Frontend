@@ -154,8 +154,7 @@ const enCommon = {
       "You have used all your subdomain slots. Upgrade to Cosy+ to get access to 5 subdomains.",
     slotsExhaustedPlus:
       "You have used all your subdomain slots. If you need more subdomains, please contact the Cosy team.",
-    creationDisabled:
-      "Domain registration is currently disabled by the admin.",
+    creationDisabled: "Domain registration is currently disabled by the admin.",
   },
   createSubdomain: {
     title: "Register a new subdomain",
@@ -213,7 +212,7 @@ const enCommon = {
       "Please enter at least one IP address (IPv4 or IPv6).",
     domainInformation: "Domain information",
     domainUuid: "Domain UUID",
-    domainFqdn: "FQDN",
+    domainFqdn: "SUBDOMAIN",
     domainStatus: "Status",
     domainCreatedAt: "Created at",
     domainUpdatedAt: "Updated at",
@@ -652,8 +651,7 @@ const deCommon: CommonSchema = {
       "Du hast alle deine Subdomain-Slots belegt. Upgrade auf Cosy+, um Zugang zu 5 Subdomains zu erhalten.",
     slotsExhaustedPlus:
       "Du hast alle deine Subdomain-Slots belegt. Falls du mehr Subdomains benötigst, kontaktiere bitte das Cosy-Team.",
-    creationDisabled:
-      "Die Domain-Registrierung wurde vom Admin deaktiviert.",
+    creationDisabled: "Die Domain-Registrierung wurde vom Admin deaktiviert.",
   },
   createSubdomain: {
     title: "Neue Subdomain registrieren",
@@ -712,7 +710,7 @@ const deCommon: CommonSchema = {
       "Bitte mindestens eine IP-Adresse eingeben (IPv4 oder IPv6).",
     domainInformation: "Domain-Informationen",
     domainUuid: "Domain-UUID",
-    domainFqdn: "FQDN",
+    domainFqdn: "SUBDOMAIN",
     domainStatus: "Status",
     domainCreatedAt: "Erstellt am",
     domainUpdatedAt: "Aktualisiert am",

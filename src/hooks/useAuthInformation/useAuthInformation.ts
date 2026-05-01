@@ -13,7 +13,11 @@ const useAuthInformation = () => {
 
   const deleteUser = useCallback(async () => {
     await deleteUserInteraction();
-    await logoutUser();
+    try {
+      await logoutUser();
+    } catch {
+      // session is already invalidated by deletion; local state is cleared by logoutUser's finally block
+    }
   }, [deleteUserInteraction, logoutUser]);
 
   return useMemo(

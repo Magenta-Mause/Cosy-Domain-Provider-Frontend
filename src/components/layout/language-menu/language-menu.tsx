@@ -12,7 +12,11 @@ type LanguageMenuProps = {
   style?: ButtonProps["style"];
 };
 
-export function LanguageMenu({ buttonVariant, className, style }: LanguageMenuProps) {
+export function LanguageMenu({
+  buttonVariant,
+  className,
+  style,
+}: LanguageMenuProps) {
   const { t, i18n } = useTranslation();
   const { handleLanguageChange: onChangeLanguage } = useLanguageChange();
   const { menuOpen, setMenuOpen, menuRef, languageCode, handleLanguageChange } =

@@ -23,7 +23,9 @@ const UserPricingCard = ({ serverCount }: UserPricingCardProps) => {
             {t("dashboard.planCardSubdomains")}
           </Badge>
           <div className={"opacity-70 italic"}>
-            {isPlus ? t("dashboard.planCardPricePlus") : t("dashboard.planCardPriceFree")}
+            {isPlus
+              ? t("dashboard.planCardPricePlus")
+              : t("dashboard.planCardPriceFree")}
           </div>
         </div>
       </div>

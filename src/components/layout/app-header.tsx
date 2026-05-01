@@ -21,6 +21,7 @@ export function AppHeader({ rightSlot, logoLinkTo }: AppHeaderProps = {}) {
     userName,
     isUserLoggedIn,
     isLoggingOut,
+    isDeleting,
     handleLogout,
     handleDelete,
     showDeleteModal,
@@ -30,23 +31,19 @@ export function AppHeader({ rightSlot, logoLinkTo }: AppHeaderProps = {}) {
 
   const { userTier } = useAuthInformation();
 
-  const resolvedLogoLink =
-    logoLinkTo ?? (isUserLoggedIn ? "/dashboard" : "/");
+  const resolvedLogoLink = logoLinkTo ?? (isUserLoggedIn ? "/dashboard" : "/");
 
   return (
     <>
       <header className="px-7 py-4 flex items-center gap-4 relative z-[5]">
-        <CosyLogo
-          linkTo={resolvedLogoLink}
-          testId="header-logo-link"
-        />
+        <CosyLogo linkTo={resolvedLogoLink} testId="header-logo-link" />
         <div className="flex-1" />
 
         {!rightSlot && <TierBadge tier={userTier ?? "FREE"} />}
 
         <LanguageMenu />
-        {rightSlot ?? (
-          isUserLoggedIn ? (
+        {rightSlot ??
+          (isUserLoggedIn ? (
             <UserMenu
               userName={userName}
               isLoggingOut={isLoggingOut}
@@ -61,8 +58,7 @@ export function AppHeader({ rightSlot, logoLinkTo }: AppHeaderProps = {}) {
             >
               {t("nav.login")}
             </Link>
-          )
-        )}
+          ))}
       </header>
 
       <ConfirmModal
@@ -71,6 +67,7 @@ export function AppHeader({ rightSlot, logoLinkTo }: AppHeaderProps = {}) {
         description={t("nav.userDeletionConfirm")}
         confirmLabel={t("nav.deleteUserConfirm")}
         cancelLabel={t("nav.deleteUserCancel")}
+        isLoading={isDeleting}
         onConfirm={() => void handleConfirmDelete()}
         onCancel={handleCancelDelete}
       />
