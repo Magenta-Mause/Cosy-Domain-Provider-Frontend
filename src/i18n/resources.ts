@@ -148,6 +148,8 @@ const enCommon = {
     planCardNotVerified: "Account not verified",
     planCardSubdomains: "Subdomains",
     planCardManage: "Manage plan →",
+    planCardPriceFree: "€0 / month",
+    planCardPricePlus: "€1 / month",
     slotsExhaustedFree:
       "You have used all your subdomain slots. Upgrade to Cosy+ to get access to 5 subdomains.",
     slotsExhaustedPlus:
@@ -644,6 +646,8 @@ const deCommon: CommonSchema = {
     planCardNotVerified: "Konto nicht verifiziert",
     planCardSubdomains: "Subdomains",
     planCardManage: "Plan verwalten →",
+    planCardPriceFree: "€0 / Monat",
+    planCardPricePlus: "€1 / Monat",
     slotsExhaustedFree:
       "Du hast alle deine Subdomain-Slots belegt. Upgrade auf Cosy+, um Zugang zu 5 Subdomains zu erhalten.",
     slotsExhaustedPlus:

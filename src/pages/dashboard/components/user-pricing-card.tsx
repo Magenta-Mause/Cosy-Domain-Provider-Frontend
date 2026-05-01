@@ -10,8 +10,9 @@ interface UserPricingCardProps {
 }
 
 const UserPricingCard = ({ serverCount }: UserPricingCardProps) => {
-  const { maxSubdomainCount } = useAuthInformation();
+  const { maxSubdomainCount, userTier } = useAuthInformation();
   const { t } = useTranslation();
+  const isPlus = userTier === "PLUS";
 
   return (
     <FlatPanel className="px-5 py-4 flex items-center justify-between gap-6">
@@ -21,7 +22,9 @@ const UserPricingCard = ({ serverCount }: UserPricingCardProps) => {
             {serverCount}/{maxSubdomainCount ?? "—"}{" "}
             {t("dashboard.planCardSubdomains")}
           </Badge>
-          <div className={"opacity-70 italic"}>0€/Monat</div>
+          <div className={"opacity-70 italic"}>
+            {isPlus ? t("dashboard.planCardPricePlus") : t("dashboard.planCardPriceFree")}
+          </div>
         </div>
       </div>
 
