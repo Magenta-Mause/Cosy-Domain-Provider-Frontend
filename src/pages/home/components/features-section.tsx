@@ -46,7 +46,10 @@ export function FeaturesSection() {
 
   return (
     <GrassSection>
-      <section id="features" className="pt-12 px-8 pb-20 relative z-[1]">
+      <section
+        id="features"
+        className="pt-12 px-5 sm:px-8 pb-20 relative z-[1]"
+      >
         <div className="max-w-[1200px] mx-auto">
           <div className="mb-8 text-center flex flex-col gap-2">
             <h2 style={{ color: "oklch(0.95 0.08 70)" }}>
@@ -56,7 +59,7 @@ export function FeaturesSection() {
               {t("features.subtitle")}
             </p>
           </div>
-          <div className="grid grid-cols-3 gap-5">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
             {stops.map((f) => (
               <FlatPanel key={f.label} className="hover-lift p-5">
                 <div className="flex flex-col gap-2">

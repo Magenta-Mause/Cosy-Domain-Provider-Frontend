@@ -35,7 +35,7 @@ export function AppHeader({ rightSlot, logoLinkTo }: AppHeaderProps = {}) {
 
   return (
     <>
-      <header className="px-7 py-4 flex items-center gap-4 relative z-[5]">
+      <header className="px-4 sm:px-7 py-4 flex items-center gap-4 relative z-[5]">
         <CosyLogo linkTo={resolvedLogoLink} testId="header-logo-link" />
         <div className="flex-1" />
 

@@ -12,7 +12,7 @@ export function DomainMetaCards({ domain, createdAt }: DomainMetaCardsProps) {
   const { t } = useTranslation();
 
   return (
-    <div className="grid grid-cols-2 gap-4 mb-4">
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
       <FlatPanel className="p-4">
         <div className="pixel text-[10px] opacity-70">
           {t("domainDetail.domainFqdn")}

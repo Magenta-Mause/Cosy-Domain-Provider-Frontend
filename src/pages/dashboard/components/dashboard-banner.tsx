@@ -34,7 +34,7 @@ export function DashboardBanner({
 
   return (
     <PageHeader>
-      <div className="flex items-end gap-4 mb-4">
+      <div className="flex flex-wrap items-end gap-4 mb-4">
         <div className="flex-1 flex flex-col gap-2">
           <div
             className="pixel text-[11px]"

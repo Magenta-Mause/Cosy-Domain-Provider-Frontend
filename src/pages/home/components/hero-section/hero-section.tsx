@@ -11,16 +11,16 @@ export function HeroSection() {
 
   return (
     <section
-      className="relative z-[2] mx-auto min-h-[85vh] flex items-center justify-center"
-      style={{ padding: "60px 32px 40px", maxWidth: 1200 }}
+      className="relative z-[2] mx-auto min-h-[85vh] flex items-center justify-center px-5 sm:px-8 pt-[60px] pb-10"
+      style={{ maxWidth: 1200 }}
     >
       <div
-        className="grid items-center gap-12"
+        className="flex flex-col md:grid items-center gap-8 md:gap-12 w-full"
         style={{ gridTemplateColumns: "1.1fr 1fr" }}
       >
         <div className="flex flex-col gap-6">
           <h1
-            className="text-5xl leading-[1.3]"
+            className="text-4xl md:text-5xl leading-[1.3]"
             style={{
               color: "oklch(0.95 0.08 70)",
               textShadow: "3px 3px 0 oklch(0.25 0.08 30)",
@@ -31,7 +31,7 @@ export function HeroSection() {
             {t("hero.titleLine2")}
           </h1>
           <p
-            className="text-[22px] max-w-[480px] leading-[1.4]"
+            className="text-lg sm:text-[22px] max-w-[480px] leading-[1.4]"
             style={{ color: "oklch(0.92 0.04 60)" }}
           >
             {t("hero.description")}
@@ -46,13 +46,12 @@ export function HeroSection() {
                 <input
                   id="subdomain-input"
                   data-testid="home-subdomain-input"
-                  className="pinput"
+                  className="pinput sm:pr-[210px]"
                   value={subdomain}
                   onChange={(e) => handleSubdomainChange(e.target.value)}
                   placeholder="my-castle"
-                  style={{ paddingRight: 210 }}
                 />
-                <span className="absolute right-[14px] top-1/2 -translate-y-1/2 text-lg opacity-70 pointer-events-none">
+                <span className="absolute right-[14px] top-1/2 -translate-y-1/2 text-lg opacity-70 pointer-events-none hidden sm:block">
                   .play.cosy-hosting.net
                 </span>
               </div>
@@ -74,7 +73,7 @@ export function HeroSection() {
           </div>
         </div>
 
-        <div className="relative h-[440px]">
+        <div className="relative h-[440px] hidden md:block">
           <FlatPanel
             className="absolute inset-0 flex items-center justify-center"
             style={{ background: "oklch(0.75 0.08 58)" }}

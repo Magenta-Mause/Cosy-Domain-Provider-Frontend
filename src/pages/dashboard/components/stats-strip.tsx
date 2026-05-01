@@ -40,7 +40,7 @@ export function StatsStrip({ subdomains }: StatsStripProps) {
   ];
 
   return (
-    <div className="grid grid-cols-3 gap-4 mb-7">
+    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-7">
       {stats.map((s) => (
         <FlatPanel key={s.label} className="p-4">
           <div className="pixel text-[10px] opacity-70">

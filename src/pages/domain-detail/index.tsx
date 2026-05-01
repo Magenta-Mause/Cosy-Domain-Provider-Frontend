@@ -59,7 +59,7 @@ export function DomainDetailPage({ domainId }: { domainId: string }) {
   return (
     <div className="min-h-screen bg-background">
       <DomainDetailHeader domain={domain} isCreateMode={isCreateMode} />
-      <div className="px-7 pb-20 max-w-[1100px] mx-auto mt-[35px]">
+      <div className="px-4 sm:px-7 pb-20 max-w-[1100px] mx-auto mt-[35px]">
         {!isCreateMode ? (
           <DomainTabBar activeTab={activeTab} onChange={setActiveTab} />
         ) : null}

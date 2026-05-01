@@ -8,7 +8,7 @@ export function PricingSection() {
   const { t } = useTranslation();
 
   return (
-    <section id="pricing" className="px-8 py-[60px] bg-background">
+    <section id="pricing" className="px-5 sm:px-8 py-[60px] bg-background">
       <div className="max-w-[1000px] mx-auto">
         <div className="mb-8 text-center flex flex-col gap-2">
           <h2>{t("pricing.title")}</h2>
@@ -16,7 +16,7 @@ export function PricingSection() {
             {t("pricing.subtitle")}
           </p>
         </div>
-        <div className="grid grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           <Panel className="p-7">
             <div className="h-full flex flex-col gap-4 justify-between">
               <div className="w-full flex flex-col gap-3">

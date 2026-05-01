@@ -18,7 +18,7 @@ export function PageHeader({
   return (
     <div className="sky-bg overflow-visible">
       <AppHeader rightSlot={headerRightSlot} logoLinkTo={headerLogoLinkTo} />
-      <div className="px-7 py-5 mx-auto" style={{ maxWidth }}>
+      <div className="px-4 sm:px-7 py-5 mx-auto" style={{ maxWidth }}>
         {children}
       </div>
     </div>
