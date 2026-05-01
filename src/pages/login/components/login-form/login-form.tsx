@@ -2,17 +2,12 @@ import { Turnstile } from "@marsidev/react-turnstile";
 import { Link } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 
+import { MfaCodeForm } from "@/components/auth/mfa-code-form";
 import { OAuthButtons } from "@/components/auth/oauth-buttons";
 import { PasswordInput } from "@/components/auth/password-input";
 import { ErrorMessage } from "@/components/pixel/error-message";
 import { Button } from "@/components/ui/button";
 import { FormField } from "@/components/ui/form-field";
-import {
-  InputOTP,
-  InputOTPGroup,
-  InputOTPSeparator,
-  InputOTPSlot,
-} from "@/components/ui/input-otp";
 
 import { useLoginFormLogic } from "./useLoginFormLogic";
 
@@ -36,69 +31,42 @@ export function LoginForm() {
     totpCode,
     setTotpCode,
     totpError,
+    handleTotpSubmit,
   } = useLoginFormLogic();
 
   if (step === 3) {
     return (
-      <div className="flex flex-col gap-6">
-        <button
-          type="button"
-          onClick={goBack}
-          data-testid="login-mfa-back-btn"
-          className="flex items-center gap-2 text-sm opacity-60 hover:opacity-100 transition-opacity w-fit cursor-pointer"
-        >
-          ← {email}
-        </button>
-
-        <div className="flex flex-col gap-2">
-          <h2 className="text-[22px]">{t("login.mfaTitle")}</h2>
-          <p className="text-base opacity-70 mt-1">
-            {t("login.mfaDescription")}
+      <MfaCodeForm
+        totpCode={totpCode}
+        setTotpCode={setTotpCode}
+        totpError={totpError}
+        isSubmitting={submitting}
+        onConfirm={() => void handleTotpSubmit()}
+        email={email}
+        otpTestId="login-totp-input"
+        header={
+          <button
+            type="button"
+            onClick={goBack}
+            data-testid="login-mfa-back-btn"
+            className="flex items-center gap-2 text-sm opacity-60 hover:opacity-100 transition-opacity w-fit cursor-pointer"
+          >
+            ← {email}
+          </button>
+        }
+        footer={
+          <p className="text-base text-center opacity-70">
+            {t("login.noAccount")}{" "}
+            <Link
+              to="/register"
+              data-testid="login-register-link-footer"
+              className="underline"
+            >
+              {t("login.registerLink")}
+            </Link>
           </p>
-        </div>
-
-        <div className="flex justify-center">
-          <InputOTP
-            maxLength={6}
-            value={totpCode}
-            onChange={setTotpCode}
-            data-testid="login-totp-input"
-            autoFocus
-          >
-            <InputOTPGroup>
-              <InputOTPSlot index={0} />
-              <InputOTPSlot index={1} />
-              <InputOTPSlot index={2} />
-            </InputOTPGroup>
-            <InputOTPSeparator />
-            <InputOTPGroup>
-              <InputOTPSlot index={3} />
-              <InputOTPSlot index={4} />
-              <InputOTPSlot index={5} />
-            </InputOTPGroup>
-          </InputOTP>
-        </div>
-
-        {totpError ? <ErrorMessage>{totpError}</ErrorMessage> : null}
-
-        <p className="text-base text-center opacity-70">
-          {t("login.mfaResetHint")}{" "}
-          <Link to="/forgot-password" search={{ email }} className="underline">
-            {t("login.mfaResetLink")}
-          </Link>
-        </p>
-
-        <p className="text-base text-center opacity-70">
-          {t("login.noAccount")}{" "}
-          <Link
-            to="/register"
-            data-testid="login-register-link-footer"
-            className="underline"
-          >
-            {t("login.registerLink")}
-          </Link>
-        </p>
-      </div>
+        }
+      />
     );
   }
 

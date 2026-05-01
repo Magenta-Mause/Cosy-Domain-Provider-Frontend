@@ -9,12 +9,12 @@ export function LandingNav() {
   const { isUserLoggedIn } = useAuthInformation();
 
   return (
-    <header className="flex items-center gap-4 relative z-[3] px-5 sm:px-8 py-5">
+    <header className="flex items-center gap-4 relative z-[3] px-2 sm:px-8 py-5">
       <CosyLogo testId="home-logo" />
 
       <div className="flex-1" />
 
-      <nav className="hidden sm:flex gap-2 items-center">
+      <nav className="hidden sm:flex sm:gap-2 gap-0 items-center">
         <a
           href="#features"
           data-testid="home-features-link"
@@ -33,7 +33,7 @@ export function LandingNav() {
         </a>
       </nav>
 
-      <LanguageMenu buttonVariant={"secondary"} className="mx-5" />
+      <LanguageMenu buttonVariant={"secondary"} className="mx-0 sm:mx-5" />
 
       <div className={"flex gap-3"}>
         {isUserLoggedIn ? (
