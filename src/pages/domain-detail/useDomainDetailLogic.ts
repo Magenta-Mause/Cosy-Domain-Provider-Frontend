@@ -105,6 +105,7 @@ export function useDomainDetailLogic(domainId: string) {
       setTargetIpv6(cachedSubdomain.targetIpv6 ?? "");
       setOriginalTargetIp(cachedSubdomain.targetIp ?? "");
       setOriginalTargetIpv6(cachedSubdomain.targetIpv6 ?? "");
+      setIsInitialLoading(false);
       return;
     }
     let active = true;

@@ -41,7 +41,6 @@ const authSlice = createSlice({
     ) => {
       state.identityToken = action.payload.token;
       state.user = action.payload.user;
-      state.bootstrapped = true;
       state.state = "idle";
     },
     clearIdentity: (state) => {
