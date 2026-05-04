@@ -5,11 +5,11 @@ import { cn } from "@/lib/utils";
 type BadgeColor = "accent" | "green" | "red" | "blue" | "gray" | "yellow";
 
 interface BadgeProps {
-  children: ReactNode;
-  color?: BadgeColor;
-  className?: string;
-  style?: CSSProperties;
-  onClick?: () => void;
+  readonly children: ReactNode;
+  readonly color?: BadgeColor;
+  readonly className?: string;
+  readonly style?: CSSProperties;
+  readonly onClick?: () => void;
 }
 
 export function Badge({

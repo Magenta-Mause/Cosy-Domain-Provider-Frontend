@@ -1,5 +1,15 @@
 import type { AuthUser } from "@/store/auth-slice";
 
+function resolveEmail(decoded: {
+  email?: string;
+  upn?: unknown;
+  [key: string]: unknown;
+}): string | null {
+  if (typeof decoded.email === "string") return decoded.email;
+  if (typeof decoded.upn === "string") return decoded.upn;
+  return null;
+}
+
 export function parseIdentityToken(token: string): AuthUser | null {
   try {
     const payload = token.split(".")[1];
@@ -22,12 +32,7 @@ export function parseIdentityToken(token: string): AuthUser | null {
 
     return {
       username: decoded.username ?? null,
-      email:
-        typeof decoded.email === "string"
-          ? decoded.email
-          : typeof decoded.upn === "string"
-            ? decoded.upn
-            : null,
+      email: resolveEmail(decoded),
       subject: decoded.sub ?? null,
       isVerified: decoded.isVerified ?? null,
       needsPasswordSetup: decoded.needsPasswordSetup === true,

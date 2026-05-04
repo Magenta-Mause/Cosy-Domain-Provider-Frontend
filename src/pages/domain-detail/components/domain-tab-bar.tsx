@@ -1,8 +1,8 @@
 import type { TabKey } from "@/pages/domain-detail/lib";
 
 interface DomainTabBarProps {
-  activeTab: TabKey;
-  onChange: (tab: TabKey) => void;
+  readonly activeTab: TabKey;
+  readonly onChange: (tab: TabKey) => void;
 }
 
 const TABS: Array<[TabKey, string]> = [

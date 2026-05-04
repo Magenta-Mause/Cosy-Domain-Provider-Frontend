@@ -4,16 +4,16 @@ import eyeOpenIcon from "@/assets/eye-open.webp";
 import { Icon } from "@/components/ui/icon";
 
 interface PasswordInputProps {
-  id: string;
-  autoComplete?: string;
-  required?: boolean;
-  minLength?: number;
-  placeholder?: string;
-  value: string;
-  onChange: (value: string) => void;
-  style?: React.CSSProperties;
-  testId?: string;
-  toggleTestId?: string;
+  readonly id: string;
+  readonly autoComplete?: string;
+  readonly required?: boolean;
+  readonly minLength?: number;
+  readonly placeholder?: string;
+  readonly value: string;
+  readonly onChange: (value: string) => void;
+  readonly style?: React.CSSProperties;
+  readonly testId?: string;
+  readonly toggleTestId?: string;
 }
 
 export function PasswordInput({
@@ -35,7 +35,7 @@ export function PasswordInput({
       <input
         id={id}
         data-testid={testId}
-        className={`pinput pr-20${!showPw ? " tracking-widest" : ""}`}
+        className={`pinput pr-20${showPw ? "" : " tracking-widest"}`}
         type={showPw ? "text" : "password"}
         autoComplete={autoComplete}
         required={required}

@@ -2,8 +2,8 @@ import { Link, type LinkProps } from "@tanstack/react-router";
 import cosyIcon from "@/assets/cosy-logo.webp";
 
 interface CosyLogoProps {
-  linkTo?: LinkProps["to"];
-  testId?: string;
+  readonly linkTo?: LinkProps["to"];
+  readonly testId?: string;
 }
 
 const inner = (

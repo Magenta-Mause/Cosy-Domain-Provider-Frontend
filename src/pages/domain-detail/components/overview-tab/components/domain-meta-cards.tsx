@@ -4,8 +4,8 @@ import type { SubdomainDto } from "@/api/generated/model";
 import { FlatPanel } from "@/components/pixel/panel";
 
 interface DomainMetaCardsProps {
-  domain: SubdomainDto | undefined;
-  createdAt: string;
+  readonly domain: SubdomainDto | undefined;
+  readonly createdAt: string;
 }
 
 export function DomainMetaCards({ domain, createdAt }: DomainMetaCardsProps) {

@@ -12,13 +12,13 @@ export interface ColumnDef<T> {
 }
 
 interface TableProps<T> {
-  columns: ColumnDef<T>[];
-  rows: T[];
-  getRowKey: (row: T) => string;
-  onRowClick?: (row: T) => void;
-  emptyMessage?: string;
-  initialSortColId?: string;
-  initialSortDir?: "asc" | "desc";
+  readonly columns: ColumnDef<T>[];
+  readonly rows: T[];
+  readonly getRowKey: (row: T) => string;
+  readonly onRowClick?: (row: T) => void;
+  readonly emptyMessage?: string;
+  readonly initialSortColId?: string;
+  readonly initialSortDir?: "asc" | "desc";
 }
 
 export function Table<T>({

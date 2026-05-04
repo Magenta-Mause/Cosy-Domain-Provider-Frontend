@@ -8,8 +8,8 @@ import { StatusDot } from "@/components/pixel/status-dot";
 import { SubdomainStatusBadge } from "@/components/pixel/subdomain-status-badge";
 
 interface DomainDetailHeaderProps {
-  domain: SubdomainDto | undefined;
-  isCreateMode: boolean;
+  readonly domain: SubdomainDto | undefined;
+  readonly isCreateMode: boolean;
 }
 
 export function DomainDetailHeader({

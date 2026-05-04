@@ -3,9 +3,9 @@ import { useTranslation } from "react-i18next";
 import { FlatPanel } from "@/components/pixel/panel";
 
 interface UserStatsProps {
-  total: number;
-  unverified: number;
-  plus: number;
+  readonly total: number;
+  readonly unverified: number;
+  readonly plus: number;
 }
 
 export function UserStats({ total, unverified, plus }: UserStatsProps) {

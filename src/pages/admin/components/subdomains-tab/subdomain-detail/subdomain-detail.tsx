@@ -11,9 +11,9 @@ import { StatusBadge } from "../../users-tab/components/status-badge";
 import { useSubdomainDetailLogic } from "./useSubdomainDetailLogic";
 
 interface SubdomainDetailProps {
-  subdomain: AdminSubdomain;
-  adminKey: string;
-  onSaved: () => void;
+  readonly subdomain: AdminSubdomain;
+  readonly adminKey: string;
+  readonly onSaved: () => void;
 }
 
 function deriveDnsEntries(subdomain: AdminSubdomain) {
@@ -190,7 +190,7 @@ export function SubdomainDetail({
             label={t("admin.colTargetIpv4")}
             value={targetIp}
             onChange={setTargetIp}
-            placeholder="1.2.3.4"
+            placeholder="192.0.2.1"
             inputMode="decimal"
           />
           <FormField

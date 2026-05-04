@@ -7,11 +7,11 @@ import { FlatPanel } from "@/components/pixel/panel";
 import { SubdomainListItem } from "./components/subdomain-list-item.tsx";
 
 interface SubdomainListProps {
-  subdomains: SubdomainDto[];
-  isLoading: boolean;
-  isError: boolean;
-  isVerified: boolean;
-  isMfaEnabled: boolean;
+  readonly subdomains: SubdomainDto[];
+  readonly isLoading: boolean;
+  readonly isError: boolean;
+  readonly isVerified: boolean;
+  readonly isMfaEnabled: boolean;
 }
 
 export function SubdomainList({
@@ -40,14 +40,11 @@ export function SubdomainList({
   }
 
   if (subdomains.length === 0) {
+    let emptyMessage: string = t("dashboard.empty");
+    if (!isVerified) emptyMessage = t("dashboard.emptyUnverified");
+    else if (!isMfaEnabled) emptyMessage = t("dashboard.emptyMfaRequired");
     return (
-      <FlatPanel className="p-6 text-center text-lg">
-        {!isVerified
-          ? t("dashboard.emptyUnverified")
-          : !isMfaEnabled
-            ? t("dashboard.emptyMfaRequired")
-            : t("dashboard.empty")}
-      </FlatPanel>
+      <FlatPanel className="p-6 text-center text-lg">{emptyMessage}</FlatPanel>
     );
   }
 

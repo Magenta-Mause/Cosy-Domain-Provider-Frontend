@@ -4,10 +4,10 @@ import { ErrorMessage } from "@/components/pixel/error-message";
 import { Button } from "@/components/ui/button";
 
 interface SendEmailViewProps {
-  userEmail: string | null | undefined;
-  isSending: boolean;
-  sendError: string | null;
-  onSend: () => void;
+  readonly userEmail: string | null | undefined;
+  readonly isSending: boolean;
+  readonly sendError: string | null;
+  readonly onSend: () => void;
 }
 
 export function SendEmailView({

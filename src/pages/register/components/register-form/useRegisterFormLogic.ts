@@ -1,6 +1,6 @@
 import type { TurnstileInstance } from "@marsidev/react-turnstile";
 import { useNavigate } from "@tanstack/react-router";
-import { useMemo, useRef, useState } from "react";
+import { type FormEvent, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import useDataInteractions from "@/hooks/useDataInteractions/useDataInteractions";
@@ -39,7 +39,7 @@ export function useRegisterFormLogic() {
     !!captchaToken &&
     !submitting;
 
-  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (step === 1) {
       if (emailValid) setStep(2);

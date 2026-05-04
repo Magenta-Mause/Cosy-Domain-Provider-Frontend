@@ -4,7 +4,7 @@ import type { SubdomainDto } from "@/api/generated/model";
 import { FlatPanel } from "@/components/pixel/panel";
 
 interface DnsTabProps {
-  domain: SubdomainDto | undefined;
+  readonly domain: SubdomainDto | undefined;
 }
 
 export function DnsTab({ domain }: DnsTabProps) {
@@ -22,7 +22,7 @@ export function DnsTab({ domain }: DnsTabProps) {
           <span className="pixel text-xs text-btn-primary">
             {domain?.fqdn ?? domain?.label}
           </span>
-          .
+          {"."}
         </p>
       </div>
       <FlatPanel className="p-0 overflow-hidden">
@@ -48,7 +48,7 @@ export function DnsTab({ domain }: DnsTabProps) {
                 entry.type ?? "—",
                 entry.name ?? "—",
                 (entry.values ?? []).join(", ") || "—",
-                entry.ttl != null ? String(entry.ttl) : "—",
+                entry.ttl == null ? "—" : String(entry.ttl),
               ];
               return cells.map((cell, j) => (
                 <div

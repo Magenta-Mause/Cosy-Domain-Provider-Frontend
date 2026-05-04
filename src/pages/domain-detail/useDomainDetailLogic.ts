@@ -1,5 +1,5 @@
 import { useNavigate } from "@tanstack/react-router";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { type FormEvent, useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { checkLabelAvailability } from "@/api/billing-api";
@@ -42,7 +42,8 @@ export function useDomainDetailLogic(domainId: string) {
   const [loadedSubdomain, setLoadedSubdomain] =
     useState<typeof cachedSubdomain>(undefined);
   const [isInitialLoading, setIsInitialLoading] = useState(false);
-  const [label, setLabelRaw] = useState("");
+  const [labelRaw, setLabelRaw] = useState("");
+  const label = labelRaw;
   const [targetIp, setTargetIp] = useState("");
   const [targetIpv6, setTargetIpv6] = useState("");
   const [originalTargetIp, setOriginalTargetIp] = useState("");
@@ -163,7 +164,7 @@ export function useDomainDetailLogic(domainId: string) {
     t("domainDetail.unknownValue"),
   );
 
-  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setHasSubmitted(true);
     setErrorMessage(null);
@@ -204,7 +205,7 @@ export function useDomainDetailLogic(domainId: string) {
 
   async function handleDelete() {
     if (isCreateMode) return;
-    const shouldDelete = window.confirm(t("domainDetail.deleteConfirm"));
+    const shouldDelete = globalThis.confirm(t("domainDetail.deleteConfirm"));
     if (!shouldDelete) return;
     setIsDeleting(true);
     setErrorMessage(null);

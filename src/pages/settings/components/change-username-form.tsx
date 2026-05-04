@@ -7,8 +7,8 @@ import { FormField } from "@/components/ui/form-field";
 import { useChangeUsernameFormLogic } from "./useChangeUsernameFormLogic";
 
 interface ChangeUsernameFormProps {
-  currentUsername: string | null;
-  onSave: (newUsername: string) => Promise<void>;
+  readonly currentUsername: string | null;
+  readonly onSave: (newUsername: string) => Promise<void>;
 }
 
 export function ChangeUsernameForm({

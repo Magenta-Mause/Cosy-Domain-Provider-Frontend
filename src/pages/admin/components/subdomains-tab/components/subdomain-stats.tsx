@@ -3,8 +3,8 @@ import { useTranslation } from "react-i18next";
 import { FlatPanel } from "@/components/pixel/panel";
 
 interface SubdomainStatsProps {
-  total: number;
-  failed: number;
+  readonly total: number;
+  readonly failed: number;
 }
 
 export function SubdomainStats({ total, failed }: SubdomainStatsProps) {

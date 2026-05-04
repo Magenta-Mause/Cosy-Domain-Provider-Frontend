@@ -24,12 +24,12 @@ export function useDashboardLogic() {
   );
 
   const handleCreateNew = useCallback(() => {
-    if (!isVerified) {
-      void navigate({ to: "/verify" });
-    } else if (!isMfaEnabled) {
+    if (isVerified && isMfaEnabled) {
+      void navigate({ to: "/domain/$domainId", params: { domainId: "new" } });
+    } else if (isVerified) {
       void navigate({ to: "/mfa-setup" });
     } else {
-      void navigate({ to: "/domain/$domainId", params: { domainId: "new" } });
+      void navigate({ to: "/verify" });
     }
   }, [navigate, isVerified, isMfaEnabled]);
 

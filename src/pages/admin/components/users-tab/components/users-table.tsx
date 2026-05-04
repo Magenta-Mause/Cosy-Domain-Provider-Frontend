@@ -5,14 +5,36 @@ import { type ColumnDef, Table } from "@/components/ui/table";
 import type { AdminUser } from "../../../lib";
 
 interface UsersTableProps {
-  users: AdminUser[];
-  onUserClick: (userId: string) => void;
+  readonly users: AdminUser[];
+  readonly onUserClick: (userId: string) => void;
 }
 
-export function UsersTable({ users, onUserClick }: UsersTableProps) {
-  const { t } = useTranslation();
+function UuidCell({ uuid }: { uuid: string }) {
+  return <span className="truncate w-full">{uuid}</span>;
+}
 
-  const columns: ColumnDef<AdminUser>[] = [
+function SubdomainCountCell({
+  subdomainCount,
+  maxSubdomainCount,
+  maxSubdomainCountOverride,
+}: Pick<
+  AdminUser,
+  "subdomainCount" | "maxSubdomainCount" | "maxSubdomainCountOverride"
+>) {
+  return (
+    <>
+      {subdomainCount}/{maxSubdomainCount}
+      {maxSubdomainCountOverride !== null && (
+        <span className="ml-1 text-xs opacity-50">*</span>
+      )}
+    </>
+  );
+}
+
+function getColumns(
+  t: ReturnType<typeof useTranslation>["t"],
+): ColumnDef<AdminUser>[] {
+  return [
     {
       id: "email",
       header: t("admin.colEmail"),
@@ -26,7 +48,7 @@ export function UsersTable({ users, onUserClick }: UsersTableProps) {
       header: t("admin.colUuid"),
       width: "2fr",
       compare: (a, b) => a.uuid.localeCompare(b.uuid),
-      cell: (u) => <span className="truncate w-full">{u.uuid}</span>,
+      cell: (u) => <UuidCell uuid={u.uuid} />,
       cellClassName:
         "font-mono text-xs opacity-60 flex items-center overflow-hidden",
     },
@@ -43,12 +65,11 @@ export function UsersTable({ users, onUserClick }: UsersTableProps) {
       header: t("admin.colSubdomains"),
       compare: (a, b) => a.subdomainCount - b.subdomainCount,
       cell: (u) => (
-        <>
-          {u.subdomainCount}/{u.maxSubdomainCount}
-          {u.maxSubdomainCountOverride !== null && (
-            <span className="ml-1 text-xs opacity-50">*</span>
-          )}
-        </>
+        <SubdomainCountCell
+          subdomainCount={u.subdomainCount}
+          maxSubdomainCount={u.maxSubdomainCount}
+          maxSubdomainCountOverride={u.maxSubdomainCountOverride}
+        />
       ),
     },
     {
@@ -70,6 +91,11 @@ export function UsersTable({ users, onUserClick }: UsersTableProps) {
       cellClassName: "opacity-60",
     },
   ];
+}
+
+export function UsersTable({ users, onUserClick }: UsersTableProps) {
+  const { t } = useTranslation();
+  const columns = getColumns(t);
 
   return (
     <Table

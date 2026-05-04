@@ -1,15 +1,25 @@
 import { Turnstile } from "@marsidev/react-turnstile";
 import { Link } from "@tanstack/react-router";
+import type { TFunction } from "i18next";
 import { useTranslation } from "react-i18next";
-
 import { OAuthButtons } from "@/components/auth/oauth-buttons";
 import { PasswordInput } from "@/components/auth/password-input";
 import { ErrorMessage } from "@/components/pixel/error-message";
 import { Button } from "@/components/ui/button";
 import { FormField } from "@/components/ui/form-field";
-
 import { PasswordStrength } from "../password-strength";
+
 import { useRegisterFormLogic } from "./useRegisterFormLogic";
+
+function registerButtonLabel(
+  t: TFunction,
+  submitting: boolean,
+  captchaReady: boolean,
+): string {
+  if (submitting) return t("register.submitting");
+  if (!captchaReady) return t("register.captchaLoading");
+  return t("register.submitButton");
+}
 
 export function RegisterForm() {
   const { t } = useTranslation();
@@ -176,11 +186,7 @@ export function RegisterForm() {
             className="w-full"
             disabled={!canSubmit}
           >
-            {submitting
-              ? t("register.submitting")
-              : !captchaReady
-                ? t("register.captchaLoading")
-                : t("register.submitButton")}
+            {registerButtonLabel(t, submitting, captchaReady)}
           </Button>
         </>
       )}

@@ -1,7 +1,7 @@
 import mailBoxImageSmall from "@/assets/castle.png";
 
 interface MailboxProps {
-  size?: number;
+  readonly size?: number;
 }
 
 export function Mailbox({ size = 58 }: MailboxProps) {

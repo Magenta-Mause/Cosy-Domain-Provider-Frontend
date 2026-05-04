@@ -1,7 +1,7 @@
 import { Turnstile } from "@marsidev/react-turnstile";
 import { Link } from "@tanstack/react-router";
+import type { TFunction } from "i18next";
 import { useTranslation } from "react-i18next";
-
 import { MfaCodeForm } from "@/components/auth/mfa-code-form";
 import { OAuthButtons } from "@/components/auth/oauth-buttons";
 import { PasswordInput } from "@/components/auth/password-input";
@@ -10,6 +10,16 @@ import { Button } from "@/components/ui/button";
 import { FormField } from "@/components/ui/form-field";
 
 import { useLoginFormLogic } from "./useLoginFormLogic";
+
+function loginButtonLabel(
+  t: TFunction,
+  submitting: boolean,
+  captchaReady: boolean,
+): string {
+  if (submitting) return t("login.submitting");
+  if (!captchaReady) return t("login.captchaLoading");
+  return t("login.submitButton");
+}
 
 export function LoginForm() {
   const { t } = useTranslation();
@@ -156,11 +166,7 @@ export function LoginForm() {
             className="w-full"
             disabled={!password || submitting || !captchaReady}
           >
-            {submitting
-              ? t("login.submitting")
-              : !captchaReady
-                ? t("login.captchaLoading")
-                : t("login.submitButton")}
+            {loginButtonLabel(t, submitting, captchaReady)}
           </Button>
 
           <Turnstile

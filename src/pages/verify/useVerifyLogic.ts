@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { type FormEvent, useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import useAuthInformation from "@/hooks/useAuthInformation/useAuthInformation";
@@ -15,9 +15,10 @@ export function useVerifyLogic() {
   const { verifyAccount, resendVerificationCode, setupPassword } =
     useDataInteractions();
 
-  const [stage, setStage] = useState<Stage>(
-    needsPasswordSetup ? "password" : isUserLoggedIn ? "send" : "input",
-  );
+  let initialStage: Stage = "input";
+  if (needsPasswordSetup) initialStage = "password";
+  else if (isUserLoggedIn) initialStage = "send";
+  const [stage, setStage] = useState<Stage>(initialStage);
   const [verificationToken, setVerificationToken] = useState("");
   const [isVerifying, setIsVerifying] = useState(false);
   const [isSending, setIsSending] = useState(false);
@@ -57,7 +58,7 @@ export function useVerifyLogic() {
     }
   }, [urlToken, triggerVerification]);
 
-  const triggerPasswordSetup = async (e: React.FormEvent) => {
+  const triggerPasswordSetup = async (e: FormEvent) => {
     e.preventDefault();
     if (password !== confirmPassword) {
       setPasswordError(t("passwordSetup.mismatch"));

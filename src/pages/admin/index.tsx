@@ -11,8 +11,8 @@ import { FormField } from "@/components/ui/form-field";
 import { useAdminLogic } from "./useAdminLogic";
 
 interface AdminAuthGateProps {
-  activeTab: "subdomains" | "users";
-  outlet: ReactNode;
+  readonly activeTab: "subdomains" | "users";
+  readonly outlet: ReactNode;
 }
 
 export function AdminAuthGate({ activeTab, outlet }: AdminAuthGateProps) {

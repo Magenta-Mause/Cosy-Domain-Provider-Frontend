@@ -2,7 +2,7 @@ import type { AdminSubdomain } from "../../../lib";
 import { subdomainStatusColor } from "../../subdomains-tab/lib";
 
 interface StatusBadgeProps {
-  status: AdminSubdomain["status"];
+  readonly status: AdminSubdomain["status"];
 }
 
 export function StatusBadge({ status }: StatusBadgeProps) {

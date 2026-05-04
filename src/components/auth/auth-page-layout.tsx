@@ -9,9 +9,9 @@ import { Scenery } from "@/components/pixel/scenery";
 import { useAuthPageLayoutLogic } from "./useAuthPageLayoutLogic";
 
 interface AuthPageLayoutProps {
-  children: React.ReactNode;
-  maxWidth?: number;
-  backButtonLink?: LinkProps["to"] | null;
+  readonly children: React.ReactNode;
+  readonly maxWidth?: number;
+  readonly backButtonLink?: LinkProps["to"] | null;
 }
 
 export function AuthPageLayout({

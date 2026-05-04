@@ -1,12 +1,12 @@
 interface ConfirmModalProps {
-  isOpen: boolean;
-  title: string;
-  description: string;
-  confirmLabel: string;
-  cancelLabel: string;
-  isLoading?: boolean;
-  onConfirm: () => void;
-  onCancel: () => void;
+  readonly isOpen: boolean;
+  readonly title: string;
+  readonly description: string;
+  readonly confirmLabel: string;
+  readonly cancelLabel: string;
+  readonly isLoading?: boolean;
+  readonly onConfirm: () => void;
+  readonly onCancel: () => void;
 }
 
 export function ConfirmModal({

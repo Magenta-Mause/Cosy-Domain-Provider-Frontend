@@ -10,14 +10,14 @@ import { LabelAvailabilityIndicator } from "./label-availability-indicator";
 import { PlanCard } from "./plan-card";
 
 interface CreateModeFieldsProps {
-  isPlus: boolean;
-  isVerified: boolean | null;
-  label: string;
-  onLabelChange: (v: string) => void;
-  labelInvalid: boolean;
-  labelAvailability: LabelAvailability;
-  namingMode: NamingMode;
-  onNamingModeChange: (mode: NamingMode) => void;
+  readonly isPlus: boolean;
+  readonly isVerified: boolean | null;
+  readonly label: string;
+  readonly onLabelChange: (v: string) => void;
+  readonly labelInvalid: boolean;
+  readonly labelAvailability: LabelAvailability;
+  readonly namingMode: NamingMode;
+  readonly onNamingModeChange: (mode: NamingMode) => void;
 }
 
 export function CreateModeFields({

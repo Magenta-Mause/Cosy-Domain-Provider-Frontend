@@ -3,10 +3,10 @@ import { useTranslation } from "react-i18next";
 import { FormField } from "@/components/ui/form-field";
 
 interface TargetIpFieldProps {
-  targetIp: string;
-  onTargetIpChange: (v: string) => void;
-  hasSubmitted: boolean;
-  ipValid: boolean;
+  readonly targetIp: string;
+  readonly onTargetIpChange: (v: string) => void;
+  readonly hasSubmitted: boolean;
+  readonly ipValid: boolean;
 }
 
 export function TargetIpField({

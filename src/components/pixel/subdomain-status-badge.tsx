@@ -5,8 +5,8 @@ import { SubdomainDtoStatus } from "@/api/generated/model";
 import { Badge } from "@/components/pixel/badge";
 
 interface SubdomainStatusBadgeProps {
-  status: SubdomainDtoStatus;
-  variant?: "dashboard" | "detail";
+  readonly status: SubdomainDtoStatus;
+  readonly variant?: "dashboard" | "detail";
 }
 
 export function SubdomainStatusBadge({

@@ -72,7 +72,7 @@ export function useSubdomainDetailLogic(
   const [deleteError, setDeleteError] = useState<string | null>(null);
 
   const handleDeleteSubdomain = async () => {
-    if (!window.confirm(t("admin.deleteSubdomainConfirm"))) return;
+    if (!globalThis.confirm(t("admin.deleteSubdomainConfirm"))) return;
     setIsDeleting(true);
     setDeleteError(null);
     try {

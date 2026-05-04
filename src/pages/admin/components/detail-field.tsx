@@ -1,8 +1,8 @@
 import type { ReactNode } from "react";
 
 interface DetailFieldProps {
-  label: string;
-  children: ReactNode;
+  readonly label: string;
+  readonly children: ReactNode;
 }
 
 export function DetailField({ label, children }: DetailFieldProps) {

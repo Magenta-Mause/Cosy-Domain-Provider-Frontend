@@ -5,7 +5,7 @@ import { SubdomainDtoStatus } from "@/api/generated/model";
 import { FlatPanel } from "@/components/pixel/panel";
 
 interface StatsStripProps {
-  subdomains: SubdomainDto[];
+  readonly subdomains: SubdomainDto[];
 }
 
 export function StatsStrip({ subdomains }: StatsStripProps) {

@@ -1,3 +1,4 @@
+import type { FormEvent } from "react";
 import { useTranslation } from "react-i18next";
 
 import { ErrorMessage } from "@/components/pixel/error-message";
@@ -8,29 +9,29 @@ import { OverviewActions } from "./overview-tab/components/overview-actions";
 import { TargetIpTabs } from "./overview-tab/components/target-ip-tabs";
 
 interface CreateSubdomainFormProps {
-  isPlus: boolean;
-  isVerified: boolean | null;
-  label: string;
-  onLabelChange: (v: string) => void;
-  targetIp: string;
-  onTargetIpChange: (v: string) => void;
-  targetIpv6: string;
-  onTargetIpv6Change: (v: string) => void;
-  ipTab: "ipv4" | "ipv6";
-  onIpTabChange: (tab: "ipv4" | "ipv6") => void;
-  errorMessage: string | null;
-  isSubmitting: boolean;
-  isDeleting: boolean;
-  hasSubmitted: boolean;
-  labelValid: boolean;
-  labelAvailability: LabelAvailability;
-  namingMode: NamingMode;
-  onNamingModeChange: (mode: NamingMode) => void;
-  ipv4Valid: boolean;
-  ipv6Valid: boolean;
-  atLeastOneIp: boolean;
-  canSubmit: boolean;
-  onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
+  readonly isPlus: boolean;
+  readonly isVerified: boolean | null;
+  readonly label: string;
+  readonly onLabelChange: (v: string) => void;
+  readonly targetIp: string;
+  readonly onTargetIpChange: (v: string) => void;
+  readonly targetIpv6: string;
+  readonly onTargetIpv6Change: (v: string) => void;
+  readonly ipTab: "ipv4" | "ipv6";
+  readonly onIpTabChange: (tab: "ipv4" | "ipv6") => void;
+  readonly errorMessage: string | null;
+  readonly isSubmitting: boolean;
+  readonly isDeleting: boolean;
+  readonly hasSubmitted: boolean;
+  readonly labelValid: boolean;
+  readonly labelAvailability: LabelAvailability;
+  readonly namingMode: NamingMode;
+  readonly onNamingModeChange: (mode: NamingMode) => void;
+  readonly ipv4Valid: boolean;
+  readonly ipv6Valid: boolean;
+  readonly atLeastOneIp: boolean;
+  readonly canSubmit: boolean;
+  readonly onSubmit: (event: FormEvent<HTMLFormElement>) => void;
 }
 
 export function CreateSubdomainForm({

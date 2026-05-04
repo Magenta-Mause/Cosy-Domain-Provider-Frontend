@@ -3,10 +3,10 @@ import type { CSSProperties, ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
 interface PanelProps {
-  children: ReactNode;
-  className?: string;
-  style?: CSSProperties;
-  withRibbon?: boolean;
+  readonly children: ReactNode;
+  readonly className?: string;
+  readonly style?: CSSProperties;
+  readonly withRibbon?: boolean;
 }
 
 export function Panel({ children, className, style, withRibbon }: PanelProps) {

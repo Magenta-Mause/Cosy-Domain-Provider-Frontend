@@ -1,11 +1,21 @@
+import type { TFunction } from "i18next";
 import { useTranslation } from "react-i18next";
+
+function killSwitchButtonLabel(
+  t: TFunction,
+  isToggling: boolean,
+  enabled: boolean,
+): string {
+  if (isToggling) return t("admin.killSwitchToggling");
+  return enabled ? t("admin.killSwitchDisable") : t("admin.killSwitchEnable");
+}
 
 import { FlatPanel } from "@/components/pixel/panel";
 
 import { useKillSwitchLogic } from "./useKillSwitchLogic";
 
 interface KillSwitchPanelProps {
-  adminKey: string;
+  readonly adminKey: string;
 }
 
 export function KillSwitchPanel({ adminKey }: KillSwitchPanelProps) {
@@ -42,11 +52,7 @@ export function KillSwitchPanel({ adminKey }: KillSwitchPanelProps) {
           disabled={isToggling}
           className={`pbtn sm ${domainCreationEnabled ? "destructive" : "primary"}`}
         >
-          {isToggling
-            ? t("admin.killSwitchToggling")
-            : domainCreationEnabled
-              ? t("admin.killSwitchDisable")
-              : t("admin.killSwitchEnable")}
+          {killSwitchButtonLabel(t, isToggling, domainCreationEnabled)}
         </button>
       </div>
     </FlatPanel>

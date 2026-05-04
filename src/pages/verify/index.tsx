@@ -32,9 +32,9 @@ const VerifyPage = () => {
     triggerPasswordSetup,
   } = useVerifyLogic();
 
-  return (
-    <AuthPageLayout backButtonLink="/dashboard">
-      {stage === "password" ? (
+  function renderStage() {
+    if (stage === "password") {
+      return (
         <SetPasswordView
           password={password}
           confirmPassword={confirmPassword}
@@ -44,38 +44,47 @@ const VerifyPage = () => {
           onConfirmChange={setConfirmPassword}
           onSubmit={(e) => void triggerPasswordSetup(e)}
         />
-      ) : stage === "send" ? (
+      );
+    }
+    if (stage === "send") {
+      return (
         <SendEmailView
           userEmail={userEmail}
           isSending={isSending}
           sendError={sendError}
           onSend={() => void triggerSendEmail()}
         />
-      ) : stage === "success" ? (
-        <VerifiedView />
-      ) : (
-        <VerifyForm
-          userEmail={userEmail}
-          verificationToken={verificationToken}
-          isVerifying={isVerifying}
-          isSending={isSending}
-          resendSent={resendSent}
-          verifyError={verifyError}
-          resendError={resendError}
-          isBusy={isBusy}
-          onTokenChange={(code) => {
-            const sanitized = sanitizeVerificationCode(code);
-            setVerificationToken(sanitized);
-            setVerifyError(null);
-            if (sanitized.length === 6) {
-              void triggerVerification(sanitized);
-            }
-          }}
-          onVerify={() => triggerVerification(verificationToken)}
-          onResend={() => void triggerResend()}
-        />
-      )}
-    </AuthPageLayout>
+      );
+    }
+    if (stage === "success") {
+      return <VerifiedView />;
+    }
+    return (
+      <VerifyForm
+        userEmail={userEmail}
+        verificationToken={verificationToken}
+        isVerifying={isVerifying}
+        isSending={isSending}
+        resendSent={resendSent}
+        verifyError={verifyError}
+        resendError={resendError}
+        isBusy={isBusy}
+        onTokenChange={(code) => {
+          const sanitized = sanitizeVerificationCode(code);
+          setVerificationToken(sanitized);
+          setVerifyError(null);
+          if (sanitized.length === 6) {
+            void triggerVerification(sanitized);
+          }
+        }}
+        onVerify={() => triggerVerification(verificationToken)}
+        onResend={() => void triggerResend()}
+      />
+    );
+  }
+
+  return (
+    <AuthPageLayout backButtonLink="/dashboard">{renderStage()}</AuthPageLayout>
   );
 };
 

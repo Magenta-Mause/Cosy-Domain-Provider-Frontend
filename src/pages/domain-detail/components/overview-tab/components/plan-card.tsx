@@ -1,10 +1,10 @@
 import { cn } from "@/lib/utils";
 
 interface PlanCardProps {
-  selected: boolean;
-  onClick: () => void;
-  badge: React.ReactNode;
-  label: string;
+  readonly selected: boolean;
+  readonly onClick: () => void;
+  readonly badge: React.ReactNode;
+  readonly label: string;
 }
 
 export function PlanCard({ selected, onClick, badge, label }: PlanCardProps) {

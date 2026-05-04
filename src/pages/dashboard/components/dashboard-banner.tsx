@@ -1,15 +1,26 @@
+import type { TFunction } from "i18next";
 import { useTranslation } from "react-i18next";
+
+function createButtonLabel(
+  t: TFunction,
+  isVerified: boolean,
+  isMfaEnabled: boolean,
+): string | null {
+  if (!isVerified) return t("dashboard.verifyAccount");
+  if (!isMfaEnabled) return t("dashboard.setupMfa");
+  return null;
+}
 
 import { PageHeader } from "@/components/layout/page-header";
 import { Button } from "@/components/ui/button";
 
 interface DashboardBannerProps {
-  isVerified: boolean;
-  isMfaEnabled: boolean;
-  isSlotsExhausted: boolean;
-  domainCreationEnabled: boolean;
-  userTier: "FREE" | "PLUS" | null;
-  onCreateNew: () => void;
+  readonly isVerified: boolean;
+  readonly isMfaEnabled: boolean;
+  readonly isSlotsExhausted: boolean;
+  readonly domainCreationEnabled: boolean;
+  readonly userTier: "FREE" | "PLUS" | null;
+  readonly onCreateNew: () => void;
 }
 
 export function DashboardBanner({
@@ -24,13 +35,15 @@ export function DashboardBanner({
 
   const isButtonDisabled = !domainCreationEnabled || isSlotsExhausted;
 
-  const tooltipText = !domainCreationEnabled
-    ? t("dashboard.creationDisabled")
-    : isSlotsExhausted
-      ? userTier === "PLUS"
-        ? t("dashboard.slotsExhaustedPlus")
-        : t("dashboard.slotsExhaustedFree")
-      : null;
+  const exhaustedText =
+    userTier === "PLUS"
+      ? t("dashboard.slotsExhaustedPlus")
+      : t("dashboard.slotsExhaustedFree");
+  const tooltipText = domainCreationEnabled
+    ? isSlotsExhausted
+      ? exhaustedText
+      : null
+    : t("dashboard.creationDisabled");
 
   return (
     <PageHeader>
@@ -60,11 +73,7 @@ export function DashboardBanner({
             onClick={onCreateNew}
             disabled={isButtonDisabled}
           >
-            {!isVerified ? (
-              t("dashboard.verifyAccount")
-            ) : !isMfaEnabled ? (
-              t("dashboard.setupMfa")
-            ) : (
+            {createButtonLabel(t, isVerified, isMfaEnabled) ?? (
               <>+ {t("dashboard.createNew")}</>
             )}
           </Button>

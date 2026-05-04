@@ -4,7 +4,7 @@ import { ErrorMessage } from "@/components/pixel/error-message";
 import type { LabelAvailability } from "@/pages/domain-detail/lib";
 
 interface LabelAvailabilityIndicatorProps {
-  availability: LabelAvailability;
+  readonly availability: LabelAvailability;
 }
 
 export function LabelAvailabilityIndicator({

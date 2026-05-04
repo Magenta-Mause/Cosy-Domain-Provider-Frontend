@@ -2,8 +2,8 @@ import type React from "react";
 
 interface IconProps
   extends Omit<React.HTMLAttributes<HTMLSpanElement>, "children"> {
-  src: string;
-  className?: string;
+  readonly src: string;
+  readonly className?: string;
 }
 
 export function Icon({ src, className = "", style, ...rest }: IconProps) {

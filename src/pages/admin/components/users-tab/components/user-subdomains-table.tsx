@@ -6,17 +6,18 @@ import type { AdminSubdomain } from "../../../lib";
 import { StatusBadge } from "./status-badge";
 
 interface UserSubdomainsTableProps {
-  subdomains: AdminSubdomain[];
-  onSubdomainClick: (subdomainId: string) => void;
+  readonly subdomains: AdminSubdomain[];
+  readonly onSubdomainClick: (subdomainId: string) => void;
 }
 
-export function UserSubdomainsTable({
-  subdomains,
-  onSubdomainClick,
-}: UserSubdomainsTableProps) {
-  const { t } = useTranslation();
+function renderStatusCell(s: AdminSubdomain) {
+  return <StatusBadge status={s.status} />;
+}
 
-  const columns: ColumnDef<AdminSubdomain>[] = [
+function getColumns(
+  t: ReturnType<typeof useTranslation>["t"],
+): ColumnDef<AdminSubdomain>[] {
+  return [
     {
       id: "label",
       header: t("admin.colLabel"),
@@ -34,7 +35,7 @@ export function UserSubdomainsTable({
     {
       id: "status",
       header: t("admin.colStatus"),
-      cell: (s) => <StatusBadge status={s.status} />,
+      cell: renderStatusCell,
     },
     {
       id: "mode",
@@ -55,6 +56,14 @@ export function UserSubdomainsTable({
       cellClassName: "opacity-70",
     },
   ];
+}
+
+export function UserSubdomainsTable({
+  subdomains,
+  onSubdomainClick,
+}: UserSubdomainsTableProps) {
+  const { t } = useTranslation();
+  const columns = getColumns(t);
 
   return (
     <Table

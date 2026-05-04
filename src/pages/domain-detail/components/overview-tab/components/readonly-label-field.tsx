@@ -3,8 +3,8 @@ import { useTranslation } from "react-i18next";
 import { FormField } from "@/components/ui/form-field";
 
 interface ReadonlyLabelFieldProps {
-  label: string;
-  fqdn?: string;
+  readonly label: string;
+  readonly fqdn?: string;
 }
 
 export function ReadonlyLabelField({ label, fqdn }: ReadonlyLabelFieldProps) {

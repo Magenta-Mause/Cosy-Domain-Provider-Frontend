@@ -6,8 +6,8 @@ import { LanguageMenu } from "@/components/layout/language-menu";
 import { FlatPanel } from "@/components/pixel/panel";
 
 interface LegalPageLayoutProps {
-  title: string;
-  children: ReactNode;
+  readonly title: string;
+  readonly children: ReactNode;
 }
 
 export function LegalPageLayout({ title, children }: LegalPageLayoutProps) {

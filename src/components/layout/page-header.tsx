@@ -3,10 +3,10 @@ import type { ReactNode } from "react";
 import { AppHeader } from "@/components/layout/app-header";
 
 interface PageHeaderProps {
-  children: ReactNode;
-  maxWidth?: number;
-  headerRightSlot?: ReactNode;
-  headerLogoLinkTo?: "/dashboard" | "/" | "/admin/subdomains";
+  readonly children: ReactNode;
+  readonly maxWidth?: number;
+  readonly headerRightSlot?: ReactNode;
+  readonly headerLogoLinkTo?: "/dashboard" | "/" | "/admin/subdomains";
 }
 
 export function PageHeader({

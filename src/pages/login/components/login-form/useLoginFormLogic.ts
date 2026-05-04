@@ -1,6 +1,12 @@
 import type { TurnstileInstance } from "@marsidev/react-turnstile";
 import { useNavigate } from "@tanstack/react-router";
-import { useCallback, useEffect, useRef, useState } from "react";
+import {
+  type FormEvent,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { useTranslation } from "react-i18next";
 import useDataInteractions from "@/hooks/useDataInteractions/useDataInteractions";
 import { isValidEmail } from "@/lib/validators";
@@ -21,7 +27,8 @@ export function useLoginFormLogic() {
   const [captchaToken, setCaptchaToken] = useState<string | null>(null);
   const turnstileRef = useRef<TurnstileInstance>(null);
   const [challengeToken, setChallengeToken] = useState<string | null>(null);
-  const [totpCode, setTotpCodeRaw] = useState("");
+  const [totpCodeRaw, setTotpCodeRaw] = useState("");
+  const totpCode = totpCodeRaw;
   const setTotpCode = useCallback(
     (value: string) => setTotpCodeRaw(value.toUpperCase()),
     [],
@@ -30,7 +37,7 @@ export function useLoginFormLogic() {
 
   const submitting = authState === "loading";
 
-  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (step === 1) {
       if (!isValidEmail(email)) {

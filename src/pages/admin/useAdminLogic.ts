@@ -1,5 +1,5 @@
 import { useNavigate } from "@tanstack/react-router";
-import { useCallback, useEffect, useState } from "react";
+import { type FormEvent, useCallback, useEffect, useState } from "react";
 
 import { ADMIN_KEY_STORAGE } from "./lib";
 
@@ -41,7 +41,7 @@ export function useAdminLogic() {
     setIsAuthenticated(false);
   }, []);
 
-  const handleLogin = async (e: React.FormEvent) => {
+  const handleLogin = async (e: FormEvent) => {
     e.preventDefault();
     setIsLogging(true);
     await login(inputKey);

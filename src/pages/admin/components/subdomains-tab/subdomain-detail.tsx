@@ -7,7 +7,7 @@ import { DetailField } from "../detail-field";
 import { subdomainStatusColor } from "./lib";
 
 interface SubdomainDetailProps {
-  subdomain: AdminSubdomain;
+  readonly subdomain: AdminSubdomain;
 }
 
 export function SubdomainDetail({ subdomain }: SubdomainDetailProps) {

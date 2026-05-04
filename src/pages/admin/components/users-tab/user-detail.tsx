@@ -10,9 +10,9 @@ import { UserSubdomainsTable } from "./components/user-subdomains-table";
 import { useUserDetailLogic } from "./useUserDetailLogic";
 
 interface UserDetailProps {
-  detail: AdminUserDetail;
-  adminKey: string;
-  onSaved: () => void;
+  readonly detail: AdminUserDetail;
+  readonly adminKey: string;
+  readonly onSaved: () => void;
 }
 
 export function UserDetail({ detail, adminKey, onSaved }: UserDetailProps) {

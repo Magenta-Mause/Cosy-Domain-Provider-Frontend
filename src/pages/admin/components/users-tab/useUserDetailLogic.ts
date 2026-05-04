@@ -14,9 +14,9 @@ export function useUserDetailLogic(
 
   // Max subdomain override
   const savedOverrideValue =
-    detail.maxSubdomainCountOverride !== null
-      ? String(detail.maxSubdomainCountOverride)
-      : "";
+    detail.maxSubdomainCountOverride === null
+      ? ""
+      : String(detail.maxSubdomainCountOverride);
 
   const [overrideInput, setOverrideInput] = useState(savedOverrideValue);
   const [isSavingOverride, setIsSavingOverride] = useState(false);
@@ -54,8 +54,8 @@ export function useUserDetailLogic(
     setSaveUserError(null);
     try {
       await adminApi.updateUser(adminKey, detail.uuid, {
-        username: username !== detail.username ? username : undefined,
-        email: email !== detail.email ? email : undefined,
+        username: username === detail.username ? undefined : username,
+        email: email === detail.email ? undefined : email,
       });
       onSaved();
     } catch {
@@ -70,7 +70,7 @@ export function useUserDetailLogic(
   const [deleteError, setDeleteError] = useState<string | null>(null);
 
   const handleDeleteUser = async () => {
-    if (!window.confirm(t("admin.deleteUserConfirm"))) return;
+    if (!globalThis.confirm(t("admin.deleteUserConfirm"))) return;
     setIsDeleting(true);
     setDeleteError(null);
     try {

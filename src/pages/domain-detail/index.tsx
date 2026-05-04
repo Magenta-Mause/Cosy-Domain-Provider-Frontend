@@ -60,9 +60,9 @@ export function DomainDetailPage({ domainId }: { domainId: string }) {
     <div className="min-h-screen bg-background">
       <DomainDetailHeader domain={domain} isCreateMode={isCreateMode} />
       <div className="px-4 sm:px-7 pb-20 max-w-[1100px] mx-auto mt-[35px]">
-        {!isCreateMode ? (
+        {isCreateMode ? null : (
           <DomainTabBar activeTab={activeTab} onChange={setActiveTab} />
-        ) : null}
+        )}
         <FlatPanel className={`p-7 ${!isCreateMode && "rounded-tl-none"}`}>
           {isCreateMode ? (
             <CreateSubdomainForm

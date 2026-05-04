@@ -7,7 +7,7 @@ export function useLanguageChange() {
   async function handleLanguageChange(language: AppLanguage) {
     await i18n.changeLanguage(language);
     if (typeof window !== "undefined") {
-      window.localStorage.setItem("cosy-language", language);
+      globalThis.localStorage.setItem("cosy-language", language);
     }
   }
 

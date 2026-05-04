@@ -5,7 +5,7 @@ import { UsersTable } from "./components/users-table";
 import { useUsersTabLogic } from "./useUsersTabLogic";
 
 interface UsersTabProps {
-  adminKey: string;
+  readonly adminKey: string;
 }
 
 export function UsersTab({ adminKey }: UsersTabProps) {

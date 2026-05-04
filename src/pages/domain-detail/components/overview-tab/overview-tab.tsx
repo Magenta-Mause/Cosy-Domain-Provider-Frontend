@@ -1,3 +1,4 @@
+import type { FormEvent } from "react";
 import { useTranslation } from "react-i18next";
 
 import type { SubdomainDto } from "@/api/generated/model";
@@ -9,24 +10,24 @@ import { ReadonlyLabelField } from "./components/readonly-label-field";
 import { TargetIpTabs } from "./components/target-ip-tabs";
 
 interface OverviewTabProps {
-  domain: SubdomainDto | undefined;
-  label: string;
-  targetIp: string;
-  onTargetIpChange: (v: string) => void;
-  targetIpv6: string;
-  onTargetIpv6Change: (v: string) => void;
-  ipTab: "ipv4" | "ipv6";
-  onIpTabChange: (tab: "ipv4" | "ipv6") => void;
-  errorMessage: string | null;
-  isSubmitting: boolean;
-  isDeleting: boolean;
-  hasSubmitted: boolean;
-  ipv4Valid: boolean;
-  ipv6Valid: boolean;
-  atLeastOneIp: boolean;
-  canSubmit: boolean;
-  createdAt: string;
-  onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
+  readonly domain: SubdomainDto | undefined;
+  readonly label: string;
+  readonly targetIp: string;
+  readonly onTargetIpChange: (v: string) => void;
+  readonly targetIpv6: string;
+  readonly onTargetIpv6Change: (v: string) => void;
+  readonly ipTab: "ipv4" | "ipv6";
+  readonly onIpTabChange: (tab: "ipv4" | "ipv6") => void;
+  readonly errorMessage: string | null;
+  readonly isSubmitting: boolean;
+  readonly isDeleting: boolean;
+  readonly hasSubmitted: boolean;
+  readonly ipv4Valid: boolean;
+  readonly ipv6Valid: boolean;
+  readonly atLeastOneIp: boolean;
+  readonly canSubmit: boolean;
+  readonly createdAt: string;
+  readonly onSubmit: (event: FormEvent<HTMLFormElement>) => void;
 }
 
 export function OverviewTab({

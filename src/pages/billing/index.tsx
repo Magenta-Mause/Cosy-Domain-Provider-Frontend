@@ -1,4 +1,5 @@
 import { Link } from "@tanstack/react-router";
+import type { TFunction } from "i18next";
 import { useTranslation } from "react-i18next";
 import { Badge } from "@/components/pixel/badge";
 import { ErrorMessage } from "@/components/pixel/error-message";
@@ -6,6 +7,15 @@ import { FlatPanel } from "@/components/pixel/panel";
 import { Button } from "@/components/ui/button";
 import { BillingHeader } from "./components/billing-header";
 import { useBillingLogic } from "./useBillingLogic";
+
+function billingButtonLabel(
+  t: TFunction,
+  isRedirecting: boolean,
+  isPlus: boolean,
+): string {
+  if (isRedirecting) return t("billing.redirecting");
+  return isPlus ? t("billing.manageButton") : t("billing.upgradeButton");
+}
 
 export function BillingPage() {
   const { t } = useTranslation();
@@ -46,11 +56,7 @@ export function BillingPage() {
             disabled={isRedirecting || (!isPlus && !isVerified)}
             className="w-fit"
           >
-            {isRedirecting
-              ? t("billing.redirecting")
-              : isPlus
-                ? t("billing.manageButton")
-                : t("billing.upgradeButton")}
+            {billingButtonLabel(t, isRedirecting, isPlus)}
           </Button>
         </FlatPanel>
 

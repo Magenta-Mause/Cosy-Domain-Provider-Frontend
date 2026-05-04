@@ -3,27 +3,27 @@ import type React from "react";
 import { ErrorMessage } from "@/components/pixel/error-message";
 
 interface FormFieldProps {
-  id: string;
-  label: string;
-  type?: string;
-  value: string;
-  onChange: (value: string) => void;
-  placeholder?: string;
-  error?: string | null;
-  required?: boolean;
-  disabled?: boolean;
-  readOnly?: boolean;
-  invalid?: boolean;
+  readonly id: string;
+  readonly label: string;
+  readonly type?: string;
+  readonly value: string;
+  readonly onChange: (value: string) => void;
+  readonly placeholder?: string;
+  readonly error?: string | null;
+  readonly required?: boolean;
+  readonly disabled?: boolean;
+  readonly readOnly?: boolean;
+  readonly invalid?: boolean;
   /** Text suffix shown inside the right edge of the input (e.g. ".play.cosy-hosting.net"). */
-  suffix?: string;
+  readonly suffix?: string;
   /** Arbitrary right-side slot, e.g. a password visibility toggle button. */
-  endDecorator?: React.ReactNode;
-  testId?: string;
-  hint?: string;
-  autoComplete?: string;
-  minLength?: number;
-  maxLength?: number;
-  inputMode?: React.HTMLAttributes<HTMLInputElement>["inputMode"];
+  readonly endDecorator?: React.ReactNode;
+  readonly testId?: string;
+  readonly hint?: string;
+  readonly autoComplete?: string;
+  readonly minLength?: number;
+  readonly maxLength?: number;
+  readonly inputMode?: React.HTMLAttributes<HTMLInputElement>["inputMode"];
 }
 
 export function FormField({

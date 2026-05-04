@@ -3,16 +3,16 @@ import { ErrorMessage } from "@/components/pixel/error-message";
 import { FormField } from "@/components/ui/form-field";
 
 interface TargetIpTabsProps {
-  targetIp: string;
-  onTargetIpChange: (v: string) => void;
-  targetIpv6: string;
-  onTargetIpv6Change: (v: string) => void;
-  activeTab: "ipv4" | "ipv6";
-  onTabChange: (tab: "ipv4" | "ipv6") => void;
-  hasSubmitted: boolean;
-  ipv4Valid: boolean;
-  ipv6Valid: boolean;
-  atLeastOneIp: boolean;
+  readonly targetIp: string;
+  readonly onTargetIpChange: (v: string) => void;
+  readonly targetIpv6: string;
+  readonly onTargetIpv6Change: (v: string) => void;
+  readonly activeTab: "ipv4" | "ipv6";
+  readonly onTabChange: (tab: "ipv4" | "ipv6") => void;
+  readonly hasSubmitted: boolean;
+  readonly ipv4Valid: boolean;
+  readonly ipv6Valid: boolean;
+  readonly atLeastOneIp: boolean;
 }
 
 export function TargetIpTabs({

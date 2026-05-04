@@ -5,9 +5,9 @@ import { Panel } from "@/components/pixel/panel";
 import { Button } from "@/components/ui/button";
 
 interface DangerTabProps {
-  errorMessage: string | null;
-  isDeleting: boolean;
-  onDelete: () => void;
+  readonly errorMessage: string | null;
+  readonly isDeleting: boolean;
+  readonly onDelete: () => void;
 }
 
 export function DangerTab({

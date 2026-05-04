@@ -5,12 +5,9 @@ export const PASSWORD_MIN = 8;
 export const SUBDOMAIN_LABEL_PATTERN = /^[a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?$/;
 
 export const IPV4_PATTERN =
-  /^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
+  /^((25[0-5]|2[0-4]\d|[01]?\d\d?)\.){3}(25[0-5]|2[0-4]\d|[01]?\d\d?)$/;
 
-export const IPV6_PATTERN =
-  /^(([0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]+|::(ffff(:0{1,4})?:)?((25[0-5]|(2[0-4]|1?[0-9])?[0-9])\.){3}(25[0-5]|(2[0-4]|1?[0-9])?[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1?[0-9])?[0-9])\.){3}(25[0-5]|(2[0-4]|1?[0-9])?[0-9]))$/;
-
-export const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+export const EMAIL_PATTERN = /^[^\s@]+@([^\s@.]+\.)+[^\s@.]+$/;
 
 export function isValidSubdomainLabel(value: string) {
   return SUBDOMAIN_LABEL_PATTERN.test(value);
@@ -20,8 +17,20 @@ export function isValidIpv4(value: string) {
   return IPV4_PATTERN.test(value);
 }
 
-export function isValidIpv6(value: string) {
-  return IPV6_PATTERN.test(value);
+export function isValidIpv6(value: string): boolean {
+  if ((value.match(/::/g) ?? []).length > 1) return false;
+  const halves = value.split("::");
+  const hexGroup = /^[0-9a-fA-F]{1,4}$/;
+  if (halves.length === 2) {
+    const left = halves[0] ? halves[0].split(":") : [];
+    const right = halves[1] ? halves[1].split(":") : [];
+    return (
+      left.length + right.length <= 7 &&
+      [...left, ...right].every((g) => hexGroup.test(g))
+    );
+  }
+  const groups = value.split(":");
+  return groups.length === 8 && groups.every((g) => hexGroup.test(g));
 }
 
 export function isValidEmail(value: string) {

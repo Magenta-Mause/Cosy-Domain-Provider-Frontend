@@ -6,7 +6,7 @@ import { SubdomainsTable } from "./components/subdomains-table";
 import { useSubdomainsTabLogic } from "./useSubdomainsTabLogic";
 
 interface SubdomainsTabProps {
-  adminKey: string;
+  readonly adminKey: string;
 }
 
 export function SubdomainsTab({ adminKey }: SubdomainsTabProps) {

@@ -17,12 +17,12 @@ export function useDropdown() {
       if (event.key === "Escape") setIsOpen(false);
     };
 
-    window.addEventListener("mousedown", onPointerDown);
-    window.addEventListener("keydown", onEscape);
+    globalThis.addEventListener("mousedown", onPointerDown);
+    globalThis.addEventListener("keydown", onEscape);
 
     return () => {
-      window.removeEventListener("mousedown", onPointerDown);
-      window.removeEventListener("keydown", onEscape);
+      globalThis.removeEventListener("mousedown", onPointerDown);
+      globalThis.removeEventListener("keydown", onEscape);
     };
   }, [isOpen]);
 

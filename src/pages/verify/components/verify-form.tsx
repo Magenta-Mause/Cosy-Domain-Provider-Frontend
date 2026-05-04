@@ -2,6 +2,15 @@ import { REGEXP_ONLY_DIGITS_AND_CHARS } from "input-otp";
 import { RotateCw } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
+function resendButtonLabel(
+  isSending: boolean,
+  resendSent: boolean,
+  sendingLabel: string,
+): string {
+  if (isSending) return sendingLabel;
+  return resendSent ? "Code sent!" : "Resend Verification Code";
+}
+
 import { ErrorMessage } from "@/components/pixel/error-message";
 import { Button } from "@/components/ui/button";
 import {
@@ -12,17 +21,17 @@ import {
 } from "@/components/ui/input-otp";
 
 interface VerifyFormProps {
-  userEmail: string | null | undefined;
-  verificationToken: string;
-  isVerifying: boolean;
-  isSending: boolean;
-  resendSent: boolean;
-  verifyError: string | null;
-  resendError: string | null;
-  isBusy: boolean;
-  onTokenChange: (code: string) => void;
-  onVerify: () => void;
-  onResend: () => void;
+  readonly userEmail: string | null | undefined;
+  readonly verificationToken: string;
+  readonly isVerifying: boolean;
+  readonly isSending: boolean;
+  readonly resendSent: boolean;
+  readonly verifyError: string | null;
+  readonly resendError: string | null;
+  readonly isBusy: boolean;
+  readonly onTokenChange: (code: string) => void;
+  readonly onVerify: () => void;
+  readonly onResend: () => void;
 }
 
 export function VerifyForm({
@@ -90,11 +99,7 @@ export function VerifyForm({
         >
           <RotateCw size="18px" />
           <span>
-            {isSending
-              ? t("verify.sendingBtn")
-              : resendSent
-                ? "Code sent!"
-                : "Resend Verification Code"}
+            {resendButtonLabel(isSending, resendSent, t("verify.sendingBtn"))}
           </span>
         </Button>
       </div>

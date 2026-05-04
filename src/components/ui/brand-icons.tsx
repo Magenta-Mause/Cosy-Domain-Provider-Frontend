@@ -1,5 +1,5 @@
 interface BrandIconProps {
-  className?: string;
+  readonly className?: string;
 }
 
 export function GoogleIcon({ className = "size-4 shrink-0" }: BrandIconProps) {

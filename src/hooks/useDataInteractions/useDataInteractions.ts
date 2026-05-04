@@ -191,7 +191,7 @@ const useDataInteractions = () => {
 
   const initiateOAuth = useCallback(
     (provider: "google" | "github" | "discord") => {
-      window.location.href = `/api/v1/auth/oauth/${provider}/authorize`;
+      globalThis.location.href = `/api/v1/auth/oauth/${provider}/authorize`;
     },
     [],
   );
@@ -223,12 +223,12 @@ const useDataInteractions = () => {
 
   const openBillingPortal = useCallback(async () => {
     const { url } = await getBillingPortalUrl();
-    window.location.href = url;
+    globalThis.location.href = url;
   }, []);
 
   const openCheckout = useCallback(async () => {
     const { url } = await getCheckoutUrl();
-    window.location.href = url;
+    globalThis.location.href = url;
   }, []);
 
   const setupMfa = useCallback(async (): Promise<{

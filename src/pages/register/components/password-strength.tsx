@@ -1,5 +1,5 @@
 interface PasswordStrengthProps {
-  password: string;
+  readonly password: string;
 }
 
 export function PasswordStrength({ password }: PasswordStrengthProps) {
@@ -8,11 +8,9 @@ export function PasswordStrength({ password }: PasswordStrengthProps) {
   const isWeak = password.length < 8;
   const isStrong = password.length >= 12;
 
-  const strengthColor = isStrong
-    ? "var(--accent-2)"
-    : isWeak
-      ? "var(--destructive)"
-      : "var(--accent)";
+  let strengthColor = "var(--accent)";
+  if (isStrong) strengthColor = "var(--accent-2)";
+  else if (isWeak) strengthColor = "var(--destructive)";
 
   return (
     <div className="flex gap-1">

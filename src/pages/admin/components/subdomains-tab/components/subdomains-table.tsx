@@ -6,8 +6,8 @@ import type { AdminSubdomain } from "../../../lib";
 import { subdomainStatusColor } from "../lib";
 
 interface SubdomainsTableProps {
-  subdomains: AdminSubdomain[];
-  onSubdomainClick: (subdomainId: string) => void;
+  readonly subdomains: AdminSubdomain[];
+  readonly onSubdomainClick: (subdomainId: string) => void;
 }
 
 export function SubdomainsTable({

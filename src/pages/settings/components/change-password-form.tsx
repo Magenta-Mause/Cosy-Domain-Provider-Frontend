@@ -10,15 +10,18 @@ import { Icon } from "@/components/ui/icon";
 import { useChangePasswordFormLogic } from "./useChangePasswordFormLogic";
 
 interface ChangePasswordFormProps {
-  onSave: (currentPassword: string, newPassword: string) => Promise<void>;
+  readonly onSave: (
+    currentPassword: string,
+    newPassword: string,
+  ) => Promise<void>;
 }
 
 function EyeToggle({
   show,
   onToggle,
 }: {
-  show: boolean;
-  onToggle: () => void;
+  readonly show: boolean;
+  readonly onToggle: () => void;
 }) {
   return (
     <button

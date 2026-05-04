@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { type FormEvent, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { isValidUsername } from "@/lib/validators";
@@ -16,7 +16,7 @@ export function useChangeUsernameFormLogic(
   const canSubmit =
     isValidUsername(newUsername) && newUsername !== currentUsername;
 
-  async function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: FormEvent) {
     e.preventDefault();
     setSaving(true);
     setError(null);
@@ -24,7 +24,6 @@ export function useChangeUsernameFormLogic(
     try {
       await onSave(newUsername);
       setSuccess(true);
-      setNewUsername(newUsername);
     } catch {
       setError(t("settings.usernameError"));
     } finally {

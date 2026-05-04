@@ -6,8 +6,8 @@ import { Button } from "@/components/ui/button";
 type FilterValue = "all" | SubdomainDtoStatus;
 
 interface FilterBarProps {
-  filter: FilterValue;
-  onChange: (value: FilterValue) => void;
+  readonly filter: FilterValue;
+  readonly onChange: (value: FilterValue) => void;
 }
 
 export function FilterBar({ filter, onChange }: FilterBarProps) {

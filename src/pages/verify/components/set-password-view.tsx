@@ -1,3 +1,4 @@
+import type { FormEvent } from "react";
 import { useTranslation } from "react-i18next";
 
 import { PasswordInput } from "@/components/auth/password-input";
@@ -7,13 +8,13 @@ import { isPasswordWeak } from "@/lib/validators";
 import { PasswordStrength } from "@/pages/register/components/password-strength";
 
 interface SetPasswordViewProps {
-  password: string;
-  confirmPassword: string;
-  passwordError: string | null;
-  isSettingPassword: boolean;
-  onPasswordChange: (value: string) => void;
-  onConfirmChange: (value: string) => void;
-  onSubmit: (e: React.FormEvent) => void;
+  readonly password: string;
+  readonly confirmPassword: string;
+  readonly passwordError: string | null;
+  readonly isSettingPassword: boolean;
+  readonly onPasswordChange: (value: string) => void;
+  readonly onConfirmChange: (value: string) => void;
+  readonly onSubmit: (e: FormEvent) => void;
 }
 
 export function SetPasswordView({

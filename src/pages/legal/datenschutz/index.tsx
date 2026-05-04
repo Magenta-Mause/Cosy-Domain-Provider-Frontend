@@ -84,8 +84,9 @@ export function DatenschutzPage() {
           >
             cosy-hosting.manliness639@passmail.net
           </a>
-          . Du hast außerdem das Recht, bei der zuständigen Aufsichtsbehörde
-          Beschwerde einzulegen.
+          {
+            ". Du hast außerdem das Recht, bei der zuständigen Aufsichtsbehörde Beschwerde einzulegen."
+          }
         </p>
       </section>
 
