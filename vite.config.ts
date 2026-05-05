@@ -5,6 +5,21 @@ import { defineConfig } from "vite";
 
 // https://vite.dev/config/
 export default defineConfig({
+  test: {
+    environment: "jsdom",
+    globals: true,
+    setupFiles: ["./src/test/setup.ts"],
+    coverage: {
+      provider: "v8",
+      include: ["src/**/*.{ts,tsx}"],
+      exclude: [
+        "src/api/generated/**",
+        "src/routeTree.gen.ts",
+        "src/test/**",
+        "src/main.tsx",
+      ],
+    },
+  },
   plugins: [
     tanstackRouter({
       target: "react",
