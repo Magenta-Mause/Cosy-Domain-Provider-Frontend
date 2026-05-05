@@ -19,7 +19,8 @@ function mockAuthState(overrides: {
 }) {
   vi.mocked(store.getState).mockReturnValue({
     auth: {
-      identityToken: "identityToken" in overrides ? overrides.identityToken : "tok",
+      identityToken:
+        "identityToken" in overrides ? overrides.identityToken : "tok",
       user:
         overrides.identityToken === null
           ? null
@@ -33,10 +34,10 @@ function mockAuthState(overrides: {
 
 beforeEach(() => {
   vi.clearAllMocks();
-  vi.mocked(redirect).mockImplementation((args: { to: string }) => ({
+  vi.mocked(redirect).mockImplementation(((args: { to: string }) => ({
     _isRedirect: true,
     ...args,
-  }) as unknown as never);
+  })) as never);
 });
 
 describe("requireFullAuth", () => {
@@ -55,14 +56,22 @@ describe("requireFullAuth", () => {
   });
 
   it("throws a redirect to /mfa-setup when MFA is not enabled", () => {
-    mockAuthState({ identityToken: "tok", isVerified: true, isMfaEnabled: false });
+    mockAuthState({
+      identityToken: "tok",
+      isVerified: true,
+      isMfaEnabled: false,
+    });
 
     expect(() => requireFullAuth()).toThrow();
     expect(redirect).toHaveBeenCalledWith({ to: "/mfa-setup" });
   });
 
   it("does not throw when fully authenticated", () => {
-    mockAuthState({ identityToken: "tok", isVerified: true, isMfaEnabled: true });
+    mockAuthState({
+      identityToken: "tok",
+      isVerified: true,
+      isMfaEnabled: true,
+    });
 
     expect(() => requireFullAuth()).not.toThrow();
   });

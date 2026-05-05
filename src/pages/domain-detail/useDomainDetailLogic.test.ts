@@ -1,7 +1,7 @@
 import { act, renderHook } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { makeWrapper } from "@/test/store-utils";
 import type { SubdomainDto } from "@/api/generated/model";
+import { makeWrapper } from "@/test/store-utils";
 
 vi.mock("@/hooks/useAuthInformation/useAuthInformation", () => ({
   default: () => mockAuthInfo,
@@ -50,7 +50,7 @@ const baseSub: SubdomainDto = {
   label: "mysite",
   fqdn: "mysite.cosy-hosting.net",
   targetIp: "1.2.3.4",
-  targetIpv6: null,
+  targetIpv6: undefined,
   status: "ACTIVE",
   labelMode: "CUSTOM",
   createdAt: "2024-01-01T00:00:00Z",
@@ -69,12 +69,12 @@ afterEach(() => {
 describe("useDomainDetailLogic", () => {
   describe("edit mode (existing subdomain from Redux cache)", () => {
     function renderEdit(sub = baseSub) {
-      return renderHook(() => useDomainDetailLogic(sub.uuid!), {
+      return renderHook(() => useDomainDetailLogic(sub.uuid ?? "sub-1"), {
         wrapper: makeWrapper({
           subdomains: {
             items: [sub],
             state: "idle",
-            error: null,
+            errorMessage: null,
           },
         }),
       });
@@ -100,7 +100,10 @@ describe("useDomainDetailLogic", () => {
     });
 
     it("handleSubmit calls updateSubdomain and does not navigate", async () => {
-      mockUpdateSubdomain.mockResolvedValue({ ...baseSub, targetIp: "9.9.9.9" });
+      mockUpdateSubdomain.mockResolvedValue({
+        ...baseSub,
+        targetIp: "9.9.9.9",
+      });
       const { result } = renderEdit();
       act(() => result.current.setTargetIp("9.9.9.9"));
 
@@ -264,7 +267,7 @@ describe("useDomainDetailLogic", () => {
       vi.stubGlobal("confirm", vi.fn().mockReturnValue(false));
       const { result } = renderHook(() => useDomainDetailLogic("sub-1"), {
         wrapper: makeWrapper({
-          subdomains: { items: [baseSub], state: "idle", error: null },
+          subdomains: { items: [baseSub], state: "idle", errorMessage: null },
         }),
       });
 
@@ -280,7 +283,7 @@ describe("useDomainDetailLogic", () => {
       mockDeleteSubdomain.mockResolvedValue(undefined);
       const { result } = renderHook(() => useDomainDetailLogic("sub-1"), {
         wrapper: makeWrapper({
-          subdomains: { items: [baseSub], state: "idle", error: null },
+          subdomains: { items: [baseSub], state: "idle", errorMessage: null },
         }),
       });
 
@@ -297,7 +300,7 @@ describe("useDomainDetailLogic", () => {
       mockDeleteSubdomain.mockRejectedValue(new Error("fail"));
       const { result } = renderHook(() => useDomainDetailLogic("sub-1"), {
         wrapper: makeWrapper({
-          subdomains: { items: [baseSub], state: "idle", error: null },
+          subdomains: { items: [baseSub], state: "idle", errorMessage: null },
         }),
       });
 
@@ -329,7 +332,7 @@ describe("useDomainDetailLogic", () => {
 
       const { result } = renderHook(() => useDomainDetailLogic("sub-99"), {
         wrapper: makeWrapper({
-          subdomains: { items: [], state: "idle", error: null },
+          subdomains: { items: [], state: "idle", errorMessage: null },
         }),
       });
 
@@ -346,7 +349,7 @@ describe("useDomainDetailLogic", () => {
 
       const { result } = renderHook(() => useDomainDetailLogic("sub-99"), {
         wrapper: makeWrapper({
-          subdomains: { items: [], state: "idle", error: null },
+          subdomains: { items: [], state: "idle", errorMessage: null },
         }),
       });
 
@@ -360,13 +363,13 @@ describe("useDomainDetailLogic", () => {
 
   describe("validation", () => {
     it("handleSubmit does not call update when IPs are empty", async () => {
-      const sub = { ...baseSub, targetIp: null };
+      const sub = { ...baseSub, targetIp: undefined };
       const { result } = renderHook(() => useDomainDetailLogic("sub-1"), {
         wrapper: makeWrapper({
           subdomains: {
             items: [sub as SubdomainDto],
             state: "idle",
-            error: null,
+            errorMessage: null,
           },
         }),
       });

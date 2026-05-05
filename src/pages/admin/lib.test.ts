@@ -26,7 +26,9 @@ describe("adminApi", () => {
     it("throws UNAUTHORIZED on 401", async () => {
       vi.stubGlobal("fetch", mockFetch(401, {}));
 
-      await expect(adminApi.getSubdomains("key")).rejects.toThrow("UNAUTHORIZED");
+      await expect(adminApi.getSubdomains("key")).rejects.toThrow(
+        "UNAUTHORIZED",
+      );
       vi.unstubAllGlobals();
     });
 
@@ -68,7 +70,9 @@ describe("adminApi", () => {
       const fetchMock = mockFetch(200, updated);
       vi.stubGlobal("fetch", fetchMock);
 
-      const result = await adminApi.updateUser("key", "u1", { username: "alice2" });
+      const result = await adminApi.updateUser("key", "u1", {
+        username: "alice2",
+      });
 
       expect(result).toEqual(updated);
       expect(fetchMock).toHaveBeenCalledWith(
@@ -94,7 +98,9 @@ describe("adminApi", () => {
 
     it("throws on 401", async () => {
       vi.stubGlobal("fetch", mockFetch(401, {}));
-      await expect(adminApi.deleteUser("key", "u1")).rejects.toThrow("UNAUTHORIZED");
+      await expect(adminApi.deleteUser("key", "u1")).rejects.toThrow(
+        "UNAUTHORIZED",
+      );
       vi.unstubAllGlobals();
     });
   });

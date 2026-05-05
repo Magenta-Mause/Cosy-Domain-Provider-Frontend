@@ -27,14 +27,16 @@ const mockVerifyAccount = vi.fn();
 const mockResendCode = vi.fn();
 const mockSetupPassword = vi.fn();
 
-function mockAuth(overrides: Partial<ReturnType<typeof useAuthInformation>> = {}) {
+function mockAuth(
+  overrides: Partial<ReturnType<typeof useAuthInformation>> = {},
+) {
   vi.mocked(useAuthInformation).mockReturnValue({
     userEmail: "user@example.com",
     isVerified: false,
     needsPasswordSetup: false,
     isUserLoggedIn: true,
     ...overrides,
-  } as ReturnType<typeof useAuthInformation>);
+  } as unknown as ReturnType<typeof useAuthInformation>);
 }
 
 beforeEach(() => {
@@ -44,7 +46,7 @@ beforeEach(() => {
     verifyAccount: mockVerifyAccount,
     resendVerificationCode: mockResendCode,
     setupPassword: mockSetupPassword,
-  } as ReturnType<typeof useDataInteractions>);
+  } as unknown as ReturnType<typeof useDataInteractions>);
   mockAuth();
 });
 
@@ -106,7 +108,7 @@ describe("useVerifyLogic", () => {
       mockVerifyAccount.mockResolvedValue(undefined);
       vi.mocked(Route.useSearch).mockReturnValue({ token: "ABCDEF" });
 
-      const { result } = renderHook(() => useVerifyLogic());
+      renderHook(() => useVerifyLogic());
 
       await act(async () => {
         await new Promise((r) => setTimeout(r, 0));

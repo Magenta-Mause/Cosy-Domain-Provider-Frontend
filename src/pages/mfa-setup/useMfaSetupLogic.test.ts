@@ -28,12 +28,15 @@ beforeEach(() => {
   vi.mocked(useDataInteractions).mockReturnValue({
     setupMfa: mockSetupMfa,
     confirmMfa: mockConfirmMfa,
-  } as ReturnType<typeof useDataInteractions>);
+  } as unknown as ReturnType<typeof useDataInteractions>);
 });
 
 describe("useMfaSetupLogic", () => {
   it("calls setupMfa on mount and stores totpUri and secret", async () => {
-    mockSetupMfa.mockResolvedValue({ totpUri: "otpauth://totp/...", secret: "ABCDEF" });
+    mockSetupMfa.mockResolvedValue({
+      totpUri: "otpauth://totp/...",
+      secret: "ABCDEF",
+    });
     const { result } = renderHook(() => useMfaSetupLogic());
 
     await act(async () => {

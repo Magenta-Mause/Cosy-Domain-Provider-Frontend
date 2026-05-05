@@ -1,8 +1,5 @@
 import { describe, expect, it } from "vitest";
 import {
-  PASSWORD_MIN,
-  USERNAME_MAX,
-  USERNAME_MIN,
   isPasswordWeak,
   isValidEmail,
   isValidIpv4,
@@ -10,6 +7,9 @@ import {
   isValidPassword,
   isValidSubdomainLabel,
   isValidUsername,
+  PASSWORD_MIN,
+  USERNAME_MAX,
+  USERNAME_MIN,
 } from "./validators";
 
 describe("isValidSubdomainLabel", () => {

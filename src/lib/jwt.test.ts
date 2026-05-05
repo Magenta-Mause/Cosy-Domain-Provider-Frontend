@@ -89,16 +89,18 @@ describe("parseIdentityToken", () => {
   });
 
   it("accepts FREE and PLUS as valid tiers", () => {
-    expect(
-      parseIdentityToken(encodePayload({ tier: "FREE" }))?.tier,
-    ).toBe("FREE");
-    expect(
-      parseIdentityToken(encodePayload({ tier: "PLUS" }))?.tier,
-    ).toBe("PLUS");
+    expect(parseIdentityToken(encodePayload({ tier: "FREE" }))?.tier).toBe(
+      "FREE",
+    );
+    expect(parseIdentityToken(encodePayload({ tier: "PLUS" }))?.tier).toBe(
+      "PLUS",
+    );
   });
 
   it("returns null maxSubdomainCount when the field is not a number", () => {
-    const result = parseIdentityToken(encodePayload({ maxSubdomainCount: "5" }));
+    const result = parseIdentityToken(
+      encodePayload({ maxSubdomainCount: "5" }),
+    );
 
     expect(result?.maxSubdomainCount).toBeNull();
   });

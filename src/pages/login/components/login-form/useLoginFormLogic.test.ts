@@ -33,11 +33,13 @@ beforeEach(() => {
   vi.mocked(useDataInteractions).mockReturnValue({
     loginUser: mockLoginUser,
     completeMfaChallenge: mockCompleteMfa,
-  } as ReturnType<typeof useDataInteractions>);
+  } as unknown as ReturnType<typeof useDataInteractions>);
 });
 
 const fakeSubmit = () =>
-  ({ preventDefault: vi.fn() }) as unknown as React.SyntheticEvent<HTMLFormElement>;
+  ({
+    preventDefault: vi.fn(),
+  }) as unknown as React.SyntheticEvent<HTMLFormElement>;
 
 describe("useLoginFormLogic", () => {
   it("starts at step 1 with empty fields", () => {
@@ -99,7 +101,9 @@ describe("useLoginFormLogic", () => {
   });
 
   describe("step 2 — password + captcha", () => {
-    async function advanceToStep2(result: { current: ReturnType<typeof useLoginFormLogic> }) {
+    async function advanceToStep2(result: {
+      current: ReturnType<typeof useLoginFormLogic>;
+    }) {
       act(() => result.current.setEmail("user@example.com"));
       await act(async () => {
         await result.current.handleSubmit(fakeSubmit());

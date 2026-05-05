@@ -1,9 +1,9 @@
 import { describe, expect, it } from "vitest";
 import type { SubdomainDto } from "@/api/generated/model";
 import {
-  type SubdomainsState,
   clearSubdomains,
   removeSubdomain,
+  type SubdomainsState,
   setSubdomains,
   setSubdomainsError,
   setSubdomainsState,
@@ -20,11 +20,10 @@ const initialState: SubdomainsState = {
 const sub = (uuid: string, label = "test"): SubdomainDto => ({
   uuid,
   label,
-  ipv4Address: "1.2.3.4",
-  ipv6Address: null,
-  active: true,
+  targetIp: "1.2.3.4",
+  targetIpv6: undefined,
+  status: "ACTIVE",
   createdAt: "2024-01-01T00:00:00Z",
-  updatedAt: "2024-01-01T00:00:00Z",
 });
 
 describe("subdomains reducer", () => {
@@ -46,7 +45,10 @@ describe("subdomains reducer", () => {
         state: "idle",
         errorMessage: "prev error",
       };
-      const result = subdomainsReducer(dirty, setSubdomains([sub("a"), sub("b")]));
+      const result = subdomainsReducer(
+        dirty,
+        setSubdomains([sub("a"), sub("b")]),
+      );
       expect(result.items).toHaveLength(2);
       expect(result.items[0].uuid).toBe("a");
       expect(result.errorMessage).toBeNull();

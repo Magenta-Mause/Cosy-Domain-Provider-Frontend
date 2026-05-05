@@ -32,7 +32,7 @@ beforeEach(() => {
   vi.mocked(Route.useSearch).mockReturnValue({ token: "challenge-tok" });
   vi.mocked(useDataInteractions).mockReturnValue({
     completeMfaChallenge: mockCompleteMfa,
-  } as ReturnType<typeof useDataInteractions>);
+  } as unknown as ReturnType<typeof useDataInteractions>);
 });
 
 describe("useMfaChallengeLogic", () => {

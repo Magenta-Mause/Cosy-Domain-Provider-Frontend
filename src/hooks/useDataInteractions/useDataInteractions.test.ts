@@ -36,21 +36,21 @@ vi.mock("@/lib/jwt", () => ({
 
 const mockLoadSubdomains = vi.fn();
 
-import {
-  fetchToken,
-  logout,
-  createSubdomain,
-  deleteSubdomain,
-  updateSubdomain,
-  verifyEmail,
-  resendVerification,
-  forgotPassword,
-  resetPassword,
-  deleteUser,
-  updateUser,
-} from "@/api/generated/domain-provider-api";
 import { customInstance, setIdentityToken } from "@/api/axios-instance";
 import { getBillingPortalUrl, getCheckoutUrl } from "@/api/billing-api";
+import {
+  createSubdomain,
+  deleteSubdomain,
+  deleteUser,
+  fetchToken,
+  forgotPassword,
+  logout,
+  resendVerification,
+  resetPassword,
+  updateSubdomain,
+  updateUser,
+  verifyEmail,
+} from "@/api/generated/domain-provider-api";
 import { parseIdentityToken } from "@/lib/jwt";
 import useDataInteractions from "./useDataInteractions";
 
@@ -147,7 +147,11 @@ describe("useDataInteractions", () => {
 
       await act(async () => {
         await expect(
-          result.current.loginUser({ email: "a@b.com", password: "pw", captchaToken: "ct" }),
+          result.current.loginUser({
+            email: "a@b.com",
+            password: "pw",
+            captchaToken: "ct",
+          }),
         ).rejects.toThrow();
       });
     });
@@ -225,7 +229,10 @@ describe("useDataInteractions", () => {
         });
       });
 
-      expect(createSubdomain).toHaveBeenCalledWith({ label: "test", targetIp: "1.2.3.4" });
+      expect(createSubdomain).toHaveBeenCalledWith({
+        label: "test",
+        targetIp: "1.2.3.4",
+      });
       expect(returned).toEqual(created);
     });
   });
@@ -241,10 +248,14 @@ describe("useDataInteractions", () => {
 
       let returned: unknown;
       await act(async () => {
-        returned = await result.current.updateSubdomain("s1", { targetIp: "5.6.7.8" });
+        returned = await result.current.updateSubdomain("s1", {
+          targetIp: "5.6.7.8",
+        });
       });
 
-      expect(updateSubdomain).toHaveBeenCalledWith("s1", { targetIp: "5.6.7.8" });
+      expect(updateSubdomain).toHaveBeenCalledWith("s1", {
+        targetIp: "5.6.7.8",
+      });
       expect(returned).toEqual(updated);
     });
 
@@ -362,11 +373,14 @@ describe("useDataInteractions", () => {
       await result.current.confirmPasswordReset("token", "newpw");
     });
 
-    expect(resetPassword).toHaveBeenCalledWith({ token: "token", newPassword: "newpw" });
+    expect(resetPassword).toHaveBeenCalledWith({
+      token: "token",
+      newPassword: "newpw",
+    });
   });
 
   it("updateUser calls updateUser and refreshes token", async () => {
-    vi.mocked(updateUser).mockResolvedValue(undefined);
+    vi.mocked(updateUser).mockResolvedValue(undefined as never);
     vi.mocked(fetchToken).mockResolvedValue("tok");
     vi.mocked(parseIdentityToken).mockReturnValue({ sub: "u1" } as never);
 
@@ -375,10 +389,10 @@ describe("useDataInteractions", () => {
     });
 
     await act(async () => {
-      await result.current.updateUser({ username: "alice2" });
+      await result.current.updateUser({ newUsername: "alice2" });
     });
 
-    expect(updateUser).toHaveBeenCalledWith({ username: "alice2" });
+    expect(updateUser).toHaveBeenCalledWith({ newUsername: "alice2" });
     expect(fetchToken).toHaveBeenCalledOnce();
   });
 
@@ -453,7 +467,10 @@ describe("useDataInteractions", () => {
 
       let returned: unknown;
       await act(async () => {
-        returned = await result.current.completeMfaChallenge("ch-tok", "654321");
+        returned = await result.current.completeMfaChallenge(
+          "ch-tok",
+          "654321",
+        );
       });
 
       expect(customInstance).toHaveBeenCalledWith({
@@ -467,7 +484,9 @@ describe("useDataInteractions", () => {
 
   describe("openBillingPortal", () => {
     it("navigates to billing portal URL", async () => {
-      vi.mocked(getBillingPortalUrl).mockResolvedValue({ url: "https://billing.example.com" });
+      vi.mocked(getBillingPortalUrl).mockResolvedValue({
+        url: "https://billing.example.com",
+      });
       vi.stubGlobal("location", { href: "" });
 
       const { result } = renderHook(() => useDataInteractions(), {
@@ -485,7 +504,9 @@ describe("useDataInteractions", () => {
 
   describe("openCheckout", () => {
     it("navigates to checkout URL", async () => {
-      vi.mocked(getCheckoutUrl).mockResolvedValue({ url: "https://checkout.example.com" });
+      vi.mocked(getCheckoutUrl).mockResolvedValue({
+        url: "https://checkout.example.com",
+      });
       vi.stubGlobal("location", { href: "" });
 
       const { result } = renderHook(() => useDataInteractions(), {

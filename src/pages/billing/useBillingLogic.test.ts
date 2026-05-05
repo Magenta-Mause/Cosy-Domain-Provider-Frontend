@@ -21,12 +21,14 @@ import useDataInteractions from "@/hooks/useDataInteractions/useDataInteractions
 const mockOpenPortal = vi.fn();
 const mockOpenCheckout = vi.fn();
 
-function mockAuth(overrides: Partial<ReturnType<typeof useAuthInformation>> = {}) {
+function mockAuth(
+  overrides: Partial<ReturnType<typeof useAuthInformation>> = {},
+) {
   vi.mocked(useAuthInformation).mockReturnValue({
     userTier: "FREE",
     isVerified: true,
     ...overrides,
-  } as ReturnType<typeof useAuthInformation>);
+  } as unknown as ReturnType<typeof useAuthInformation>);
 }
 
 beforeEach(() => {
@@ -34,7 +36,7 @@ beforeEach(() => {
   vi.mocked(useDataInteractions).mockReturnValue({
     openBillingPortal: mockOpenPortal,
     openCheckout: mockOpenCheckout,
-  } as ReturnType<typeof useDataInteractions>);
+  } as unknown as ReturnType<typeof useDataInteractions>);
   mockAuth();
 });
 

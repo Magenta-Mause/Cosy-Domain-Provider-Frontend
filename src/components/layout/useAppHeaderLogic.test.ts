@@ -24,7 +24,7 @@ beforeEach(() => {
     userName: "alice",
     isUserLoggedIn: true,
     userTier: "FREE",
-  } as ReturnType<typeof useAuthInformation>);
+  } as unknown as ReturnType<typeof useAuthInformation>);
   vi.mocked(router.navigate).mockResolvedValue(undefined);
 });
 

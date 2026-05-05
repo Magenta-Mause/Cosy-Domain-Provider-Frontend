@@ -1,5 +1,5 @@
 import { act, renderHook } from "@testing-library/react";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { useResetPasswordLogic } from "./useResetPasswordLogic";
 
 vi.mock("@/hooks/useDataInteractions/useDataInteractions", () => ({
@@ -29,7 +29,7 @@ beforeEach(() => {
   vi.mocked(Route.useSearch).mockReturnValue({ token: "reset-tok" });
   vi.mocked(useDataInteractions).mockReturnValue({
     confirmPasswordReset: mockConfirmReset,
-  } as ReturnType<typeof useDataInteractions>);
+  } as unknown as ReturnType<typeof useDataInteractions>);
 });
 
 afterEach(() => {
@@ -37,7 +37,9 @@ afterEach(() => {
 });
 
 const fakeSubmit = () =>
-  ({ preventDefault: vi.fn() }) as unknown as React.SyntheticEvent<HTMLFormElement>;
+  ({
+    preventDefault: vi.fn(),
+  }) as unknown as React.SyntheticEvent<HTMLFormElement>;
 
 describe("useResetPasswordLogic", () => {
   it("exposes the token from route search params", () => {

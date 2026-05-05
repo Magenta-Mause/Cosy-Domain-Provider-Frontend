@@ -23,8 +23,24 @@ beforeEach(() => {
   mockNavigate.mockResolvedValue(undefined);
 });
 
-function makeSubdomain(uuid: string, status: "ACTIVE" | "FAILED" | "PENDING" = "ACTIVE") {
-  return { uuid, label: uuid, fqdn: null, targetIp: null, targetIpv6: null, status, labelMode: "CUSTOM", ownerUuid: "u1", ownerUsername: "alice", ownerEmail: "a@b.com", createdAt: "", updatedAt: "" } as const;
+function makeSubdomain(
+  uuid: string,
+  status: "ACTIVE" | "FAILED" | "PENDING" = "ACTIVE",
+) {
+  return {
+    uuid,
+    label: uuid,
+    fqdn: null,
+    targetIp: null,
+    targetIpv6: null,
+    status,
+    labelMode: "CUSTOM",
+    ownerUuid: "u1",
+    ownerUsername: "alice",
+    ownerEmail: "a@b.com",
+    createdAt: "",
+    updatedAt: "",
+  } as const;
 }
 
 describe("useSubdomainsTabLogic", () => {

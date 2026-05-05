@@ -100,7 +100,9 @@ describe("useSubdomainDetailLogic", () => {
     });
 
     it("sets saveIpsError on failure", async () => {
-      vi.mocked(adminApi.updateSubdomainIps).mockRejectedValue(new Error("fail"));
+      vi.mocked(adminApi.updateSubdomainIps).mockRejectedValue(
+        new Error("fail"),
+      );
       const { result } = renderHook(() =>
         useSubdomainDetailLogic(baseSub, "key", mockOnSaved),
       );
@@ -127,7 +129,11 @@ describe("useSubdomainDetailLogic", () => {
         await result.current.handleSaveLabel();
       });
 
-      expect(adminApi.relabelSubdomain).toHaveBeenCalledWith("key", "sub-1", "newlabel");
+      expect(adminApi.relabelSubdomain).toHaveBeenCalledWith(
+        "key",
+        "sub-1",
+        "newlabel",
+      );
       expect(mockOnSaved).toHaveBeenCalledOnce();
     });
 

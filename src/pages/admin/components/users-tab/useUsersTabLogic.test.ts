@@ -23,13 +23,31 @@ beforeEach(() => {
   mockNavigate.mockResolvedValue(undefined);
 });
 
-function makeUser(uuid: string, tier: "FREE" | "PLUS" = "FREE", verified = true) {
-  return { uuid, username: uuid, email: `${uuid}@x.com`, verified, tier, maxSubdomainCount: 3, maxSubdomainCountOverride: null, subdomainCount: 0, planExpiresAt: null, createdAt: null };
+function makeUser(
+  uuid: string,
+  tier: "FREE" | "PLUS" = "FREE",
+  verified = true,
+) {
+  return {
+    uuid,
+    username: uuid,
+    email: `${uuid}@x.com`,
+    verified,
+    tier,
+    maxSubdomainCount: 3,
+    maxSubdomainCountOverride: null,
+    subdomainCount: 0,
+    planExpiresAt: null,
+    createdAt: null,
+  };
 }
 
 describe("useUsersTabLogic", () => {
   it("loads users on mount", async () => {
-    vi.mocked(adminApi.getUsers).mockResolvedValue([makeUser("u1"), makeUser("u2")]);
+    vi.mocked(adminApi.getUsers).mockResolvedValue([
+      makeUser("u1"),
+      makeUser("u2"),
+    ]);
     const { result } = renderHook(() => useUsersTabLogic("key"));
 
     await act(async () => {

@@ -6,7 +6,12 @@ interface IconProps
   readonly className?: string;
 }
 
-export function Icon({ src, className = "", style, ...rest }: Readonly<IconProps>) {
+export function Icon({
+  src,
+  className = "",
+  style,
+  ...rest
+}: Readonly<IconProps>) {
   return (
     <span
       aria-hidden={true}

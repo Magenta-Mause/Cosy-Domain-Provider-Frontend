@@ -25,11 +25,13 @@ beforeEach(() => {
   mockNavigate.mockResolvedValue(undefined);
   vi.mocked(useDataInteractions).mockReturnValue({
     registerUser: mockRegisterUser,
-  } as ReturnType<typeof useDataInteractions>);
+  } as unknown as ReturnType<typeof useDataInteractions>);
 });
 
 const fakeSubmit = () =>
-  ({ preventDefault: vi.fn() }) as unknown as React.SyntheticEvent<HTMLFormElement>;
+  ({
+    preventDefault: vi.fn(),
+  }) as unknown as React.SyntheticEvent<HTMLFormElement>;
 
 function fillStep1(result: ReturnType<typeof useRegisterFormLogic>) {
   act(() => {
@@ -160,7 +162,9 @@ describe("useRegisterFormLogic", () => {
   });
 
   describe("step 2 — password + captcha + submit", () => {
-    async function advanceToStep2(result: { current: ReturnType<typeof useRegisterFormLogic> }) {
+    async function advanceToStep2(result: {
+      current: ReturnType<typeof useRegisterFormLogic>;
+    }) {
       fillStep1(result.current);
       await act(async () => {
         await result.current.handleSubmit(fakeSubmit());

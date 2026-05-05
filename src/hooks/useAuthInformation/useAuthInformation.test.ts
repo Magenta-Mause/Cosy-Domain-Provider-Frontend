@@ -22,7 +22,7 @@ beforeEach(() => {
     refreshIdentityToken: mockRefresh,
     updateUser: mockUpdateUser,
     deleteUser: mockDeleteUserInteraction,
-  } as ReturnType<typeof useDataInteractions>);
+  } as unknown as ReturnType<typeof useDataInteractions>);
 });
 
 const loggedInAuth: Partial<AuthState> = {

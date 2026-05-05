@@ -13,7 +13,10 @@ describe("settings reducer", () => {
   });
 
   it("re-enables domain creation", () => {
-    const disabled = settingsReducer(undefined, setDomainCreationEnabled(false));
+    const disabled = settingsReducer(
+      undefined,
+      setDomainCreationEnabled(false),
+    );
     const result = settingsReducer(disabled, setDomainCreationEnabled(true));
     expect(result.domainCreationEnabled).toBe(true);
   });

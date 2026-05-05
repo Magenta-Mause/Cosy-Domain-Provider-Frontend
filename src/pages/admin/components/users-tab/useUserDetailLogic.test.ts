@@ -76,7 +76,11 @@ describe("useUserDetailLogic", () => {
         await result.current.handleSaveOverride();
       });
 
-      expect(adminApi.setMaxSubdomainOverride).toHaveBeenCalledWith("key", "user-1", null);
+      expect(adminApi.setMaxSubdomainOverride).toHaveBeenCalledWith(
+        "key",
+        "user-1",
+        null,
+      );
       expect(mockOnSaved).toHaveBeenCalledOnce();
     });
 
@@ -92,11 +96,17 @@ describe("useUserDetailLogic", () => {
         await result.current.handleSaveOverride();
       });
 
-      expect(adminApi.setMaxSubdomainOverride).toHaveBeenCalledWith("key", "user-1", 5);
+      expect(adminApi.setMaxSubdomainOverride).toHaveBeenCalledWith(
+        "key",
+        "user-1",
+        5,
+      );
     });
 
     it("sets saveError on failure", async () => {
-      vi.mocked(adminApi.setMaxSubdomainOverride).mockRejectedValue(new Error("fail"));
+      vi.mocked(adminApi.setMaxSubdomainOverride).mockRejectedValue(
+        new Error("fail"),
+      );
       const { result } = renderHook(() =>
         useUserDetailLogic(baseDetail, "key", mockOnSaved),
       );

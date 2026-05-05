@@ -1,7 +1,7 @@
 import { act, renderHook } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { SubdomainDto } from "@/api/generated/model";
-import type { AuthState } from "@/store/auth-slice";
+
 import { makeWrapper } from "@/test/store-utils";
 import { useDashboardLogic } from "./useDashboardLogic";
 
@@ -19,14 +19,14 @@ import useAuthInformation from "@/hooks/useAuthInformation/useAuthInformation";
 const sub = (uuid: string): SubdomainDto => ({
   uuid,
   label: uuid,
-  ipv4Address: "1.2.3.4",
-  ipv6Address: null,
-  active: true,
+  targetIp: "1.2.3.4",
+  status: "ACTIVE",
   createdAt: "2024-01-01T00:00:00Z",
-  updatedAt: "2024-01-01T00:00:00Z",
 });
 
-function mockAuth(overrides: Partial<ReturnType<typeof useAuthInformation>> = {}) {
+function mockAuth(
+  overrides: Partial<ReturnType<typeof useAuthInformation>> = {},
+) {
   vi.mocked(useAuthInformation).mockReturnValue({
     isVerified: true,
     isMfaEnabled: true,
@@ -46,7 +46,11 @@ describe("useDashboardLogic", () => {
   it("reads subdomains and loading state from the store", () => {
     const { result } = renderHook(() => useDashboardLogic(), {
       wrapper: makeWrapper({
-        subdomains: { items: [sub("a"), sub("b")], state: "loading", errorMessage: null },
+        subdomains: {
+          items: [sub("a"), sub("b")],
+          state: "loading",
+          errorMessage: null,
+        },
       }),
     });
 
@@ -70,7 +74,11 @@ describe("useDashboardLogic", () => {
 
     const { result } = renderHook(() => useDashboardLogic(), {
       wrapper: makeWrapper({
-        subdomains: { items: [sub("a"), sub("b")], state: "idle", errorMessage: null },
+        subdomains: {
+          items: [sub("a"), sub("b")],
+          state: "idle",
+          errorMessage: null,
+        },
       }),
     });
 

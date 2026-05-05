@@ -16,8 +16,12 @@ vi.mock("@/lib/jwt", () => ({
   parseIdentityToken: vi.fn(),
 }));
 
-import { fetchToken, getSubdomain, listMySubdomains } from "@/api/generated/domain-provider-api";
 import { setIdentityToken } from "@/api/axios-instance";
+import {
+  fetchToken,
+  getSubdomain,
+  listMySubdomains,
+} from "@/api/generated/domain-provider-api";
 import { parseIdentityToken } from "@/lib/jwt";
 import useDataLoading from "./useDataLoading";
 

@@ -6,7 +6,11 @@ vi.mock("react-i18next", () => ({
   useTranslation: () => ({ i18n: { changeLanguage: mockChangeLanguage } }),
 }));
 
-const mockLocalStorage = { setItem: vi.fn(), getItem: vi.fn(), removeItem: vi.fn() };
+const mockLocalStorage = {
+  setItem: vi.fn(),
+  getItem: vi.fn(),
+  removeItem: vi.fn(),
+};
 
 beforeEach(() => {
   vi.clearAllMocks();
@@ -38,7 +42,10 @@ describe("useLanguageChange", () => {
       await result.current.handleLanguageChange("en");
     });
 
-    expect(mockLocalStorage.setItem).toHaveBeenCalledWith("cosy-language", "en");
+    expect(mockLocalStorage.setItem).toHaveBeenCalledWith(
+      "cosy-language",
+      "en",
+    );
   });
 
   it("works with 'de' language", async () => {
@@ -48,6 +55,9 @@ describe("useLanguageChange", () => {
       await result.current.handleLanguageChange("de");
     });
 
-    expect(mockLocalStorage.setItem).toHaveBeenCalledWith("cosy-language", "de");
+    expect(mockLocalStorage.setItem).toHaveBeenCalledWith(
+      "cosy-language",
+      "de",
+    );
   });
 });

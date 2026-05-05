@@ -1,11 +1,13 @@
 import { act, renderHook } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
-const { mockLogoutUser, mockDeleteUser, mockRouterNavigate } = vi.hoisted(() => ({
-  mockLogoutUser: vi.fn(),
-  mockDeleteUser: vi.fn(),
-  mockRouterNavigate: vi.fn(),
-}));
+const { mockLogoutUser, mockDeleteUser, mockRouterNavigate } = vi.hoisted(
+  () => ({
+    mockLogoutUser: vi.fn(),
+    mockDeleteUser: vi.fn(),
+    mockRouterNavigate: vi.fn(),
+  }),
+);
 
 vi.mock("@/hooks/useAuthInformation/useAuthInformation", () => ({
   default: () => ({

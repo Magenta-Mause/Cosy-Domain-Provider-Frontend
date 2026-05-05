@@ -3,15 +3,15 @@ import type { PropsWithChildren } from "react";
 import { Provider } from "react-redux";
 import { authReducer } from "@/store/auth-slice";
 import { settingsReducer } from "@/store/settings-slice";
-import { subdomainsReducer } from "@/store/subdomains-slice";
 import type { RootState } from "@/store/store";
+import { subdomainsReducer } from "@/store/subdomains-slice";
 
 export function makeStore(preloadedState?: Partial<RootState>) {
   return configureStore({
     reducer: {
-      auth: authReducer,
-      subdomains: subdomainsReducer,
-      settings: settingsReducer,
+      auth: authReducer as never,
+      subdomains: subdomainsReducer as never,
+      settings: settingsReducer as never,
     },
     preloadedState,
   });

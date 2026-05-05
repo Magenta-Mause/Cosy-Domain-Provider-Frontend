@@ -24,11 +24,13 @@ beforeEach(() => {
   vi.mocked(Route.useSearch).mockReturnValue({ email: undefined });
   vi.mocked(useDataInteractions).mockReturnValue({
     requestPasswordReset: mockRequestReset,
-  } as ReturnType<typeof useDataInteractions>);
+  } as unknown as ReturnType<typeof useDataInteractions>);
 });
 
-const fakeSubmit = (email = "user@example.com") =>
-  ({ preventDefault: vi.fn() }) as unknown as React.SyntheticEvent<HTMLFormElement>;
+const fakeSubmit = (_email = "user@example.com") =>
+  ({
+    preventDefault: vi.fn(),
+  }) as unknown as React.SyntheticEvent<HTMLFormElement>;
 
 describe("useForgotPasswordLogic", () => {
   it("initialises with empty email when no prefill", () => {
