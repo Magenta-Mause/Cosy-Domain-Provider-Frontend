@@ -15,7 +15,7 @@ export function parseIdentityToken(token: string): AuthUser | null {
     const payload = token.split(".")[1];
     if (!payload) return null;
     const decoded = JSON.parse(
-      atob(payload.replaceAll(/-/g, "+").replaceAll(/_/g, "/")),
+      atob(payload.replaceAll("-", "+").replaceAll("_", "/")),
     ) as {
       username?: string;
       sub?: string;
