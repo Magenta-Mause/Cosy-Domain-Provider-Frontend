@@ -17,8 +17,7 @@ function loginButtonLabel(
   captchaReady: boolean,
 ): string {
   if (submitting) return t("login.submitting");
-  if (!captchaReady) return t("login.captchaLoading");
-  return t("login.submitButton");
+  return captchaReady ? t("login.submitButton") : t("login.captchaLoading");
 }
 
 export function LoginForm() {

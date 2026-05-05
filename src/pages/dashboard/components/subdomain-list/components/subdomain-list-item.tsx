@@ -6,7 +6,11 @@ import { Mailbox } from "@/components/pixel/mailbox";
 import { StatusDot } from "@/components/pixel/status-dot";
 import { SubdomainStatusBadge } from "@/components/pixel/subdomain-status-badge";
 
-export function SubdomainListItem({ domain }: { domain: SubdomainDto }) {
+export function SubdomainListItem({
+  domain,
+}: {
+  readonly domain: SubdomainDto;
+}) {
   const { t } = useTranslation();
   const navigate = useNavigate();
 
@@ -15,12 +19,13 @@ export function SubdomainListItem({ domain }: { domain: SubdomainDto }) {
       type="button"
       data-testid={`dashboard-domain-item-${domain.uuid}`}
       className="panel-flat hover-lift p-[18px] cursor-pointer w-full text-left"
-      onClick={() =>
+      onClick={() => {
+        if (!domain.uuid) return;
         void navigate({
           to: "/domain/$domainId",
-          params: { domainId: domain.uuid as string },
-        })
-      }
+          params: { domainId: domain.uuid },
+        });
+      }}
     >
       <div className="flex gap-5 items-center">
         <Mailbox size={60} />

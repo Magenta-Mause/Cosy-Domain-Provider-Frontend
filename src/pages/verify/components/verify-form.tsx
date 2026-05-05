@@ -60,7 +60,7 @@ export function VerifyForm({
           value={verificationToken}
           maxLength={6}
           pattern={REGEXP_ONLY_DIGITS_AND_CHARS}
-          pasteTransformer={(text) => text.replace(/[-\s]/g, "")}
+          pasteTransformer={(text) => text.replaceAll(/[-\s]/g, "")}
           onChange={onTokenChange}
           disabled={isBusy}
           data-testid="verify-code-input"

@@ -17,8 +17,9 @@ function registerButtonLabel(
   captchaReady: boolean,
 ): string {
   if (submitting) return t("register.submitting");
-  if (!captchaReady) return t("register.captchaLoading");
-  return t("register.submitButton");
+  return captchaReady
+    ? t("register.submitButton")
+    : t("register.captchaLoading");
 }
 
 export function RegisterForm() {
@@ -142,9 +143,9 @@ export function RegisterForm() {
               onChange={setConfirmPassword}
               testId="register-confirm-password-input"
             />
-            {!confirmValid && confirmPassword.length > 0 ? (
+            {confirmPassword.length > 0 && !confirmValid && (
               <ErrorMessage>{t("register.passwordMismatch")}</ErrorMessage>
-            ) : null}
+            )}
           </div>
 
           <label className="flex items-center gap-2.5 text-base cursor-pointer">

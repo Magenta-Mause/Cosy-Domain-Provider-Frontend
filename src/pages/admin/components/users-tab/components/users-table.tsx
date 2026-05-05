@@ -9,7 +9,7 @@ interface UsersTableProps {
   readonly onUserClick: (userId: string) => void;
 }
 
-function UuidCell({ uuid }: { uuid: string }) {
+function UuidCell({ uuid }: { readonly uuid: string }) {
   return <span className="truncate w-full">{uuid}</span>;
 }
 
@@ -17,9 +17,11 @@ function SubdomainCountCell({
   subdomainCount,
   maxSubdomainCount,
   maxSubdomainCountOverride,
-}: Pick<
-  AdminUser,
-  "subdomainCount" | "maxSubdomainCount" | "maxSubdomainCountOverride"
+}: Readonly<
+  Pick<
+    AdminUser,
+    "subdomainCount" | "maxSubdomainCount" | "maxSubdomainCountOverride"
+  >
 >) {
   return (
     <>

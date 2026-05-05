@@ -48,7 +48,7 @@ export function DnsTab({ domain }: DnsTabProps) {
                 entry.type ?? "—",
                 entry.name ?? "—",
                 (entry.values ?? []).join(", ") || "—",
-                entry.ttl == null ? "—" : String(entry.ttl),
+                String(entry.ttl ?? "—"),
               ];
               return cells.map((cell, j) => (
                 <div

@@ -1,7 +1,7 @@
 import type React from "react";
 
 interface IconProps
-  extends Omit<React.HTMLAttributes<HTMLSpanElement>, "children"> {
+  extends Readonly<Omit<React.HTMLAttributes<HTMLSpanElement>, "children">> {
   readonly src: string;
   readonly className?: string;
 }

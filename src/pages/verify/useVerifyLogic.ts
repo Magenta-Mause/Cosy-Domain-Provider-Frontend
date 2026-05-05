@@ -1,4 +1,4 @@
-import { type FormEvent, useCallback, useEffect, useState } from "react";
+import { type SyntheticEvent, useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import useAuthInformation from "@/hooks/useAuthInformation/useAuthInformation";
@@ -51,14 +51,14 @@ export function useVerifyLogic() {
   );
 
   useEffect(() => {
-    if (urlToken && urlToken.length === 6) {
+    if (urlToken?.length === 6) {
       setVerificationToken(urlToken.toUpperCase());
       setStage("input");
       void triggerVerification(urlToken);
     }
   }, [urlToken, triggerVerification]);
 
-  const triggerPasswordSetup = async (e: FormEvent) => {
+  const triggerPasswordSetup = async (e: SyntheticEvent) => {
     e.preventDefault();
     if (password !== confirmPassword) {
       setPasswordError(t("passwordSetup.mismatch"));

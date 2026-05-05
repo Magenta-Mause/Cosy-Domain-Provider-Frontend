@@ -4,11 +4,11 @@ import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 
 type UserMenuDropdownProps = {
-  isLoggingOut: boolean;
-  restricted?: boolean;
-  onClose: () => void;
-  onLogout: () => Promise<void>;
-  onDelete: () => Promise<void>;
+  readonly isLoggingOut: boolean;
+  readonly restricted?: boolean;
+  readonly onClose: () => void;
+  readonly onLogout: () => Promise<void>;
+  readonly onDelete: () => Promise<void>;
 };
 
 export function UserMenuDropdown({

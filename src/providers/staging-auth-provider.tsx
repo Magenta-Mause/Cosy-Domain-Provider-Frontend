@@ -5,7 +5,7 @@ import { useStagingAuthProviderLogic } from "./useStagingAuthProviderLogic";
 export function StagingAuthProvider({
   children,
 }: {
-  children: React.ReactNode;
+  readonly children: React.ReactNode;
 }) {
   if (import.meta.env.VITE_STAGING_AUTH_ENABLED !== "true") {
     return <>{children}</>;
@@ -14,7 +14,7 @@ export function StagingAuthProvider({
   return <StagingAuthGate>{children}</StagingAuthGate>;
 }
 
-function StagingAuthGate({ children }: { children: React.ReactNode }) {
+function StagingAuthGate({ children }: { readonly children: React.ReactNode }) {
   const { t } = useTranslation();
   const {
     authenticated,

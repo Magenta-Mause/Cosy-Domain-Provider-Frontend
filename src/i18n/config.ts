@@ -4,12 +4,12 @@ import { initReactI18next } from "react-i18next";
 import { type AppLanguage, defaultNS, resources } from "@/i18n/resources";
 
 const LANGUAGE_STORAGE_KEY = "cosy-language";
-const storedLanguage =
-  typeof globalThis.window !== "undefined"
-    ? (globalThis.localStorage.getItem(
-        LANGUAGE_STORAGE_KEY,
-      ) as AppLanguage | null)
-    : null;
+let storedLanguage: AppLanguage | null = null;
+if (globalThis.window !== undefined) {
+  storedLanguage = globalThis.localStorage.getItem(
+    LANGUAGE_STORAGE_KEY,
+  ) as AppLanguage | null;
+}
 const initialLanguage: AppLanguage =
   storedLanguage && storedLanguage in resources ? storedLanguage : "en";
 

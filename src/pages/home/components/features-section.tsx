@@ -2,7 +2,7 @@ import { useTranslation } from "react-i18next";
 
 import { FlatPanel } from "@/components/pixel/panel";
 
-function GrassSection({ children }: { children: React.ReactNode }) {
+function GrassSection({ children }: { readonly children: React.ReactNode }) {
   return (
     <div
       className="relative"

@@ -1,4 +1,4 @@
-import type { FormEvent } from "react";
+import type { SyntheticEvent } from "react";
 import { useTranslation } from "react-i18next";
 
 import { PasswordInput } from "@/components/auth/password-input";
@@ -14,7 +14,7 @@ interface SetPasswordViewProps {
   readonly isSettingPassword: boolean;
   readonly onPasswordChange: (value: string) => void;
   readonly onConfirmChange: (value: string) => void;
-  readonly onSubmit: (e: FormEvent) => void;
+  readonly onSubmit: (e: SyntheticEvent) => void;
 }
 
 export function SetPasswordView({

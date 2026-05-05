@@ -7,9 +7,9 @@ import { cn } from "@/lib/utils.ts";
 import { useLanguageMenuLogic } from "./useLanguageMenuLogic";
 
 type LanguageMenuProps = {
-  buttonVariant?: ButtonProps["variant"];
-  className?: ButtonProps["className"];
-  style?: ButtonProps["style"];
+  readonly buttonVariant?: ButtonProps["variant"];
+  readonly className?: ButtonProps["className"];
+  readonly style?: ButtonProps["style"];
 };
 
 export function LanguageMenu({

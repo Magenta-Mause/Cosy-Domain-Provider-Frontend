@@ -1,3 +1,7 @@
-export function ErrorMessage({ children }: { children: React.ReactNode }) {
+export function ErrorMessage({
+  children,
+}: {
+  readonly children: React.ReactNode;
+}) {
   return <div className="text-base text-destructive">⚠ {children}</div>;
 }

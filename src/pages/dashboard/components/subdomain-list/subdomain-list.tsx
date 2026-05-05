@@ -40,9 +40,14 @@ export function SubdomainList({
   }
 
   if (subdomains.length === 0) {
-    let emptyMessage: string = t("dashboard.empty");
-    if (!isVerified) emptyMessage = t("dashboard.emptyUnverified");
-    else if (!isMfaEnabled) emptyMessage = t("dashboard.emptyMfaRequired");
+    let emptyMessage: string;
+    if (isVerified && isMfaEnabled) {
+      emptyMessage = t("dashboard.empty");
+    } else if (isVerified) {
+      emptyMessage = t("dashboard.emptyMfaRequired");
+    } else {
+      emptyMessage = t("dashboard.emptyUnverified");
+    }
     return (
       <FlatPanel className="p-6 text-center text-lg">{emptyMessage}</FlatPanel>
     );

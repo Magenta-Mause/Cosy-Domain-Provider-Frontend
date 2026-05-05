@@ -25,7 +25,7 @@ export function AuthPageLayout({
 
   return (
     <Scenery>
-      {backButtonLink != null ? (
+      {backButtonLink !== null && backButtonLink !== undefined && (
         <Link
           to={backButtonLink}
           data-testid="auth-back-link"
@@ -34,7 +34,7 @@ export function AuthPageLayout({
         >
           {t("legal.back")}
         </Link>
-      ) : null}
+      )}
       <div className="absolute top-6 right-7 z-[5] flex items-center gap-3">
         <LanguageMenu />
         {isUserLoggedIn ? (

@@ -1,5 +1,11 @@
 import { useNavigate } from "@tanstack/react-router";
-import { type FormEvent, useEffect, useMemo, useRef, useState } from "react";
+import {
+  type SyntheticEvent,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { useTranslation } from "react-i18next";
 
 import { checkLabelAvailability } from "@/api/billing-api";
@@ -164,7 +170,7 @@ export function useDomainDetailLogic(domainId: string) {
     t("domainDetail.unknownValue"),
   );
 
-  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: SyntheticEvent<HTMLFormElement>) {
     event.preventDefault();
     setHasSubmitted(true);
     setErrorMessage(null);

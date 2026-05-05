@@ -1,7 +1,7 @@
 import type { TurnstileInstance } from "@marsidev/react-turnstile";
 import { useNavigate } from "@tanstack/react-router";
 import {
-  type FormEvent,
+  type SyntheticEvent,
   useCallback,
   useEffect,
   useRef,
@@ -27,17 +27,16 @@ export function useLoginFormLogic() {
   const [captchaToken, setCaptchaToken] = useState<string | null>(null);
   const turnstileRef = useRef<TurnstileInstance>(null);
   const [challengeToken, setChallengeToken] = useState<string | null>(null);
-  const [totpCodeRaw, setTotpCodeRaw] = useState("");
-  const totpCode = totpCodeRaw;
-  const setTotpCode = useCallback(
-    (value: string) => setTotpCodeRaw(value.toUpperCase()),
+  const [totpCode, setTotpCode] = useState("");
+  const onTotpChange = useCallback(
+    (value: string) => setTotpCode(value.toUpperCase()),
     [],
   );
   const [totpError, setTotpError] = useState<string | null>(null);
 
   const submitting = authState === "loading";
 
-  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: SyntheticEvent<HTMLFormElement>) {
     event.preventDefault();
     if (step === 1) {
       if (!isValidEmail(email)) {
@@ -85,7 +84,7 @@ export function useLoginFormLogic() {
       }
     } catch {
       setTotpError(t("login.mfaError"));
-      setTotpCode("");
+      onTotpChange("");
     }
   }, [
     challengeToken,
@@ -93,7 +92,7 @@ export function useLoginFormLogic() {
     completeMfaChallenge,
     navigate,
     t,
-    setTotpCode,
+    onTotpChange,
   ]);
 
   useEffect(() => {
@@ -109,7 +108,7 @@ export function useLoginFormLogic() {
     setErrorMessage(null);
     setCaptchaToken(null);
     setChallengeToken(null);
-    setTotpCode("");
+    onTotpChange("");
     setTotpError(null);
   }
 
@@ -129,7 +128,7 @@ export function useLoginFormLogic() {
     turnstileRef,
     setCaptchaToken,
     totpCode,
-    setTotpCode,
+    setTotpCode: onTotpChange,
     totpError,
     handleTotpSubmit,
   };

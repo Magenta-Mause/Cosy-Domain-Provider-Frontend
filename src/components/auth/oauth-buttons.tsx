@@ -8,7 +8,7 @@ import useDataInteractions from "@/hooks/useDataInteractions/useDataInteractions
 
 type OAuthVariant = "login" | "register";
 
-export function OAuthButtons({ variant }: { variant: OAuthVariant }) {
+export function OAuthButtons({ variant }: { readonly variant: OAuthVariant }) {
   const { initiateOAuth } = useDataInteractions();
 
   return (

@@ -17,7 +17,7 @@ const STATUS_I18N: Record<
   [SubdomainDtoStatus.FAILED]: "status.failed",
 };
 
-export function StatusDot({ status }: { status: SubdomainDtoStatus }) {
+export function StatusDot({ status }: { readonly status: SubdomainDtoStatus }) {
   const { t } = useTranslation();
   return (
     <span className="inline-flex items-center gap-1.5 text-base">

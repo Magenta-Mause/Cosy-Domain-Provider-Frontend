@@ -3,12 +3,12 @@ import { Fragment, type ReactNode, useMemo, useState } from "react";
 import { FlatPanel } from "@/components/pixel/panel";
 
 export interface ColumnDef<T> {
-  id: string;
-  header: ReactNode;
-  width?: string;
-  compare?: (a: T, b: T) => number;
-  cell: (row: T) => ReactNode;
-  cellClassName?: string | ((row: T) => string);
+  readonly id: string;
+  readonly header: ReactNode;
+  readonly width?: string;
+  readonly compare?: (a: T, b: T) => number;
+  readonly cell: (row: T) => ReactNode;
+  readonly cellClassName?: string | ((row: T) => string);
 }
 
 interface TableProps<T> {

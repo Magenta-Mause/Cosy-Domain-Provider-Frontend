@@ -11,16 +11,16 @@ import {
 } from "@/components/ui/input-otp";
 
 type MfaCodeFormProps = {
-  totpCode: string;
-  setTotpCode: (value: string) => void;
-  totpError: string | null;
-  isSubmitting: boolean;
-  onConfirm: () => void;
-  email?: string;
-  otpTestId?: string;
-  submitTestId?: string;
-  header?: ReactNode;
-  footer?: ReactNode;
+  readonly totpCode: string;
+  readonly setTotpCode: (value: string) => void;
+  readonly totpError: string | null;
+  readonly isSubmitting: boolean;
+  readonly onConfirm: () => void;
+  readonly email?: string;
+  readonly otpTestId?: string;
+  readonly submitTestId?: string;
+  readonly header?: ReactNode;
+  readonly footer?: ReactNode;
 };
 
 export function MfaCodeForm({

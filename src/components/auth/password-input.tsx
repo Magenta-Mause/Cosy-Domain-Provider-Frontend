@@ -35,7 +35,9 @@ export function PasswordInput({
       <input
         id={id}
         data-testid={testId}
-        className={`pinput pr-20${showPw ? "" : " tracking-widest"}`}
+        className={["pinput pr-20", !showPw && "tracking-widest"]
+          .filter(Boolean)
+          .join(" ")}
         type={showPw ? "text" : "password"}
         autoComplete={autoComplete}
         required={required}

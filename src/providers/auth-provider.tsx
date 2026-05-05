@@ -2,7 +2,11 @@ import { useEffect } from "react";
 import useDataLoading from "@/hooks/useDataLoading/useDataLoading";
 import { useAppSelector } from "@/store/hooks";
 
-export function AuthProvider({ children }: { children: React.ReactNode }) {
+export function AuthProvider({
+  children,
+}: {
+  readonly children: React.ReactNode;
+}) {
   const { bootstrapAuth } = useDataLoading();
   const bootstrapped = useAppSelector((state) => state.auth.bootstrapped);
 

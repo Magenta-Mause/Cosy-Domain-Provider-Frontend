@@ -17,8 +17,8 @@ export function useDashboardLogic() {
   const { isVerified, isMfaEnabled, userTier, maxSubdomainCount } =
     useAuthInformation();
 
-  const isSlotsExhausted =
-    maxSubdomainCount !== null && subdomains.length >= maxSubdomainCount;
+  const slotLimit = maxSubdomainCount ?? Number.POSITIVE_INFINITY;
+  const isSlotsExhausted = subdomains.length >= slotLimit;
   const domainCreationEnabled = useAppSelector(
     (state) => state.settings.domainCreationEnabled,
   );

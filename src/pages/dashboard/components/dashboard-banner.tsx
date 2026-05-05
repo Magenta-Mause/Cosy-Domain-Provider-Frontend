@@ -6,9 +6,9 @@ function createButtonLabel(
   isVerified: boolean,
   isMfaEnabled: boolean,
 ): string | null {
-  if (!isVerified) return t("dashboard.verifyAccount");
-  if (!isMfaEnabled) return t("dashboard.setupMfa");
-  return null;
+  if (isVerified && isMfaEnabled) return null;
+  if (isVerified) return t("dashboard.setupMfa");
+  return t("dashboard.verifyAccount");
 }
 
 import { PageHeader } from "@/components/layout/page-header";
@@ -39,11 +39,12 @@ export function DashboardBanner({
     userTier === "PLUS"
       ? t("dashboard.slotsExhaustedPlus")
       : t("dashboard.slotsExhaustedFree");
-  const tooltipText = domainCreationEnabled
-    ? isSlotsExhausted
-      ? exhaustedText
-      : null
-    : t("dashboard.creationDisabled");
+  let tooltipText: string | null = null;
+  if (domainCreationEnabled) {
+    tooltipText = isSlotsExhausted ? exhaustedText : null;
+  } else {
+    tooltipText = t("dashboard.creationDisabled");
+  }
 
   return (
     <PageHeader>

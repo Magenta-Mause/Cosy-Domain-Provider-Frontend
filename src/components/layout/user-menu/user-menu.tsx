@@ -5,11 +5,11 @@ import { UserMenuDropdown } from "./user-menu-dropdown";
 import { useUserMenuLogic } from "./useUserMenuLogic";
 
 type UserMenuProps = {
-  userName?: string | null;
-  isLoggingOut: boolean;
-  restricted?: boolean;
-  onLogout: () => Promise<void>;
-  onDelete: () => Promise<void>;
+  readonly userName?: string | null;
+  readonly isLoggingOut: boolean;
+  readonly restricted?: boolean;
+  readonly onLogout: () => Promise<void>;
+  readonly onDelete: () => Promise<void>;
 };
 
 export function UserMenu({

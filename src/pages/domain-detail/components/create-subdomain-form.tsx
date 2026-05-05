@@ -1,4 +1,4 @@
-import type { FormEvent } from "react";
+import type { SyntheticEvent } from "react";
 import { useTranslation } from "react-i18next";
 
 import { ErrorMessage } from "@/components/pixel/error-message";
@@ -31,7 +31,7 @@ interface CreateSubdomainFormProps {
   readonly ipv6Valid: boolean;
   readonly atLeastOneIp: boolean;
   readonly canSubmit: boolean;
-  readonly onSubmit: (event: FormEvent<HTMLFormElement>) => void;
+  readonly onSubmit: (event: SyntheticEvent<HTMLFormElement>) => void;
 }
 
 export function CreateSubdomainForm({

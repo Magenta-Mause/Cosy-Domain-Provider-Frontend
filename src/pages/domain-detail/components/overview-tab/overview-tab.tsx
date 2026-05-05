@@ -1,4 +1,4 @@
-import type { FormEvent } from "react";
+import type { SyntheticEvent } from "react";
 import { useTranslation } from "react-i18next";
 
 import type { SubdomainDto } from "@/api/generated/model";
@@ -27,7 +27,7 @@ interface OverviewTabProps {
   readonly atLeastOneIp: boolean;
   readonly canSubmit: boolean;
   readonly createdAt: string;
-  readonly onSubmit: (event: FormEvent<HTMLFormElement>) => void;
+  readonly onSubmit: (event: SyntheticEvent<HTMLFormElement>) => void;
 }
 
 export function OverviewTab({

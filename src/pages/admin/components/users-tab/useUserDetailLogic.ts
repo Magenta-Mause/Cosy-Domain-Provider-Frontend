@@ -53,10 +53,10 @@ export function useUserDetailLogic(
     setIsSavingUser(true);
     setSaveUserError(null);
     try {
-      await adminApi.updateUser(adminKey, detail.uuid, {
-        username: username === detail.username ? undefined : username,
-        email: email === detail.email ? undefined : email,
-      });
+      const updates: { username?: string; email?: string } = {};
+      if (username !== detail.username) updates.username = username;
+      if (email !== detail.email) updates.email = email;
+      await adminApi.updateUser(adminKey, detail.uuid, updates);
       onSaved();
     } catch {
       setSaveUserError(t("admin.saveUserError"));
@@ -70,15 +70,16 @@ export function useUserDetailLogic(
   const [deleteError, setDeleteError] = useState<string | null>(null);
 
   const handleDeleteUser = async () => {
-    if (!globalThis.confirm(t("admin.deleteUserConfirm"))) return;
-    setIsDeleting(true);
-    setDeleteError(null);
-    try {
-      await adminApi.deleteUser(adminKey, detail.uuid);
-      await navigate({ to: "/admin" });
-    } catch {
-      setDeleteError(t("admin.deleteUserError"));
-      setIsDeleting(false);
+    if (globalThis.confirm(t("admin.deleteUserConfirm"))) {
+      setIsDeleting(true);
+      setDeleteError(null);
+      try {
+        await adminApi.deleteUser(adminKey, detail.uuid);
+        await navigate({ to: "/admin" });
+      } catch {
+        setDeleteError(t("admin.deleteUserError"));
+        setIsDeleting(false);
+      }
     }
   };
 

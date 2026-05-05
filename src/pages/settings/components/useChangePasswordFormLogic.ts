@@ -1,4 +1,4 @@
-import { type FormEvent, useState } from "react";
+import { type SyntheticEvent, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { isPasswordWeak, isValidPassword } from "@/lib/validators";
@@ -24,7 +24,7 @@ export function useChangePasswordFormLogic(
     isValidPassword(newPassword) &&
     passwordsMatch;
 
-  async function handleSubmit(e: FormEvent) {
+  async function handleSubmit(e: SyntheticEvent) {
     e.preventDefault();
     setSaving(true);
     setError(null);

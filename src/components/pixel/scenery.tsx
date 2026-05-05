@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 
-export function Scenery({ children }: { children: ReactNode }) {
+export function Scenery({ children }: { readonly children: ReactNode }) {
   return (
     <div className="sky-bg min-h-screen relative overflow-hidden">
       <div

@@ -9,7 +9,7 @@ import { DomainTabBar } from "./components/domain-tab-bar";
 import { OverviewTab } from "./components/overview-tab";
 import { useDomainDetailLogic } from "./useDomainDetailLogic";
 
-export function DomainDetailPage({ domainId }: { domainId: string }) {
+export function DomainDetailPage({ domainId }: { readonly domainId: string }) {
   const {
     domain,
     isCreateMode,
