@@ -4,8 +4,11 @@ import { RegisterForm } from "./components/register-form";
 
 export function RegisterPage() {
   return (
-    <AuthPageLayout maxWidth={440}>
-      <RegisterForm />
-    </AuthPageLayout>
+    <>
+      <title>Create account — Cosy Domain Provider</title>
+      <AuthPageLayout maxWidth={440}>
+        <RegisterForm />
+      </AuthPageLayout>
+    </>
   );
 }

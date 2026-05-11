@@ -33,6 +33,9 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  build: {
+    manifest: true,
+  },
   server: {
     proxy: {
       "/api": {

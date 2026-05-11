@@ -7,6 +7,7 @@ export function DatenschutzPage() {
 
   return (
     <LegalPageLayout title={t("legal.datenschutz.title")}>
+      <title>{t("legal.datenschutz.title")} — Cosy Domain Provider</title>
       <section>
         <h2 className="font-semibold text-lg mb-2">1. Verantwortlicher</h2>
         <p>

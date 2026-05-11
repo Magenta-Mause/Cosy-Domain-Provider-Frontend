@@ -7,6 +7,7 @@ export function AgbPage() {
 
   return (
     <LegalPageLayout title={t("legal.agb.title")}>
+      <title>{t("legal.agb.title")} — Cosy Domain Provider</title>
       <section>
         <h2 className="font-semibold text-lg mb-2">1. Geltungsbereich</h2>
         <p>

@@ -4,8 +4,11 @@ import { LoginForm } from "./components/login-form";
 
 export function LoginPage() {
   return (
-    <AuthPageLayout>
-      <LoginForm />
-    </AuthPageLayout>
+    <>
+      <title>Log in — Cosy Domain Provider</title>
+      <AuthPageLayout>
+        <LoginForm />
+      </AuthPageLayout>
+    </>
   );
 }

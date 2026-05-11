@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /
+Disallow: /dashboard
+Disallow: /admin
+Disallow: /billing
+Disallow: /settings
+Disallow: /domain/
+Disallow: /mfa-setup
+Disallow: /mfa-challenge
+Disallow: /verify
+
+Sitemap: https://cosy-hosting.net/sitemap.xml

@@ -7,6 +7,7 @@ export function ImpressumPage() {
 
   return (
     <LegalPageLayout title={t("legal.impressum.title")}>
+      <title>{t("legal.impressum.title")} — Cosy Domain Provider</title>
       <section>
         <h2 className="font-semibold text-lg mb-2">Angaben gemäß § 5 TMG</h2>
         <p>
