@@ -18,6 +18,7 @@ export default defineConfig({
         "src/routeTree.gen.ts",
         "src/test/**",
         "src/main.tsx",
+        "src/entry-server.tsx",
       ],
     },
   },
