@@ -1,0 +1,34 @@
+{
+  "ci": {
+    "collect": {
+      "startServerCommand": "bun preview --port 4173 --strictPort",
+      "startServerReadyPattern": "Local:",
+      "url": [
+        "http://localhost:4173/",
+        "http://localhost:4173/login",
+        "http://localhost:4173/register",
+        "http://localhost:4173/forgot-password",
+        "http://localhost:4173/legal-notice",
+        "http://localhost:4173/privacy",
+        "http://localhost:4173/terms"
+      ],
+      "numberOfRuns": 1,
+      "settings": {
+        "preset": "desktop"
+      }
+    },
+    "assert": {
+      "assertions": {
+        "categories:performance":    ["warn", { "minScore": 0 }],
+        "categories:accessibility":  ["warn", { "minScore": 0 }],
+        "categories:best-practices": ["warn", { "minScore": 0 }],
+        "categories:seo":            ["warn", { "minScore": 0 }]
+      }
+    },
+    "upload": {
+      "target": "filesystem",
+      "outputDir": "./lighthouse-reports",
+      "reportFilenamePattern": "%%PATHNAME%%-%%DATETIME%%-report.%%EXTENSION%%"
+    }
+  }
+}

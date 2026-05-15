@@ -12,6 +12,7 @@
     "format": "biome format --write .",
     "gen:api": "curl http://localhost:8080/api/v3/api-docs > openapi-domain-provider.json && orval",
     "preview": "vite preview",
+    "lighthouse": "bun run build && lhci autorun",
     "test": "bunx vitest run",
     "test:watch": "bunx vitest"
   },
@@ -37,6 +38,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^2.4.14",
+    "@lhci/cli": "^0.15.1",
     "@tanstack/router-plugin": "^1.167.32",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
