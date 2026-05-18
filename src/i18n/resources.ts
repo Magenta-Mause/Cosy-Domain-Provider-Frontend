@@ -40,6 +40,8 @@ const enCommon = {
     oauthGithub: "Continue with GitHub",
     oauthDiscord: "Continue with Discord",
     oauthError: "Sign-in failed. Please try again.",
+    oauthEmailTaken:
+      "This email is already registered. Log in with your password, then link this account from Settings.",
     orEmail: "OR USE EMAIL",
     emailContinue: "Continue →",
     captchaError: "Security check not ready yet. Please try again in a moment.",
@@ -364,6 +366,17 @@ const enCommon = {
     passwordError: "Could not update password. Please try again.",
     saveButton: "Save",
     saving: "Saving...",
+    linkedAccounts: {
+      section: "Linked accounts",
+      loading: "Loading...",
+      link: "Link",
+      unlink: "Unlink",
+      unlinking: "Unlinking...",
+      linkSuccess: "Account linked successfully!",
+      linkError: "Failed to link account. Please try again.",
+      unlinkError:
+        "Could not unlink this account. Make sure you have another login method set up first.",
+    },
   },
   admin: {
     label: "ADMIN",
@@ -528,6 +541,8 @@ const deCommon: CommonSchema = {
     oauthGithub: "Mit GitHub anmelden",
     oauthDiscord: "Mit Discord anmelden",
     oauthError: "Anmeldung fehlgeschlagen. Bitte erneut versuchen.",
+    oauthEmailTaken:
+      "Diese E-Mail-Adresse ist bereits registriert. Melde dich mit deinem Passwort an und verknüpfe das Konto dann in den Einstellungen.",
     orEmail: "ODER E-MAIL NUTZEN",
     emailContinue: "Weiter →",
     captchaError:
@@ -872,6 +887,18 @@ const deCommon: CommonSchema = {
       "Passwort konnte nicht aktualisiert werden. Bitte erneut versuchen.",
     saveButton: "Speichern",
     saving: "Wird gespeichert...",
+    linkedAccounts: {
+      section: "Verknüpfte Konten",
+      loading: "Wird geladen...",
+      link: "Verknüpfen",
+      unlink: "Trennen",
+      unlinking: "Wird getrennt...",
+      linkSuccess: "Konto erfolgreich verknüpft!",
+      linkError:
+        "Konto konnte nicht verknüpft werden. Bitte erneut versuchen.",
+      unlinkError:
+        "Dieses Konto konnte nicht getrennt werden. Stelle sicher, dass eine andere Anmeldemethode vorhanden ist.",
+    },
   },
   admin: {
     label: "ADMIN",

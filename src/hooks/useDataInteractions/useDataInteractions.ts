@@ -196,6 +196,23 @@ const useDataInteractions = () => {
     [],
   );
 
+  const initiateOAuthLink = useCallback(
+    (provider: "google" | "github" | "discord") => {
+      globalThis.location.href = `/api/v1/user/oauth-identities/${provider}/link`;
+    },
+    [],
+  );
+
+  const unlinkOAuth = useCallback(
+    async (provider: "google" | "github" | "discord") => {
+      await customInstance({
+        method: "DELETE",
+        url: `/api/v1/user/oauth-identities/${provider}`,
+      });
+    },
+    [],
+  );
+
   const setupPassword = useCallback(
     async (password: string) => {
       await customInstance({
@@ -278,6 +295,8 @@ const useDataInteractions = () => {
     updateSubdomain: updateSubdomainInteraction,
     deleteSubdomain: deleteSubdomainInteraction,
     initiateOAuth,
+    initiateOAuthLink,
+    unlinkOAuth,
     setupPassword,
     updateUser: updateUserInteraction,
     deleteUser: deleteUserInteraction,

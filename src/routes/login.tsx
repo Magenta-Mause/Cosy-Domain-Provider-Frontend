@@ -5,7 +5,7 @@ import { store } from "@/store/store";
 
 export const Route = createFileRoute("/login")({
   validateSearch: z.object({
-    oauthError: z.boolean().optional(),
+    oauthError: z.union([z.boolean(), z.literal("emailTaken")]).optional(),
   }),
   beforeLoad: () => {
     const { identityToken } = store.getState().auth;

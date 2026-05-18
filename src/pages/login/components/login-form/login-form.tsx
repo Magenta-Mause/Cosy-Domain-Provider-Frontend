@@ -31,6 +31,7 @@ export function LoginForm() {
     emailError,
     errorMessage,
     oauthError,
+    oauthEmailTaken,
     submitting,
     captchaReady,
     handleSubmit,
@@ -83,7 +84,11 @@ export function LoginForm() {
     <form onSubmit={handleSubmit} className="flex flex-col gap-4">
       <h2 className="text-[22px]">{t("login.title")}</h2>
 
-      {oauthError ? <ErrorMessage>{t("login.oauthError")}</ErrorMessage> : null}
+      {oauthEmailTaken ? (
+        <ErrorMessage>{t("login.oauthEmailTaken")}</ErrorMessage>
+      ) : oauthError ? (
+        <ErrorMessage>{t("login.oauthError")}</ErrorMessage>
+      ) : null}
 
       {step === 1 ? (
         <>

@@ -5,6 +5,7 @@ import useAuthInformation from "@/hooks/useAuthInformation/useAuthInformation";
 
 import { ChangePasswordForm } from "./components/change-password-form";
 import { ChangeUsernameForm } from "./components/change-username-form";
+import { LinkedAccountsForm } from "./components/linked-accounts-form";
 import { SettingsHeader } from "./components/settings-header";
 
 export function SettingsPage() {
@@ -30,6 +31,13 @@ export function SettingsPage() {
               updateUser({ currentPassword, newPassword })
             }
           />
+        </FlatPanel>
+
+        <FlatPanel className="px-5 py-5 flex flex-col gap-6">
+          <span className="pixel text-sm">
+            {t("settings.linkedAccounts.section")}
+          </span>
+          <LinkedAccountsForm />
         </FlatPanel>
       </div>
     </div>
