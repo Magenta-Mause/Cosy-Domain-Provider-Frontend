@@ -1,4 +1,6 @@
 import { useCallback } from "react";
+
+type OAuthProvider = "google" | "github" | "discord";
 import { customInstance, setIdentityToken } from "@/api/axios-instance";
 import { getBillingPortalUrl, getCheckoutUrl } from "@/api/billing-api";
 import {
@@ -190,21 +192,21 @@ const useDataInteractions = () => {
   );
 
   const initiateOAuth = useCallback(
-    (provider: "google" | "github" | "discord") => {
+    (provider: OAuthProvider) => {
       globalThis.location.href = `/api/v1/auth/oauth/${provider}/authorize`;
     },
     [],
   );
 
   const initiateOAuthLink = useCallback(
-    (provider: "google" | "github" | "discord") => {
+    (provider: OAuthProvider) => {
       globalThis.location.href = `/api/v1/user/oauth-identities/${provider}/link`;
     },
     [],
   );
 
   const unlinkOAuth = useCallback(
-    async (provider: "google" | "github" | "discord") => {
+    async (provider: OAuthProvider) => {
       await customInstance({
         method: "DELETE",
         url: `/api/v1/user/oauth-identities/${provider}`,

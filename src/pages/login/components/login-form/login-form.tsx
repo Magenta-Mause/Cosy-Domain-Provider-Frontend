@@ -84,11 +84,12 @@ export function LoginForm() {
     <form onSubmit={handleSubmit} className="flex flex-col gap-4">
       <h2 className="text-[22px]">{t("login.title")}</h2>
 
-      {oauthEmailTaken ? (
+      {oauthEmailTaken && (
         <ErrorMessage>{t("login.oauthEmailTaken")}</ErrorMessage>
-      ) : oauthError ? (
+      )}
+      {!oauthEmailTaken && oauthError && (
         <ErrorMessage>{t("login.oauthError")}</ErrorMessage>
-      ) : null}
+      )}
 
       {step === 1 ? (
         <>
