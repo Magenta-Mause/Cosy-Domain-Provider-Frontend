@@ -1,6 +1,5 @@
 import { useCallback } from "react";
 
-type OAuthProvider = "google" | "github" | "discord";
 import { customInstance, setIdentityToken } from "@/api/axios-instance";
 import { getBillingPortalUrl, getCheckoutUrl } from "@/api/billing-api";
 import {
@@ -36,6 +35,8 @@ import {
   setSubdomainsError,
   upsertSubdomain,
 } from "@/store/subdomains-slice";
+
+type OAuthProvider = "google" | "github" | "discord";
 
 const useDataInteractions = () => {
   const dispatch = useAppDispatch();
@@ -191,33 +192,24 @@ const useDataInteractions = () => {
     [],
   );
 
-  const initiateOAuth = useCallback(
-    (provider: OAuthProvider) => {
-      globalThis.location.href = `/api/v1/auth/oauth/${provider}/authorize`;
-    },
-    [],
-  );
+  const initiateOAuth = useCallback((provider: OAuthProvider) => {
+    globalThis.location.href = `/api/v1/auth/oauth/${provider}/authorize`;
+  }, []);
 
-  const initiateOAuthLink = useCallback(
-    async (provider: OAuthProvider) => {
-      const url = await customInstance<string>({
-        method: "GET",
-        url: `/api/v1/user/oauth-identities/${provider}/link`,
-      });
-      globalThis.location.href = url;
-    },
-    [],
-  );
+  const initiateOAuthLink = useCallback(async (provider: OAuthProvider) => {
+    const url = await customInstance<string>({
+      method: "GET",
+      url: `/api/v1/user/oauth-identities/${provider}/link`,
+    });
+    globalThis.location.href = url;
+  }, []);
 
-  const unlinkOAuth = useCallback(
-    async (provider: OAuthProvider) => {
-      await customInstance({
-        method: "DELETE",
-        url: `/api/v1/user/oauth-identities/${provider}`,
-      });
-    },
-    [],
-  );
+  const unlinkOAuth = useCallback(async (provider: OAuthProvider) => {
+    await customInstance({
+      method: "DELETE",
+      url: `/api/v1/user/oauth-identities/${provider}`,
+    });
+  }, []);
 
   const setupPassword = useCallback(
     async (password: string) => {

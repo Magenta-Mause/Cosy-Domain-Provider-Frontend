@@ -894,8 +894,7 @@ const deCommon: CommonSchema = {
       unlink: "Trennen",
       unlinking: "Wird getrennt...",
       linkSuccess: "Konto erfolgreich verknüpft!",
-      linkError:
-        "Konto konnte nicht verknüpft werden. Bitte erneut versuchen.",
+      linkError: "Konto konnte nicht verknüpft werden. Bitte erneut versuchen.",
       unlinkError:
         "Dieses Konto konnte nicht getrennt werden. Stelle sicher, dass eine andere Anmeldemethode vorhanden ist.",
     },

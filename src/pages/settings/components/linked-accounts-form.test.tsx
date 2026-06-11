@@ -79,15 +79,9 @@ describe("LinkedAccountsForm", () => {
 
   it("renders link buttons for unlinked providers", () => {
     render(<LinkedAccountsForm />);
-    expect(
-      screen.getByTestId("settings-link-google-btn"),
-    ).toBeInTheDocument();
-    expect(
-      screen.getByTestId("settings-link-github-btn"),
-    ).toBeInTheDocument();
-    expect(
-      screen.getByTestId("settings-link-discord-btn"),
-    ).toBeInTheDocument();
+    expect(screen.getByTestId("settings-link-google-btn")).toBeInTheDocument();
+    expect(screen.getByTestId("settings-link-github-btn")).toBeInTheDocument();
+    expect(screen.getByTestId("settings-link-discord-btn")).toBeInTheDocument();
   });
 
   it("renders unlink button for linked provider", () => {
@@ -99,9 +93,7 @@ describe("LinkedAccountsForm", () => {
     expect(
       screen.getByTestId("settings-unlink-github-btn"),
     ).toBeInTheDocument();
-    expect(
-      screen.getByTestId("settings-link-google-btn"),
-    ).toBeInTheDocument();
+    expect(screen.getByTestId("settings-link-google-btn")).toBeInTheDocument();
   });
 
   it("calls handleLink when link button is clicked", async () => {
@@ -133,17 +125,13 @@ describe("LinkedAccountsForm", () => {
   it("shows success banner when justLinked", () => {
     mockLogicReturn = { ...defaultLogic, justLinked: true };
     render(<LinkedAccountsForm />);
-    expect(
-      screen.getByTestId("settings-link-success"),
-    ).toBeInTheDocument();
+    expect(screen.getByTestId("settings-link-success")).toBeInTheDocument();
   });
 
   it("shows error banner when justLinkFailed", () => {
     mockLogicReturn = { ...defaultLogic, justLinkFailed: true };
     render(<LinkedAccountsForm />);
-    expect(
-      screen.getByTestId("settings-link-error"),
-    ).toBeInTheDocument();
+    expect(screen.getByTestId("settings-link-error")).toBeInTheDocument();
   });
 
   it("shows unlinkError when present", () => {

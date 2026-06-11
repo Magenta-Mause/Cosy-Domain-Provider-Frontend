@@ -2,9 +2,9 @@ import "@/i18n/config";
 import { configureStore } from "@reduxjs/toolkit";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import {
-  RouterProvider,
   createMemoryHistory,
   createRouter,
+  RouterProvider,
 } from "@tanstack/react-router";
 import { renderToString } from "react-dom/server";
 import { Provider } from "react-redux";

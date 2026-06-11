@@ -1,11 +1,11 @@
 import { useTranslation } from "react-i18next";
+import { ErrorMessage } from "@/components/pixel/error-message";
 import {
   DiscordIcon,
   GitHubIcon,
   GoogleIcon,
 } from "@/components/ui/brand-icons";
 import { Button } from "@/components/ui/button";
-import { ErrorMessage } from "@/components/pixel/error-message";
 
 import { useLinkedAccountsLogic } from "./useLinkedAccountsLogic";
 
@@ -63,7 +63,10 @@ export function LinkedAccountsForm() {
           {allProviders.map((provider) => {
             const linked = isLinked(provider);
             return (
-              <div key={provider} className="flex items-center justify-between gap-4">
+              <div
+                key={provider}
+                className="flex items-center justify-between gap-4"
+              >
                 <div className="flex items-center gap-3">
                   {PROVIDER_ICONS[provider]}
                   <span className="text-sm">{PROVIDER_LABELS[provider]}</span>
