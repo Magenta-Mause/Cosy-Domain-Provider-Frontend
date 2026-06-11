@@ -15,10 +15,6 @@ vi.mock("@/hooks/useDataLoading/useDataLoading", () => ({
   default: () => mockDataLoading,
 }));
 
-vi.mock("@/api/billing-api", () => ({
-  checkLabelAvailability: vi.fn(),
-}));
-
 const mockT = (key: string) => key;
 vi.mock("react-i18next", () => ({
   useTranslation: () => ({ t: mockT, i18n: { language: "en" } }),
@@ -34,15 +30,18 @@ const mockCreateSubdomain = vi.fn();
 const mockUpdateSubdomain = vi.fn();
 const mockDeleteSubdomain = vi.fn();
 const mockLoadSubdomainByUuid = vi.fn();
+const mockCheckLabelAvailability = vi.fn();
 
 const mockDataInteractions = {
   createSubdomain: mockCreateSubdomain,
   updateSubdomain: mockUpdateSubdomain,
   deleteSubdomain: mockDeleteSubdomain,
 };
-const mockDataLoading = { loadSubdomainByUuid: mockLoadSubdomainByUuid };
+const mockDataLoading = {
+  loadSubdomainByUuid: mockLoadSubdomainByUuid,
+  checkLabelAvailability: mockCheckLabelAvailability,
+};
 
-import { checkLabelAvailability } from "@/api/billing-api";
 import { useDomainDetailLogic } from "./useDomainDetailLogic";
 
 const baseSub: SubdomainDto = {
@@ -203,7 +202,7 @@ describe("useDomainDetailLogic", () => {
 
     it("PLUS user in custom mode checks label availability", async () => {
       vi.useFakeTimers();
-      vi.mocked(checkLabelAvailability).mockResolvedValue({
+      mockCheckLabelAvailability.mockResolvedValue({
         available: true,
         reason: null,
       });
@@ -218,14 +217,14 @@ describe("useDomainDetailLogic", () => {
         await vi.runAllTimersAsync();
       });
 
-      expect(checkLabelAvailability).toHaveBeenCalledWith("mysite");
+      expect(mockCheckLabelAvailability).toHaveBeenCalledWith("mysite");
       expect(result.current.labelAvailability).toBe("available");
       vi.useRealTimers();
     });
 
     it("sets labelAvailability to taken when label is unavailable", async () => {
       vi.useFakeTimers();
-      vi.mocked(checkLabelAvailability).mockResolvedValue({
+      mockCheckLabelAvailability.mockResolvedValue({
         available: false,
         reason: "taken",
       });
@@ -244,7 +243,7 @@ describe("useDomainDetailLogic", () => {
 
     it("sets labelAvailability to reserved when label is reserved", async () => {
       vi.useFakeTimers();
-      vi.mocked(checkLabelAvailability).mockResolvedValue({
+      mockCheckLabelAvailability.mockResolvedValue({
         available: false,
         reason: "reserved",
       });

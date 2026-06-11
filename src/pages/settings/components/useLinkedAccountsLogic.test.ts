@@ -1,17 +1,9 @@
 import { act, renderHook } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-const { mockCustomInstance } = vi.hoisted(() => ({
-  mockCustomInstance: vi.fn(),
-}));
-
-vi.mock("@/api/axios-instance", () => ({
-  customInstance: mockCustomInstance,
-  setIdentityToken: vi.fn(),
-}));
-
 const mockInitiateOAuthLink = vi.fn();
 const mockUnlinkOAuth = vi.fn();
+const mockLoadOAuthIdentities = vi.fn();
 
 vi.mock("@/hooks/useDataInteractions/useDataInteractions", () => ({
   default: () => ({
@@ -20,12 +12,16 @@ vi.mock("@/hooks/useDataInteractions/useDataInteractions", () => ({
   }),
 }));
 
+vi.mock("@/hooks/useDataLoading/useDataLoading", () => ({
+  default: () => ({
+    loadOAuthIdentities: mockLoadOAuthIdentities,
+  }),
+}));
+
 const searchParams = { linked: false as boolean, linkError: false as boolean };
 
-vi.mock("@/routes/settings", () => ({
-  Route: {
-    useSearch: () => searchParams,
-  },
+vi.mock("@tanstack/react-router", () => ({
+  useSearch: () => searchParams,
 }));
 
 vi.mock("react-i18next", () => ({
@@ -42,7 +38,7 @@ beforeEach(() => {
 
 describe("useLinkedAccountsLogic", () => {
   it("starts in loading state and loads identities on mount", async () => {
-    mockCustomInstance.mockResolvedValue([
+    mockLoadOAuthIdentities.mockResolvedValue([
       { provider: "github", email: "a@a.com" },
     ]);
 
@@ -61,7 +57,7 @@ describe("useLinkedAccountsLogic", () => {
   });
 
   it("stays unloaded with empty list when API fails", async () => {
-    mockCustomInstance.mockRejectedValue(new Error("network error"));
+    mockLoadOAuthIdentities.mockResolvedValue(null);
 
     const { result } = renderHook(() => useLinkedAccountsLogic());
 
@@ -74,7 +70,7 @@ describe("useLinkedAccountsLogic", () => {
   });
 
   it("isLinked returns true only for linked providers", async () => {
-    mockCustomInstance.mockResolvedValue([
+    mockLoadOAuthIdentities.mockResolvedValue([
       { provider: "github", email: "a@a.com" },
     ]);
 
@@ -90,7 +86,7 @@ describe("useLinkedAccountsLogic", () => {
   });
 
   it("handleLink delegates to initiateOAuthLink", async () => {
-    mockCustomInstance.mockResolvedValue([]);
+    mockLoadOAuthIdentities.mockResolvedValue([]);
 
     const { result } = renderHook(() => useLinkedAccountsLogic());
 
@@ -106,7 +102,7 @@ describe("useLinkedAccountsLogic", () => {
   });
 
   it("handleUnlink removes the identity on success", async () => {
-    mockCustomInstance.mockResolvedValue([
+    mockLoadOAuthIdentities.mockResolvedValue([
       { provider: "github", email: "a@a.com" },
       { provider: "google", email: "b@b.com" },
     ]);
@@ -130,7 +126,7 @@ describe("useLinkedAccountsLogic", () => {
   });
 
   it("handleUnlink sets unlinkError on failure", async () => {
-    mockCustomInstance.mockResolvedValue([
+    mockLoadOAuthIdentities.mockResolvedValue([
       { provider: "github", email: "a@a.com" },
     ]);
     mockUnlinkOAuth.mockRejectedValue(new Error("conflict"));
@@ -153,16 +149,20 @@ describe("useLinkedAccountsLogic", () => {
   });
 
   it("allProviders always contains all three", async () => {
-    mockCustomInstance.mockResolvedValue([]);
+    mockLoadOAuthIdentities.mockResolvedValue([]);
 
     const { result } = renderHook(() => useLinkedAccountsLogic());
 
-    expect(result.current.allProviders).toEqual(["google", "github", "discord"]);
+    expect(result.current.allProviders).toEqual([
+      "google",
+      "github",
+      "discord",
+    ]);
   });
 
   it("justLinked reflects the linked search param", async () => {
     searchParams.linked = true;
-    mockCustomInstance.mockResolvedValue([]);
+    mockLoadOAuthIdentities.mockResolvedValue([]);
 
     const { result } = renderHook(() => useLinkedAccountsLogic());
 
@@ -172,7 +172,7 @@ describe("useLinkedAccountsLogic", () => {
 
   it("justLinkFailed reflects the linkError search param", async () => {
     searchParams.linkError = true;
-    mockCustomInstance.mockResolvedValue([]);
+    mockLoadOAuthIdentities.mockResolvedValue([]);
 
     const { result } = renderHook(() => useLinkedAccountsLogic());
 

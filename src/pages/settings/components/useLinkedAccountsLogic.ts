@@ -1,41 +1,33 @@
+import { useSearch } from "@tanstack/react-router";
 import { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { customInstance } from "@/api/axios-instance";
+import type { LinkedIdentity } from "@/api/user-api";
 import useDataInteractions from "@/hooks/useDataInteractions/useDataInteractions";
-import { Route } from "@/routes/settings";
+import useDataLoading from "@/hooks/useDataLoading/useDataLoading";
 
 type Provider = "google" | "github" | "discord";
-
-interface LinkedIdentity {
-  provider: string;
-  email: string;
-}
 
 const ALL_PROVIDERS: Provider[] = ["google", "github", "discord"];
 
 export function useLinkedAccountsLogic() {
   const { t } = useTranslation();
   const { initiateOAuthLink, unlinkOAuth } = useDataInteractions();
-  const { linked, linkError } = Route.useSearch();
+  const { loadOAuthIdentities } = useDataLoading();
+  const { linked, linkError } = useSearch({ from: "/settings" });
 
   const [identities, setIdentities] = useState<LinkedIdentity[]>([]);
   const [loading, setLoading] = useState(true);
   const [unlinkError, setUnlinkError] = useState<string | null>(null);
-  const [unlinkingProvider, setUnlinkingProvider] = useState<string | null>(null);
+  const [unlinkingProvider, setUnlinkingProvider] = useState<string | null>(
+    null,
+  );
 
   const loadIdentities = useCallback(async () => {
-    try {
-      const data = await customInstance<LinkedIdentity[]>({
-        method: "GET",
-        url: "/api/v1/user/oauth-identities",
-      });
-      setIdentities(data);
-    } catch {
-      // non-fatal — list stays empty
-    } finally {
-      setLoading(false);
-    }
-  }, []);
+    const data = await loadOAuthIdentities();
+    // a failed load is non-fatal — the list stays empty
+    if (data) setIdentities(data);
+    setLoading(false);
+  }, [loadOAuthIdentities]);
 
   useEffect(() => {
     void loadIdentities();

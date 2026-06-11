@@ -8,7 +8,6 @@ import {
 } from "react";
 import { useTranslation } from "react-i18next";
 
-import { checkLabelAvailability } from "@/api/billing-api";
 import useAuthInformation from "@/hooks/useAuthInformation/useAuthInformation";
 import useDataInteractions from "@/hooks/useDataInteractions/useDataInteractions";
 import useDataLoading from "@/hooks/useDataLoading/useDataLoading";
@@ -40,7 +39,7 @@ export function useDomainDetailLogic(domainId: string) {
 
   const { createSubdomain, updateSubdomain, deleteSubdomain } =
     useDataInteractions();
-  const { loadSubdomainByUuid } = useDataLoading();
+  const { loadSubdomainByUuid, checkLabelAvailability } = useDataLoading();
   const cachedSubdomain = useAppSelector((state) =>
     state.subdomains.items.find((item) => item.uuid === domainId),
   );

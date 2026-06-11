@@ -16,12 +16,22 @@ vi.mock("@/lib/jwt", () => ({
   parseIdentityToken: vi.fn(),
 }));
 
+vi.mock("@/api/subdomain-api", () => ({
+  checkLabelAvailability: vi.fn(),
+}));
+
+vi.mock("@/api/user-api", () => ({
+  getOAuthIdentities: vi.fn(),
+}));
+
 import { setIdentityToken } from "@/api/axios-instance";
 import {
   fetchToken,
   getSubdomain,
   listMySubdomains,
 } from "@/api/generated/domain-provider-api";
+import { checkLabelAvailability } from "@/api/subdomain-api";
+import { getOAuthIdentities } from "@/api/user-api";
 import { parseIdentityToken } from "@/lib/jwt";
 import useDataLoading from "./useDataLoading";
 
@@ -142,6 +152,51 @@ describe("useDataLoading", () => {
       await act(async () => {
         returned = await result.current.loadSubdomainByUuid("s1");
       });
+
+      expect(returned).toBeNull();
+    });
+  });
+
+  describe("checkLabelAvailability", () => {
+    it("delegates to the subdomain API", async () => {
+      vi.mocked(checkLabelAvailability).mockResolvedValue({
+        available: true,
+        reason: null,
+      });
+
+      const { result } = renderHook(() => useDataLoading(), {
+        wrapper: makeWrapper(),
+      });
+
+      const returned = await result.current.checkLabelAvailability("castle");
+
+      expect(checkLabelAvailability).toHaveBeenCalledWith("castle");
+      expect(returned).toEqual({ available: true, reason: null });
+    });
+  });
+
+  describe("loadOAuthIdentities", () => {
+    it("returns identities on success", async () => {
+      const identities = [{ provider: "github", email: "a@a.com" }];
+      vi.mocked(getOAuthIdentities).mockResolvedValue(identities);
+
+      const { result } = renderHook(() => useDataLoading(), {
+        wrapper: makeWrapper(),
+      });
+
+      const returned = await result.current.loadOAuthIdentities();
+
+      expect(returned).toEqual(identities);
+    });
+
+    it("returns null on failure", async () => {
+      vi.mocked(getOAuthIdentities).mockRejectedValue(new Error("fail"));
+
+      const { result } = renderHook(() => useDataLoading(), {
+        wrapper: makeWrapper(),
+      });
+
+      const returned = await result.current.loadOAuthIdentities();
 
       expect(returned).toBeNull();
     });

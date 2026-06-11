@@ -5,6 +5,8 @@ import {
   getSubdomain,
   listMySubdomains,
 } from "@/api/generated/domain-provider-api";
+import { checkLabelAvailability as checkLabelAvailabilityRequest } from "@/api/subdomain-api";
+import { getOAuthIdentities } from "@/api/user-api";
 import { parseIdentityToken } from "@/lib/jwt";
 import {
   clearIdentity,
@@ -82,10 +84,25 @@ const useDataLoading = () => {
     [dispatch],
   );
 
+  const checkLabelAvailability = useCallback(
+    (label: string) => checkLabelAvailabilityRequest(label),
+    [],
+  );
+
+  const loadOAuthIdentities = useCallback(async () => {
+    try {
+      return await getOAuthIdentities();
+    } catch {
+      return null;
+    }
+  }, []);
+
   return {
     bootstrapAuth,
     loadSubdomains,
     loadSubdomainByUuid,
+    checkLabelAvailability,
+    loadOAuthIdentities,
   };
 };
 
