@@ -1,8 +1,6 @@
 import { useTranslation } from "react-i18next";
-
+import type { AdminUser } from "@/api/admin-api";
 import { type ColumnDef, Table } from "@/components/ui/table";
-
-import type { AdminUser } from "../../../lib";
 
 interface UsersTableProps {
   readonly users: AdminUser[];

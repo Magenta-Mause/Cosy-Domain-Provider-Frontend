@@ -1,9 +1,7 @@
 import { useTranslation } from "react-i18next";
-
+import type { AdminSubdomain } from "@/api/admin-api";
 import { type ColumnDef, Table } from "@/components/ui/table";
-
-import type { AdminSubdomain } from "../../../lib";
-import { StatusBadge } from "./status-badge";
+import { StatusBadge } from "../../status-badge";
 
 interface UserSubdomainsTableProps {
   readonly subdomains: AdminSubdomain[];

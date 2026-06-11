@@ -2,7 +2,7 @@ import { useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import { type AdminSubdomain, adminApi } from "../../lib";
+import { type AdminSubdomain, adminApi } from "@/api/admin-api";
 
 export function useSubdomainsTabLogic(adminKey: string) {
   const { t } = useTranslation();

@@ -1,5 +1,5 @@
 import { act, renderHook } from "@testing-library/react";
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { useAdminLogic } from "./useAdminLogic";
 
 const mockNavigate = vi.fn();
@@ -11,22 +11,27 @@ vi.mock("./lib", () => ({
   ADMIN_KEY_STORAGE: "admin_key",
 }));
 
+vi.mock("@/api/admin-api", () => ({
+  adminApi: { getUsers: vi.fn() },
+}));
+
+import { adminApi } from "@/api/admin-api";
+
 beforeEach(() => {
   vi.clearAllMocks();
   mockNavigate.mockResolvedValue(undefined);
   sessionStorage.clear();
-  vi.stubGlobal("fetch", vi.fn());
-});
-
-afterEach(() => {
-  vi.unstubAllGlobals();
 });
 
 const fakeSubmit = () =>
   ({ preventDefault: vi.fn() }) as unknown as React.SyntheticEvent;
 
-function mockFetch(status: number) {
-  vi.mocked(fetch).mockResolvedValue({ status } as Response);
+function mockLogin(outcome: "ok" | "unauthorized") {
+  if (outcome === "ok") {
+    vi.mocked(adminApi.getUsers).mockResolvedValue([]);
+  } else {
+    vi.mocked(adminApi.getUsers).mockRejectedValue(new Error("UNAUTHORIZED"));
+  }
 }
 
 describe("useAdminLogic", () => {
@@ -52,7 +57,7 @@ describe("useAdminLogic", () => {
 
   describe("login", () => {
     it("authenticates and stores key on a successful response", async () => {
-      mockFetch(200);
+      mockLogin("ok");
       const { result } = renderHook(() => useAdminLogic());
 
       await act(async () => {
@@ -66,7 +71,7 @@ describe("useAdminLogic", () => {
     });
 
     it("sets loginError on a 401 response", async () => {
-      mockFetch(401);
+      mockLogin("unauthorized");
       const { result } = renderHook(() => useAdminLogic());
 
       await act(async () => {
@@ -77,8 +82,10 @@ describe("useAdminLogic", () => {
       expect(result.current.loginError).toBe(true);
     });
 
-    it("sets loginError when fetch throws", async () => {
-      vi.mocked(fetch).mockRejectedValue(new Error("network error"));
+    it("sets loginError when the request throws", async () => {
+      vi.mocked(adminApi.getUsers).mockRejectedValue(
+        new Error("network error"),
+      );
       const { result } = renderHook(() => useAdminLogic());
 
       await act(async () => {
@@ -91,7 +98,7 @@ describe("useAdminLogic", () => {
 
   describe("logout", () => {
     it("clears key, isAuthenticated, and sessionStorage", async () => {
-      mockFetch(200);
+      mockLogin("ok");
       const { result } = renderHook(() => useAdminLogic());
 
       await act(async () => {
@@ -108,7 +115,7 @@ describe("useAdminLogic", () => {
 
   describe("handleLogin", () => {
     it("calls login with inputKey and navigates to /admin/subdomains", async () => {
-      mockFetch(200);
+      mockLogin("ok");
       const { result } = renderHook(() => useAdminLogic());
 
       act(() => result.current.setInputKey("my-key"));
@@ -122,7 +129,7 @@ describe("useAdminLogic", () => {
     });
 
     it("clears isLogging after completion", async () => {
-      mockFetch(200);
+      mockLogin("ok");
       const { result } = renderHook(() => useAdminLogic());
 
       await act(async () => {

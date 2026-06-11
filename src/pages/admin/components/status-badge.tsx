@@ -1,5 +1,5 @@
-import type { AdminSubdomain } from "../../../lib";
-import { subdomainStatusColor } from "../../subdomains-tab/lib";
+import type { AdminSubdomain } from "@/api/admin-api";
+import { subdomainStatusColor } from "../lib";
 
 interface StatusBadgeProps {
   readonly status: AdminSubdomain["status"];

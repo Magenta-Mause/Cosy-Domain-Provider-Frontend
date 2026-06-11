@@ -2,7 +2,7 @@ import { act, renderHook } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { useUsersTabLogic } from "./useUsersTabLogic";
 
-vi.mock("../../lib", () => ({
+vi.mock("@/api/admin-api", () => ({
   adminApi: { getUsers: vi.fn() },
 }));
 
@@ -16,7 +16,7 @@ vi.mock("@tanstack/react-router", () => ({
   useNavigate: () => mockNavigate,
 }));
 
-import { adminApi } from "../../lib";
+import { adminApi } from "@/api/admin-api";
 
 beforeEach(() => {
   vi.clearAllMocks();

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 
-import { adminApi } from "../../../lib";
+import { adminApi } from "@/api/admin-api";
 
 export function useKillSwitchLogic(adminKey: string) {
   const [domainCreationEnabled, setDomainCreationEnabled] = useState(true);

@@ -1,9 +1,9 @@
 import { act, renderHook } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import type { AdminSubdomain } from "../../../lib";
+import type { AdminSubdomain } from "@/api/admin-api";
 import { useSubdomainDetailLogic } from "./useSubdomainDetailLogic";
 
-vi.mock("../../../lib", () => ({
+vi.mock("@/api/admin-api", () => ({
   adminApi: {
     updateSubdomainIps: vi.fn(),
     relabelSubdomain: vi.fn(),
@@ -23,7 +23,7 @@ vi.mock("@tanstack/react-router", () => ({
   useRouter: () => ({ history: { back: mockBack } }),
 }));
 
-import { adminApi } from "../../../lib";
+import { adminApi } from "@/api/admin-api";
 
 const mockOnSaved = vi.fn();
 

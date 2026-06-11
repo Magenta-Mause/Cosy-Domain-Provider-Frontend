@@ -2,7 +2,7 @@ import { useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import { type AdminUser, adminApi } from "../../lib";
+import { type AdminUser, adminApi } from "@/api/admin-api";
 
 export function useUsersTabLogic(adminKey: string) {
   const { t } = useTranslation();

@@ -1,12 +1,11 @@
 import { useTranslation } from "react-i18next";
-
+import type { AdminUserDetail } from "@/api/admin-api";
 import { FlatPanel } from "@/components/pixel/panel";
 import { Button } from "@/components/ui/button";
 import { FormField } from "@/components/ui/form-field";
-
-import type { AdminUserDetail } from "../../lib";
-import { DetailField } from "./components/detail-field";
-import { UserSubdomainsTable } from "./components/user-subdomains-table";
+import { DangerZonePanel } from "../../danger-zone-panel";
+import { DetailField } from "../../detail-field";
+import { UserSubdomainsTable } from "../components/user-subdomains-table";
 import { useUserDetailLogic } from "./useUserDetailLogic";
 
 interface UserDetailProps {
@@ -160,25 +159,12 @@ export function UserDetail({ detail, adminKey, onSaved }: UserDetailProps) {
         />
       </div>
 
-      <FlatPanel className="px-5 py-4 flex flex-col gap-3 border border-destructive/40">
-        <h3 className="text-sm font-semibold text-destructive uppercase tracking-wide">
-          {t("admin.dangerZone")}
-        </h3>
-        <div className="flex items-center gap-5">
-          <Button
-            type="button"
-            variant="destructive"
-            size="sm"
-            onClick={handleDeleteUser}
-            disabled={isDeleting}
-          >
-            {t("admin.deleteUser")}
-          </Button>
-          {deleteError && (
-            <p className="text-sm text-destructive">{deleteError}</p>
-          )}
-        </div>
-      </FlatPanel>
+      <DangerZonePanel
+        buttonLabel={t("admin.deleteUser")}
+        onDelete={handleDeleteUser}
+        isDeleting={isDeleting}
+        error={deleteError}
+      />
     </div>
   );
 }

@@ -2,7 +2,7 @@ import { useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import { type AdminUserDetail, adminApi } from "../../lib";
+import { type AdminUserDetail, adminApi } from "@/api/admin-api";
 
 export function useUserDetailLogic(
   detail: AdminUserDetail,

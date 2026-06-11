@@ -1,6 +1,7 @@
 import { useNavigate } from "@tanstack/react-router";
 import { type SyntheticEvent, useCallback, useEffect, useState } from "react";
 
+import { adminApi } from "@/api/admin-api";
 import { ADMIN_KEY_STORAGE } from "./lib";
 
 export function useAdminLogic() {
@@ -19,13 +20,7 @@ export function useAdminLogic() {
 
   const login = useCallback(async (loginKey: string) => {
     try {
-      const res = await fetch("/api/v1/admin/users", {
-        headers: { "X-Admin-Key": loginKey },
-      });
-      if (res.status === 401) {
-        setLoginError(true);
-        return;
-      }
+      await adminApi.getUsers(loginKey);
       sessionStorage.setItem(ADMIN_KEY_STORAGE, loginKey);
       setKey(loginKey);
       setIsAuthenticated(true);

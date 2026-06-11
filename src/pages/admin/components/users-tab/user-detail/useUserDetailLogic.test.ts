@@ -1,9 +1,9 @@
 import { act, renderHook } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import type { AdminUserDetail } from "../../lib";
+import type { AdminUserDetail } from "@/api/admin-api";
 import { useUserDetailLogic } from "./useUserDetailLogic";
 
-vi.mock("../../lib", () => ({
+vi.mock("@/api/admin-api", () => ({
   adminApi: {
     setMaxSubdomainOverride: vi.fn(),
     updateUser: vi.fn(),
@@ -21,7 +21,7 @@ vi.mock("@tanstack/react-router", () => ({
   useNavigate: () => mockNavigate,
 }));
 
-import { adminApi } from "../../lib";
+import { adminApi } from "@/api/admin-api";
 
 const mockOnSaved = vi.fn();
 

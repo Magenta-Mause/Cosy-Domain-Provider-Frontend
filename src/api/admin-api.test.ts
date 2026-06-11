@@ -1,12 +1,18 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { adminApi } from "./lib";
 
-function mockFetch(status: number, body: unknown) {
-  return vi.fn().mockResolvedValue({
-    status,
-    ok: status >= 200 && status < 300,
-    json: () => Promise.resolve(body),
-  });
+const { mockCustomInstance } = vi.hoisted(() => ({
+  mockCustomInstance: vi.fn(),
+}));
+
+vi.mock("@/api/axios-instance", () => ({
+  customInstance: mockCustomInstance,
+  setIdentityToken: vi.fn(),
+}));
+
+import { adminApi } from "./admin-api";
+
+function axiosError(status: number) {
+  return { isAxiosError: true, response: { status } };
 }
 
 beforeEach(() => vi.clearAllMocks());
@@ -15,198 +21,203 @@ describe("adminApi", () => {
   describe("getSubdomains", () => {
     it("returns parsed body on success", async () => {
       const data = [{ uuid: "s1" }];
-      vi.stubGlobal("fetch", mockFetch(200, data));
+      mockCustomInstance.mockResolvedValue(data);
 
       const result = await adminApi.getSubdomains("key");
 
       expect(result).toEqual(data);
-      vi.unstubAllGlobals();
+      expect(mockCustomInstance).toHaveBeenCalledWith(
+        expect.objectContaining({
+          url: expect.stringContaining("/subdomains"),
+          headers: { "X-Admin-Key": "key" },
+        }),
+      );
     });
 
     it("throws UNAUTHORIZED on 401", async () => {
-      vi.stubGlobal("fetch", mockFetch(401, {}));
+      mockCustomInstance.mockRejectedValue(axiosError(401));
 
       await expect(adminApi.getSubdomains("key")).rejects.toThrow(
         "UNAUTHORIZED",
       );
-      vi.unstubAllGlobals();
     });
 
     it("throws HTTP error on non-ok status", async () => {
-      vi.stubGlobal("fetch", mockFetch(500, {}));
+      mockCustomInstance.mockRejectedValue(axiosError(500));
 
       await expect(adminApi.getSubdomains("key")).rejects.toThrow("HTTP 500");
-      vi.unstubAllGlobals();
     });
   });
 
   describe("getUsers", () => {
     it("returns users on success", async () => {
       const users = [{ uuid: "u1" }];
-      vi.stubGlobal("fetch", mockFetch(200, users));
+      mockCustomInstance.mockResolvedValue(users);
 
       const result = await adminApi.getUsers("key");
 
       expect(result).toEqual(users);
-      vi.unstubAllGlobals();
     });
   });
 
   describe("getUserDetail", () => {
     it("fetches user detail by uuid", async () => {
       const detail = { uuid: "u1", username: "alice" };
-      vi.stubGlobal("fetch", mockFetch(200, detail));
+      mockCustomInstance.mockResolvedValue(detail);
 
       const result = await adminApi.getUserDetail("key", "u1");
 
       expect(result).toEqual(detail);
-      vi.unstubAllGlobals();
+      expect(mockCustomInstance).toHaveBeenCalledWith(
+        expect.objectContaining({ url: expect.stringContaining("/users/u1") }),
+      );
     });
   });
 
   describe("updateUser", () => {
     it("sends PATCH and returns updated user", async () => {
       const updated = { uuid: "u1", username: "alice2" };
-      const fetchMock = mockFetch(200, updated);
-      vi.stubGlobal("fetch", fetchMock);
+      mockCustomInstance.mockResolvedValue(updated);
 
       const result = await adminApi.updateUser("key", "u1", {
         username: "alice2",
       });
 
       expect(result).toEqual(updated);
-      expect(fetchMock).toHaveBeenCalledWith(
-        expect.stringContaining("/users/u1"),
-        expect.objectContaining({ method: "PATCH" }),
+      expect(mockCustomInstance).toHaveBeenCalledWith(
+        expect.objectContaining({
+          url: expect.stringContaining("/users/u1"),
+          method: "PATCH",
+          data: { username: "alice2" },
+        }),
       );
-      vi.unstubAllGlobals();
     });
   });
 
   describe("deleteUser", () => {
-    it("sends DELETE without returning a body", async () => {
-      const fetchMock = mockFetch(204, null);
-      vi.stubGlobal("fetch", fetchMock);
+    it("sends DELETE", async () => {
+      mockCustomInstance.mockResolvedValue(undefined);
 
       await expect(adminApi.deleteUser("key", "u1")).resolves.toBeUndefined();
-      expect(fetchMock).toHaveBeenCalledWith(
-        expect.stringContaining("/users/u1"),
-        expect.objectContaining({ method: "DELETE" }),
+      expect(mockCustomInstance).toHaveBeenCalledWith(
+        expect.objectContaining({
+          url: expect.stringContaining("/users/u1"),
+          method: "DELETE",
+        }),
       );
-      vi.unstubAllGlobals();
     });
 
     it("throws on 401", async () => {
-      vi.stubGlobal("fetch", mockFetch(401, {}));
+      mockCustomInstance.mockRejectedValue(axiosError(401));
       await expect(adminApi.deleteUser("key", "u1")).rejects.toThrow(
         "UNAUTHORIZED",
       );
-      vi.unstubAllGlobals();
     });
   });
 
   describe("setMaxSubdomainOverride", () => {
     it("sends PATCH with override value", async () => {
-      const fetchMock = mockFetch(200, {});
-      vi.stubGlobal("fetch", fetchMock);
+      mockCustomInstance.mockResolvedValue({});
 
       await adminApi.setMaxSubdomainOverride("key", "u1", 5);
 
-      expect(fetchMock).toHaveBeenCalledWith(
-        expect.stringContaining("/users/u1/max-subdomain-override"),
-        expect.objectContaining({ method: "PATCH" }),
+      expect(mockCustomInstance).toHaveBeenCalledWith(
+        expect.objectContaining({
+          url: expect.stringContaining("/users/u1/max-subdomain-override"),
+          method: "PATCH",
+          data: { maxSubdomainCountOverride: 5 },
+        }),
       );
-      vi.unstubAllGlobals();
     });
   });
 
   describe("getSubdomainDetail", () => {
     it("returns subdomain detail", async () => {
       const sub = { uuid: "s1" };
-      vi.stubGlobal("fetch", mockFetch(200, sub));
+      mockCustomInstance.mockResolvedValue(sub);
 
       const result = await adminApi.getSubdomainDetail("key", "s1");
 
       expect(result).toEqual(sub);
-      vi.unstubAllGlobals();
     });
   });
 
   describe("updateSubdomainIps", () => {
     it("sends PUT with IP body", async () => {
       const updated = { uuid: "s1", targetIp: "5.6.7.8" };
-      const fetchMock = mockFetch(200, updated);
-      vi.stubGlobal("fetch", fetchMock);
+      mockCustomInstance.mockResolvedValue(updated);
 
       const result = await adminApi.updateSubdomainIps("key", "s1", {
         targetIp: "5.6.7.8",
       });
 
       expect(result).toEqual(updated);
-      expect(fetchMock).toHaveBeenCalledWith(
-        expect.stringContaining("/subdomains/s1"),
-        expect.objectContaining({ method: "PUT" }),
+      expect(mockCustomInstance).toHaveBeenCalledWith(
+        expect.objectContaining({
+          url: expect.stringContaining("/subdomains/s1"),
+          method: "PUT",
+          data: { targetIp: "5.6.7.8" },
+        }),
       );
-      vi.unstubAllGlobals();
     });
   });
 
   describe("relabelSubdomain", () => {
     it("sends PATCH with label body", async () => {
-      const fetchMock = mockFetch(200, { uuid: "s1", label: "new" });
-      vi.stubGlobal("fetch", fetchMock);
+      mockCustomInstance.mockResolvedValue({ uuid: "s1", label: "new" });
 
       await adminApi.relabelSubdomain("key", "s1", "new");
 
-      expect(fetchMock).toHaveBeenCalledWith(
-        expect.stringContaining("/subdomains/s1/label"),
-        expect.objectContaining({ method: "PATCH" }),
+      expect(mockCustomInstance).toHaveBeenCalledWith(
+        expect.objectContaining({
+          url: expect.stringContaining("/subdomains/s1/label"),
+          method: "PATCH",
+          data: { label: "new" },
+        }),
       );
-      vi.unstubAllGlobals();
     });
   });
 
   describe("deleteSubdomain", () => {
     it("sends DELETE", async () => {
-      const fetchMock = mockFetch(204, null);
-      vi.stubGlobal("fetch", fetchMock);
+      mockCustomInstance.mockResolvedValue(undefined);
 
       await adminApi.deleteSubdomain("key", "s1");
 
-      expect(fetchMock).toHaveBeenCalledWith(
-        expect.stringContaining("/subdomains/s1"),
-        expect.objectContaining({ method: "DELETE" }),
+      expect(mockCustomInstance).toHaveBeenCalledWith(
+        expect.objectContaining({
+          url: expect.stringContaining("/subdomains/s1"),
+          method: "DELETE",
+        }),
       );
-      vi.unstubAllGlobals();
     });
   });
 
   describe("getSettings", () => {
     it("returns settings", async () => {
-      vi.stubGlobal("fetch", mockFetch(200, { domainCreationEnabled: true }));
+      mockCustomInstance.mockResolvedValue({ domainCreationEnabled: true });
 
       const result = await adminApi.getSettings("key");
 
       expect(result).toEqual({ domainCreationEnabled: true });
-      vi.unstubAllGlobals();
     });
   });
 
   describe("updateSettings", () => {
     it("sends PATCH with settings body", async () => {
-      const fetchMock = mockFetch(200, { domainCreationEnabled: false });
-      vi.stubGlobal("fetch", fetchMock);
+      mockCustomInstance.mockResolvedValue({ domainCreationEnabled: false });
 
       const result = await adminApi.updateSettings("key", {
         domainCreationEnabled: false,
       });
 
       expect(result).toEqual({ domainCreationEnabled: false });
-      expect(fetchMock).toHaveBeenCalledWith(
-        expect.stringContaining("/settings"),
-        expect.objectContaining({ method: "PATCH" }),
+      expect(mockCustomInstance).toHaveBeenCalledWith(
+        expect.objectContaining({
+          url: expect.stringContaining("/settings"),
+          method: "PATCH",
+        }),
       );
-      vi.unstubAllGlobals();
     });
   });
 });

@@ -2,14 +2,14 @@ import { act, renderHook } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { useKillSwitchLogic } from "./useKillSwitchLogic";
 
-vi.mock("../../../lib", () => ({
+vi.mock("@/api/admin-api", () => ({
   adminApi: {
     getSettings: vi.fn(),
     updateSettings: vi.fn(),
   },
 }));
 
-import { adminApi } from "../../../lib";
+import { adminApi } from "@/api/admin-api";
 
 beforeEach(() => vi.clearAllMocks());
 

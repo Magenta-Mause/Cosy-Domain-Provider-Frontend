@@ -2,7 +2,7 @@ import { useNavigate, useRouter } from "@tanstack/react-router";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import { type AdminSubdomain, adminApi } from "../../../lib";
+import { type AdminSubdomain, adminApi } from "@/api/admin-api";
 
 export function useSubdomainDetailLogic(
   subdomain: AdminSubdomain,
@@ -86,6 +86,12 @@ export function useSubdomainDetailLogic(
 
   const handleBack = () => router.history.back();
 
+  const handleOwnerClick = () =>
+    navigate({
+      to: "/admin/users/$userId",
+      params: { userId: subdomain.ownerUuid },
+    });
+
   return {
     domainSuffix,
     targetIp,
@@ -106,5 +112,6 @@ export function useSubdomainDetailLogic(
     deleteError,
     handleDeleteSubdomain,
     handleBack,
+    handleOwnerClick,
   };
 }
