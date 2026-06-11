@@ -3,10 +3,10 @@ import { Link } from "@tanstack/react-router";
 import type { TFunction } from "i18next";
 import { useTranslation } from "react-i18next";
 import { OAuthButtons } from "@/components/auth/oauth-buttons";
-import { PasswordInput } from "@/components/auth/password-input";
 import { ErrorMessage } from "@/components/pixel/error-message";
 import { Button } from "@/components/ui/button";
 import { FormField } from "@/components/ui/form-field";
+import { PasswordField } from "@/components/ui/password-field";
 import { PasswordStrength } from "../password-strength";
 
 import { useRegisterFormLogic } from "./useRegisterFormLogic";
@@ -112,11 +112,9 @@ export function RegisterForm() {
           />
 
           <div className="flex flex-col gap-2">
-            <label className="plabel" htmlFor="password">
-              {t("register.password")}
-            </label>
-            <PasswordInput
+            <PasswordField
               id="password"
+              label={t("register.password")}
               autoComplete="new-password"
               required
               minLength={8}
@@ -131,22 +129,20 @@ export function RegisterForm() {
             ) : null}
           </div>
 
-          <div className="flex flex-col gap-2">
-            <label className="plabel" htmlFor="confirmPassword">
-              {t("register.confirmPassword")}
-            </label>
-            <PasswordInput
-              id="confirmPassword"
-              autoComplete="new-password"
-              required
-              value={confirmPassword}
-              onChange={setConfirmPassword}
-              testId="register-confirm-password-input"
-            />
-            {confirmPassword.length > 0 && !confirmValid && (
-              <ErrorMessage>{t("register.passwordMismatch")}</ErrorMessage>
-            )}
-          </div>
+          <PasswordField
+            id="confirmPassword"
+            label={t("register.confirmPassword")}
+            autoComplete="new-password"
+            required
+            value={confirmPassword}
+            onChange={setConfirmPassword}
+            testId="register-confirm-password-input"
+            error={
+              confirmPassword.length > 0 && !confirmValid
+                ? t("register.passwordMismatch")
+                : null
+            }
+          />
 
           <label className="flex items-center gap-2.5 text-base cursor-pointer">
             <input

@@ -1,9 +1,9 @@
 import type { SyntheticEvent } from "react";
 import { useTranslation } from "react-i18next";
 
-import { PasswordInput } from "@/components/auth/password-input";
 import { ErrorMessage } from "@/components/pixel/error-message";
 import { Button } from "@/components/ui/button";
+import { PasswordField } from "@/components/ui/password-field";
 import { isPasswordWeak } from "@/lib/validators";
 import { PasswordStrength } from "@/pages/register/components/password-strength";
 
@@ -45,11 +45,9 @@ export function SetPasswordView({
       </div>
       <form onSubmit={onSubmit} className="flex flex-col gap-3">
         <div className="flex flex-col gap-2">
-          <label className="plabel" htmlFor="verify-password">
-            {t("passwordSetup.password")}
-          </label>
-          <PasswordInput
+          <PasswordField
             id="verify-password"
+            label={t("passwordSetup.password")}
             autoComplete="new-password"
             required
             minLength={8}
@@ -61,21 +59,15 @@ export function SetPasswordView({
             <ErrorMessage>{t("register.passwordTooShort")}</ErrorMessage>
           ) : null}
         </div>
-        <div className="flex flex-col gap-2">
-          <label className="plabel" htmlFor="verify-confirm">
-            {t("passwordSetup.confirm")}
-          </label>
-          <PasswordInput
-            id="verify-confirm"
-            autoComplete="new-password"
-            required
-            value={confirmPassword}
-            onChange={onConfirmChange}
-          />
-          {confirmMismatch ? (
-            <ErrorMessage>{t("passwordSetup.mismatch")}</ErrorMessage>
-          ) : null}
-        </div>
+        <PasswordField
+          id="verify-confirm"
+          label={t("passwordSetup.confirm")}
+          autoComplete="new-password"
+          required
+          value={confirmPassword}
+          onChange={onConfirmChange}
+          error={confirmMismatch ? t("passwordSetup.mismatch") : null}
+        />
         {passwordError ? <ErrorMessage>{passwordError}</ErrorMessage> : null}
         <Button
           type="submit"

@@ -4,10 +4,10 @@ import type { TFunction } from "i18next";
 import { useTranslation } from "react-i18next";
 import { MfaCodeForm } from "@/components/auth/mfa-code-form";
 import { OAuthButtons } from "@/components/auth/oauth-buttons";
-import { PasswordInput } from "@/components/auth/password-input";
 import { ErrorMessage } from "@/components/pixel/error-message";
 import { Button } from "@/components/ui/button";
 import { FormField } from "@/components/ui/form-field";
+import { PasswordField } from "@/components/ui/password-field";
 
 import { useLoginFormLogic } from "./useLoginFormLogic";
 
@@ -138,11 +138,9 @@ export function LoginForm() {
           </button>
 
           <div className="flex flex-col gap-2">
-            <label className="plabel" htmlFor="password">
-              {t("login.password")}
-            </label>
-            <PasswordInput
+            <PasswordField
               id="password"
+              label={t("login.password")}
               autoComplete="current-password"
               required
               value={password}

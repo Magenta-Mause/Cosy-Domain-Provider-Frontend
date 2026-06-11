@@ -2,9 +2,9 @@ import { Link } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 
 import { AuthPageLayout } from "@/components/auth/auth-page-layout";
-import { PasswordInput } from "@/components/auth/password-input";
 import { ErrorMessage } from "@/components/pixel/error-message";
 import { Button } from "@/components/ui/button";
+import { PasswordField } from "@/components/ui/password-field";
 
 import { useResetPasswordLogic } from "./useResetPasswordLogic";
 
@@ -53,20 +53,16 @@ export const ResetPasswordPage = () => {
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-            <div className="flex flex-col gap-2">
-              <label className="plabel" htmlFor="new-password">
-                {t("resetPassword.newPassword")}
-              </label>
-              <PasswordInput
-                id="new-password"
-                autoComplete="new-password"
-                required
-                minLength={8}
-                value={newPassword}
-                onChange={setNewPassword}
-                testId="reset-password-input"
-              />
-            </div>
+            <PasswordField
+              id="new-password"
+              label={t("resetPassword.newPassword")}
+              autoComplete="new-password"
+              required
+              minLength={8}
+              value={newPassword}
+              onChange={setNewPassword}
+              testId="reset-password-input"
+            />
             {error ? <ErrorMessage>{error}</ErrorMessage> : null}
             <Button
               type="submit"
@@ -90,4 +86,3 @@ export const ResetPasswordPage = () => {
     </AuthPageLayout>
   );
 };
-

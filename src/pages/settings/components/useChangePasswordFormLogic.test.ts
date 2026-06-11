@@ -63,18 +63,6 @@ describe("useChangePasswordFormLogic", () => {
     });
   });
 
-  describe("visibility toggles", () => {
-    it("toggles showCurrentPw, showNewPw, showConfirmPw", () => {
-      const { result } = renderHook(() => useChangePasswordFormLogic(onSave));
-      act(() => result.current.setShowCurrentPw(true));
-      expect(result.current.showCurrentPw).toBe(true);
-      act(() => result.current.setShowNewPw(true));
-      expect(result.current.showNewPw).toBe(true);
-      act(() => result.current.setShowConfirmPw(true));
-      expect(result.current.showConfirmPw).toBe(true);
-    });
-  });
-
   describe("handleSubmit", () => {
     it("calls onSave with currentPassword and newPassword on success", async () => {
       onSave.mockResolvedValue(undefined);

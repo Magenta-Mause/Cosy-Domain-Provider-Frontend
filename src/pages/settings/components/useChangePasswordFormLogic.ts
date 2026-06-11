@@ -10,9 +10,6 @@ export function useChangePasswordFormLogic(
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [showCurrentPw, setShowCurrentPw] = useState(false);
-  const [showNewPw, setShowNewPw] = useState(false);
-  const [showConfirmPw, setShowConfirmPw] = useState(false);
   const [saving, setSaving] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -55,12 +52,6 @@ export function useChangePasswordFormLogic(
     setNewPassword,
     confirmPassword,
     setConfirmPassword,
-    showCurrentPw,
-    setShowCurrentPw,
-    showNewPw,
-    setShowNewPw,
-    showConfirmPw,
-    setShowConfirmPw,
     saving,
     success,
     error,

@@ -2,6 +2,7 @@ import { useTranslation } from "react-i18next";
 import mailBoxImage from "@/assets/castle.png";
 import { FlatPanel } from "@/components/pixel/panel";
 import { Button } from "@/components/ui/button";
+import { FormField } from "@/components/ui/form-field";
 import { useHeroSectionLogic } from "./useHeroSectionLogic";
 
 export function HeroSection() {
@@ -38,27 +39,24 @@ export function HeroSection() {
           </p>
 
           <FlatPanel className="p-4 max-w-[520px]">
-            <label htmlFor="subdomain-input" className="plabel mb-[10px]">
-              {t("hero.claimLabel")}
-            </label>
-            <div className="flex gap-2 items-stretch">
-              <div className="relative flex-1">
-                <input
+            <div className="flex gap-2 items-end">
+              <div className="flex-1">
+                <FormField
                   id="subdomain-input"
-                  data-testid="home-subdomain-input"
-                  className="pinput sm:pr-[210px]"
+                  testId="home-subdomain-input"
+                  label={t("hero.claimLabel")}
                   value={subdomain}
-                  onChange={(e) => handleSubdomainChange(e.target.value)}
+                  onChange={handleSubdomainChange}
                   placeholder="my-castle"
+                  suffix=".play.cosy-hosting.net"
+                  responsiveSuffix
                 />
-                <span className="absolute right-[14px] top-1/2 -translate-y-1/2 text-lg opacity-70 pointer-events-none hidden sm:block">
-                  .play.cosy-hosting.net
-                </span>
               </div>
               <Button
                 type="button"
                 data-testid="home-check-btn"
                 onClick={handleCheckAvailability}
+                className="h-[50px] shrink-0"
               >
                 {t("hero.checkButton")}
               </Button>
