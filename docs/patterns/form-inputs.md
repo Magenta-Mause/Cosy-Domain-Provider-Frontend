@@ -18,6 +18,7 @@ interface FormFieldProps {
   disabled?: boolean
   readOnly?: boolean
   suffix?: string             // static text overlaid on the right edge (e.g. ".play.cosy-hosting.net")
+  responsiveSuffix?: boolean  // hide the suffix below the sm breakpoint (and only pad the input from sm up)
   endDecorator?: React.ReactNode  // arbitrary right-side slot (e.g. a password eye-toggle button)
   hint?: string               // small helper text below the input (hidden when error is set)
   testId?: string
@@ -40,32 +41,22 @@ interface FormFieldProps {
 
 ## Password fields
 
-Password fields use `FormField` with `type={showPw ? "text" : "password"}` and an eye-toggle button as `endDecorator`:
+Password fields use `<PasswordField>` (`src/components/ui/password-field.tsx`) — a thin wrapper around `FormField` that renders the eye-toggle `endDecorator` and owns its own show/hide state:
 
 ```tsx
-<FormField
+<PasswordField
   id="password"
   label={t("login.password")}
-  type={showPw ? "text" : "password"}
   autoComplete="current-password"
+  required
   value={password}
   onChange={setPassword}
-  endDecorator={
-    <button
-      type="button"
-      aria-label={showPw ? "Hide password" : "Show password"}
-      onClick={() => setShowPw(!showPw)}
-      className="opacity-70 hover:opacity-100 flex items-center"
-    >
-      <Icon src={showPw ? eyeOpenIcon : eyeClosedIcon} className="size-6" />
-    </button>
-  }
+  testId="login-password-input"
+  toggleTestId="login-toggle-password-btn"
 />
 ```
 
-Each password field manages its **own** `showPw` state — never share one toggle across multiple password inputs.
-
-The `PasswordInput` component (`src/components/auth/password-input.tsx`) is legacy. Migrate it to `FormField` when touching a form that uses it.
+Each `PasswordField` instance manages its **own** visibility state — never share one toggle across multiple password inputs, and do not keep `showPw` state in logic hooks. Do not rebuild the eye toggle by hand with `FormField` + `endDecorator`.
 
 ## Validation
 
