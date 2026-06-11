@@ -5,10 +5,11 @@
  * OpenAPI spec version: v0
  */
 
-export type UserDtoTier = (typeof UserDtoTier)[keyof typeof UserDtoTier];
+export type UserDtoTier = typeof UserDtoTier[keyof typeof UserDtoTier];
+
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const UserDtoTier = {
-  FREE: "FREE",
-  PLUS: "PLUS",
+  FREE: 'FREE',
+  PLUS: 'PLUS',
 } as const;

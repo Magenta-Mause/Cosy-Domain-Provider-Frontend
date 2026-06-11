@@ -12,5 +12,5 @@ export interface ResetPasswordDto {
    * @minLength 8
    * @maxLength 2147483647
    */
-  newPassword?: string;
+  newPassword: string;
 }

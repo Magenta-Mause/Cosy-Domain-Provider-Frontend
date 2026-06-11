@@ -5,7 +5,6 @@
     { "url": "http://localhost:8080", "description": "Generated server url" }
   ],
   "tags": [
-    { "name": "User", "description": "User management (admin)" },
     {
       "name": "Subdomain",
       "description": "Subdomain creation and management for the authenticated user"
@@ -23,13 +22,18 @@
       "description": "Stripe billing portal and subscription checkout"
     },
     {
+      "name": "User",
+      "description": "Self-management for the authenticated user"
+    },
+    {
       "name": "Authorization",
       "description": "Authentication, registration, and account management"
     },
     {
       "name": "Stripe Webhook",
       "description": "Stripe event webhook consumer (internal — not for client use)"
-    }
+    },
+    { "name": "Settings", "description": "Public application settings" }
   ],
   "paths": {
     "/api/v1/subdomain/{uuid}": {
@@ -55,16 +59,8 @@
               }
             }
           },
-          "403": {
-            "description": "Not owned by the current user",
-            "content": {
-              "*/*": {
-                "schema": { "$ref": "#/components/schemas/SubdomainDto" }
-              }
-            }
-          },
           "404": {
-            "description": "Subdomain not found",
+            "description": "Subdomain not found or not owned by the current user",
             "content": {
               "*/*": {
                 "schema": { "$ref": "#/components/schemas/SubdomainDto" }
@@ -103,16 +99,8 @@
               }
             }
           },
-          "403": {
-            "description": "Not owned by the current user",
-            "content": {
-              "*/*": {
-                "schema": { "$ref": "#/components/schemas/SubdomainDto" }
-              }
-            }
-          },
           "404": {
-            "description": "Subdomain not found",
+            "description": "Subdomain not found or not owned by the current user",
             "content": {
               "*/*": {
                 "schema": { "$ref": "#/components/schemas/SubdomainDto" }
@@ -136,8 +124,9 @@
         ],
         "responses": {
           "204": { "description": "Subdomain deleted" },
-          "403": { "description": "Not owned by the current user" },
-          "404": { "description": "Subdomain not found" }
+          "404": {
+            "description": "Subdomain not found or not owned by the current user"
+          }
         }
       }
     },
@@ -279,86 +268,6 @@
         }
       }
     },
-    "/api/v1/user": {
-      "get": {
-        "tags": ["User"],
-        "summary": "List all users",
-        "operationId": "getAllUsers",
-        "responses": {
-          "200": {
-            "description": "User list returned",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "type": "array",
-                  "items": { "$ref": "#/components/schemas/UserDto" }
-                }
-              }
-            }
-          }
-        }
-      },
-      "post": {
-        "tags": ["User"],
-        "summary": "Create a new user and send verification email",
-        "operationId": "createUser",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": { "$ref": "#/components/schemas/UserCreationDto" }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "User created",
-            "content": {
-              "*/*": { "schema": { "$ref": "#/components/schemas/UserDto" } }
-            }
-          },
-          "409": {
-            "description": "Email already in use",
-            "content": {
-              "*/*": { "schema": { "$ref": "#/components/schemas/UserDto" } }
-            }
-          }
-        }
-      },
-      "delete": {
-        "tags": ["User"],
-        "summary": "Delete the authenticated user and all their subdomains",
-        "operationId": "deleteUser",
-        "responses": { "204": { "description": "User deleted" } }
-      },
-      "patch": {
-        "tags": ["User"],
-        "summary": "Update username or password of the authenticated user",
-        "operationId": "updateUser",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": { "$ref": "#/components/schemas/UpdateUserDto" }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "User updated",
-            "content": {
-              "*/*": { "schema": { "$ref": "#/components/schemas/UserDto" } }
-            }
-          },
-          "401": {
-            "description": "Current password incorrect",
-            "content": {
-              "*/*": { "schema": { "$ref": "#/components/schemas/UserDto" } }
-            }
-          }
-        }
-      }
-    },
     "/api/v1/subdomain": {
       "get": {
         "tags": ["Subdomain"],
@@ -400,7 +309,15 @@
             }
           },
           "400": {
-            "description": "Label reserved or invalid",
+            "description": "Label invalid",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/SubdomainDto" }
+              }
+            }
+          },
+          "403": {
+            "description": "Subdomain limit reached for this plan",
             "content": {
               "*/*": {
                 "schema": { "$ref": "#/components/schemas/SubdomainDto" }
@@ -408,15 +325,7 @@
             }
           },
           "409": {
-            "description": "Label already taken",
-            "content": {
-              "*/*": {
-                "schema": { "$ref": "#/components/schemas/SubdomainDto" }
-              }
-            }
-          },
-          "429": {
-            "description": "Subdomain limit reached for this plan",
+            "description": "Label reserved or already taken",
             "content": {
               "*/*": {
                 "schema": { "$ref": "#/components/schemas/SubdomainDto" }
@@ -613,6 +522,116 @@
         }
       }
     },
+    "/api/v1/auth/mfa/setup": {
+      "post": {
+        "tags": ["Authorization"],
+        "summary": "Initiate MFA setup",
+        "description": "Generates a TOTP secret, stores it, and returns the QR URI and plain secret. Requires a verified account with MFA not yet enabled.",
+        "operationId": "setupMfa",
+        "responses": {
+          "200": {
+            "description": "TOTP setup data returned",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/MfaSetupResponseDto" }
+              }
+            }
+          },
+          "401": {
+            "description": "Not authenticated",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/MfaSetupResponseDto" }
+              }
+            }
+          },
+          "403": {
+            "description": "Account not verified",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/MfaSetupResponseDto" }
+              }
+            }
+          },
+          "409": {
+            "description": "MFA already enabled",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/MfaSetupResponseDto" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/auth/mfa/confirm": {
+      "post": {
+        "tags": ["Authorization"],
+        "summary": "Confirm MFA setup",
+        "description": "Validates the TOTP code against the stored secret and enables MFA on the account.",
+        "operationId": "confirmMfa",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/MfaConfirmDto" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": { "description": "MFA enabled" },
+          "400": { "description": "Invalid TOTP code or setup not initiated" },
+          "401": { "description": "Not authenticated" }
+        }
+      }
+    },
+    "/api/v1/auth/mfa/challenge": {
+      "post": {
+        "tags": ["Authorization"],
+        "summary": "Complete MFA challenge",
+        "description": "Exchanges a short-lived MFA challenge token and a TOTP code for a refresh token.",
+        "operationId": "completeMfaChallenge",
+        "parameters": [
+          {
+            "name": "tokenMode",
+            "in": "query",
+            "description": "COOKIE sets httpOnly cookie, DIRECT returns token in body",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "COOKIE",
+              "enum": ["COOKIE", "DIRECT"]
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/MfaChallengeDto" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Refresh token issued",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/LoginResponseDto" }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid or expired challenge token, or wrong TOTP code",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/LoginResponseDto" }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/auth/logout": {
       "post": {
         "tags": ["Authorization"],
@@ -683,6 +702,47 @@
         "responses": {
           "204": {
             "description": "Reset email sent (always, to avoid enumeration)"
+          }
+        }
+      }
+    },
+    "/api/v1/user": {
+      "delete": {
+        "tags": ["User"],
+        "summary": "Delete the authenticated user and all their subdomains",
+        "operationId": "deleteUser",
+        "responses": { "204": { "description": "User deleted" } }
+      },
+      "patch": {
+        "tags": ["User"],
+        "summary": "Update username or password of the authenticated user",
+        "operationId": "updateUser",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/UpdateUserDto" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "User updated",
+            "content": {
+              "*/*": { "schema": { "$ref": "#/components/schemas/UserDto" } }
+            }
+          },
+          "401": {
+            "description": "Current password incorrect",
+            "content": {
+              "*/*": { "schema": { "$ref": "#/components/schemas/UserDto" } }
+            }
+          },
+          "409": {
+            "description": "Username already in use",
+            "content": {
+              "*/*": { "schema": { "$ref": "#/components/schemas/UserDto" } }
+            }
           }
         }
       }
@@ -858,8 +918,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "additionalProperties": { "type": "integer", "format": "int32" }
+                "$ref": "#/components/schemas/AdminMaxSubdomainOverrideDto"
               }
             }
           },
@@ -962,6 +1021,128 @@
         }
       }
     },
+    "/api/v1/admin/settings": {
+      "get": {
+        "tags": ["Admin"],
+        "summary": "Get global admin settings",
+        "operationId": "getSettings",
+        "parameters": [
+          {
+            "name": "X-Admin-Key",
+            "in": "header",
+            "description": "Admin secret key",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Settings returned",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/AdminSettingsDto" }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid admin key",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/AdminSettingsDto" }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": ["Admin"],
+        "summary": "Update global admin settings",
+        "operationId": "updateSettings",
+        "parameters": [
+          {
+            "name": "X-Admin-Key",
+            "in": "header",
+            "description": "Admin secret key",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminSettingsUpdateDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Settings updated",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/AdminSettingsDto" }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid admin key",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/AdminSettingsDto" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/user/oauth-identities": {
+      "get": {
+        "tags": ["User"],
+        "summary": "List OAuth identities linked to the authenticated user",
+        "operationId": "getLinkedIdentities",
+        "responses": {
+          "200": {
+            "description": "Linked identities returned",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/OAuthIdentityDto" }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/user/oauth-identities/{provider}/link": {
+      "get": {
+        "tags": ["User"],
+        "summary": "Get OAuth authorization URL for account linking",
+        "operationId": "linkOAuthIdentity",
+        "parameters": [
+          {
+            "name": "provider",
+            "in": "path",
+            "description": "OAuth provider name (google, github, discord)",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Authorization URL returned",
+            "content": { "*/*": { "schema": { "type": "string" } } }
+          },
+          "400": {
+            "description": "Unknown provider",
+            "content": { "*/*": { "schema": { "type": "string" } } }
+          }
+        }
+      }
+    },
     "/api/v1/subdomain/check": {
       "get": {
         "tags": ["Subdomain"],
@@ -994,6 +1175,23 @@
                 "schema": {
                   "$ref": "#/components/schemas/LabelAvailabilityDto"
                 }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/settings": {
+      "get": {
+        "tags": ["Settings"],
+        "summary": "Get public application settings",
+        "operationId": "getPublicSettings",
+        "responses": {
+          "200": {
+            "description": "Settings returned",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/AdminSettingsDto" }
               }
             }
           }
@@ -1121,7 +1319,7 @@
       "get": {
         "tags": ["Admin"],
         "summary": "List all users",
-        "operationId": "getAllUsers_1",
+        "operationId": "getAllUsers",
         "parameters": [
           {
             "name": "X-Admin-Key",
@@ -1196,6 +1394,29 @@
           }
         }
       }
+    },
+    "/api/v1/user/oauth-identities/{provider}": {
+      "delete": {
+        "tags": ["User"],
+        "summary": "Unlink an OAuth identity from the authenticated user",
+        "operationId": "unlinkOAuthIdentity",
+        "parameters": [
+          {
+            "name": "provider",
+            "in": "path",
+            "description": "OAuth provider name (google, github, discord)",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "204": { "description": "Identity unlinked" },
+          "404": { "description": "No such identity linked to this account" },
+          "409": {
+            "description": "Cannot unlink the only authentication method"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -1264,36 +1485,15 @@
           "updatedAt": { "type": "string", "format": "date-time" }
         }
       },
-      "UserCreationDto": {
-        "type": "object",
-        "properties": {
-          "username": { "type": "string", "maxLength": 20, "minLength": 3 },
-          "email": { "type": "string", "format": "email", "minLength": 1 },
-          "password": {
-            "type": "string",
-            "maxLength": 2147483647,
-            "minLength": 8
-          },
-          "captchaToken": { "type": "string", "minLength": 1 }
-        },
-        "required": ["captchaToken", "email"]
-      },
-      "UserDto": {
-        "type": "object",
-        "properties": {
-          "uuid": { "type": "string" },
-          "username": { "type": "string" },
-          "email": { "type": "string" },
-          "needsPasswordSetup": { "type": "boolean" },
-          "tier": { "type": "string", "enum": ["FREE", "PLUS"] },
-          "maxSubdomainCount": { "type": "integer", "format": "int32" },
-          "verified": { "type": "boolean" }
-        }
-      },
       "SubdomainCreationDto": {
         "type": "object",
         "properties": {
-          "label": { "type": "string" },
+          "label": {
+            "type": "string",
+            "maxLength": 63,
+            "minLength": 3,
+            "pattern": "^[a-z0-9-]+$"
+          },
           "targetIp": {
             "type": "string",
             "pattern": "^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$"
@@ -1311,7 +1511,8 @@
       },
       "EmailVerificationDto": {
         "type": "object",
-        "properties": { "token": { "type": "string" } }
+        "properties": { "token": { "type": "string", "minLength": 1 } },
+        "required": ["token"]
       },
       "SetPasswordDto": {
         "type": "object",
@@ -1334,11 +1535,51 @@
             "minLength": 8
           }
         },
-        "required": ["token"]
+        "required": ["newPassword", "token"]
+      },
+      "UserCreationDto": {
+        "type": "object",
+        "properties": {
+          "username": { "type": "string", "maxLength": 20, "minLength": 3 },
+          "email": { "type": "string", "format": "email", "minLength": 1 },
+          "password": {
+            "type": "string",
+            "maxLength": 2147483647,
+            "minLength": 8
+          },
+          "captchaToken": { "type": "string", "minLength": 1 }
+        },
+        "required": ["captchaToken", "email", "password", "username"]
       },
       "LoginResponseDto": {
         "type": "object",
-        "properties": { "refreshToken": { "type": "string" } }
+        "properties": {
+          "refreshToken": { "type": "string" },
+          "mfaRequired": { "type": "boolean" },
+          "challengeToken": { "type": "string" }
+        }
+      },
+      "MfaSetupResponseDto": {
+        "type": "object",
+        "properties": {
+          "totpUri": { "type": "string" },
+          "secret": { "type": "string" }
+        }
+      },
+      "MfaConfirmDto": {
+        "type": "object",
+        "properties": {
+          "totpCode": { "type": "string", "maxLength": 6, "minLength": 6 }
+        },
+        "required": ["totpCode"]
+      },
+      "MfaChallengeDto": {
+        "type": "object",
+        "properties": {
+          "challengeToken": { "type": "string", "minLength": 1 },
+          "totpCode": { "type": "string", "maxLength": 6, "minLength": 6 }
+        },
+        "required": ["challengeToken", "totpCode"]
       },
       "LoginDto": {
         "type": "object",
@@ -1368,6 +1609,18 @@
           }
         }
       },
+      "UserDto": {
+        "type": "object",
+        "properties": {
+          "uuid": { "type": "string" },
+          "username": { "type": "string" },
+          "email": { "type": "string" },
+          "needsPasswordSetup": { "type": "boolean" },
+          "tier": { "type": "string", "enum": ["FREE", "PLUS"] },
+          "maxSubdomainCount": { "type": "integer", "format": "int32" },
+          "verified": { "type": "boolean" }
+        }
+      },
       "AdminUserUpdateDto": {
         "type": "object",
         "properties": {
@@ -1390,17 +1643,43 @@
           "verified": { "type": "boolean" }
         }
       },
+      "AdminMaxSubdomainOverrideDto": {
+        "type": "object",
+        "properties": {
+          "maxSubdomainCountOverride": {
+            "type": "integer",
+            "format": "int32",
+            "minimum": 0
+          }
+        }
+      },
       "AdminSubdomainRelabelDto": {
         "type": "object",
         "properties": {
           "label": {
             "type": "string",
-            "maxLength": 45,
+            "maxLength": 63,
             "minLength": 3,
             "pattern": "^[a-z0-9-]+$"
           }
         },
         "required": ["label"]
+      },
+      "AdminSettingsUpdateDto": {
+        "type": "object",
+        "properties": { "domainCreationEnabled": { "type": "boolean" } },
+        "required": ["domainCreationEnabled"]
+      },
+      "AdminSettingsDto": {
+        "type": "object",
+        "properties": { "domainCreationEnabled": { "type": "boolean" } }
+      },
+      "OAuthIdentityDto": {
+        "type": "object",
+        "properties": {
+          "provider": { "type": "string" },
+          "email": { "type": "string" }
+        }
       },
       "LabelAvailabilityDto": {
         "type": "object",

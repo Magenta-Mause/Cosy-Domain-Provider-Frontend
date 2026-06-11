@@ -5,11 +5,11 @@
  * OpenAPI spec version: v0
  */
 
-export type LoginTokenMode =
-  (typeof LoginTokenMode)[keyof typeof LoginTokenMode];
+export type LoginTokenMode = typeof LoginTokenMode[keyof typeof LoginTokenMode];
+
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const LoginTokenMode = {
-  COOKIE: "COOKIE",
-  DIRECT: "DIRECT",
+  COOKIE: 'COOKIE',
+  DIRECT: 'DIRECT',
 } as const;

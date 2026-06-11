@@ -5,7 +5,12 @@
  * OpenAPI spec version: v0
  */
 
-export interface EmailVerificationDto {
+export interface MfaChallengeDto {
   /** @minLength 1 */
-  token: string;
+  challengeToken: string;
+  /**
+   * @minLength 6
+   * @maxLength 6
+   */
+  totpCode: string;
 }

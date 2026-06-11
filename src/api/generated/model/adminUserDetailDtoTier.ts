@@ -5,11 +5,11 @@
  * OpenAPI spec version: v0
  */
 
-export type AdminUserDetailDtoTier =
-  (typeof AdminUserDetailDtoTier)[keyof typeof AdminUserDetailDtoTier];
+export type AdminUserDetailDtoTier = typeof AdminUserDetailDtoTier[keyof typeof AdminUserDetailDtoTier];
+
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const AdminUserDetailDtoTier = {
-  FREE: "FREE",
-  PLUS: "PLUS",
+  FREE: 'FREE',
+  PLUS: 'PLUS',
 } as const;

@@ -4,11 +4,11 @@
  * OpenAPI definition
  * OpenAPI spec version: v0
  */
-import type { LoginTokenMode } from './loginTokenMode';
+import type { CompleteMfaChallengeTokenMode } from './completeMfaChallengeTokenMode';
 
-export type LoginParams = {
+export type CompleteMfaChallengeParams = {
 /**
  * COOKIE sets httpOnly cookie, DIRECT returns token in body
  */
-tokenMode?: LoginTokenMode;
+tokenMode?: CompleteMfaChallengeTokenMode;
 };

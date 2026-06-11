@@ -5,8 +5,7 @@
  * OpenAPI spec version: v0
  */
 
-export interface LoginResponseDto {
-  refreshToken?: string;
-  mfaRequired?: boolean;
-  challengeToken?: string;
+export interface OAuthIdentityDto {
+  provider?: string;
+  email?: string;
 }

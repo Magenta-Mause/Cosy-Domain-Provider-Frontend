@@ -6,8 +6,8 @@
  */
 
 export type CheckLabelAvailabilityParams = {
-  /**
-   * Subdomain label to check (without parent domain)
-   */
-  label: string;
+/**
+ * Subdomain label to check (without parent domain)
+ */
+label: string;
 };

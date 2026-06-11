@@ -10,14 +10,14 @@ export interface UserCreationDto {
    * @minLength 3
    * @maxLength 20
    */
-  username?: string;
+  username: string;
   /** @minLength 1 */
   email: string;
   /**
    * @minLength 8
    * @maxLength 2147483647
    */
-  password?: string;
+  password: string;
   /** @minLength 1 */
   captchaToken: string;
 }

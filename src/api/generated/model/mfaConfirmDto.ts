@@ -5,11 +5,10 @@
  * OpenAPI spec version: v0
  */
 
-export interface AdminSubdomainRelabelDto {
+export interface MfaConfirmDto {
   /**
-   * @minLength 3
-   * @maxLength 63
-   * @pattern ^[a-z0-9-]+$
+   * @minLength 6
+   * @maxLength 6
    */
-  label: string;
+  totpCode: string;
 }

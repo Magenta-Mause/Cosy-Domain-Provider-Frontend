@@ -6,12 +6,12 @@
  */
 
 export type OauthCallbackParams = {
-  /**
-   * Authorization code returned by the provider
-   */
-  code: string;
-  /**
-   * State parameter for CSRF validation
-   */
-  state: string;
+/**
+ * Authorization code returned by the provider
+ */
+code: string;
+/**
+ * State parameter for CSRF validation
+ */
+state: string;
 };
