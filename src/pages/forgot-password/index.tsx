@@ -7,7 +7,7 @@ import { FormField } from "@/components/ui/form-field";
 
 import { useForgotPasswordLogic } from "./useForgotPasswordLogic";
 
-const ForgotPasswordPage = () => {
+export const ForgotPasswordPage = () => {
   const { t } = useTranslation();
   const { email, setEmail, isSubmitting, success, error, handleSubmit } =
     useForgotPasswordLogic();
@@ -66,5 +66,3 @@ const ForgotPasswordPage = () => {
     </AuthPageLayout>
   );
 };
-
-export default ForgotPasswordPage;

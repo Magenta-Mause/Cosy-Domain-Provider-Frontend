@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 
 import { useResetPasswordLogic } from "./useResetPasswordLogic";
 
-const ResetPasswordPage = () => {
+export const ResetPasswordPage = () => {
   const { t } = useTranslation();
   const {
     token,
@@ -91,4 +91,3 @@ const ResetPasswordPage = () => {
   );
 };
 
-export default ResetPasswordPage;

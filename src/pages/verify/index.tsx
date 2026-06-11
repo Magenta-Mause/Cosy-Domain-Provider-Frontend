@@ -6,7 +6,7 @@ import { VerifiedView } from "./components/verified-view";
 import { VerifyForm } from "./components/verify-form";
 import { useVerifyLogic } from "./useVerifyLogic";
 
-const VerifyPage = () => {
+export const VerifyPage = () => {
   const {
     userEmail,
     stage,
@@ -87,5 +87,3 @@ const VerifyPage = () => {
     <AuthPageLayout backButtonLink="/dashboard">{renderStage()}</AuthPageLayout>
   );
 };
-
-export default VerifyPage;

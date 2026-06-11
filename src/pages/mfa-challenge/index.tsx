@@ -2,7 +2,7 @@ import { AuthPageLayout } from "@/components/auth/auth-page-layout";
 import { MfaCodeForm } from "@/components/auth/mfa-code-form";
 import { useMfaChallengeLogic } from "./useMfaChallengeLogic";
 
-const MfaChallengePage = () => {
+export const MfaChallengePage = () => {
   const { totpCode, setTotpCode, totpError, isSubmitting, handleConfirm } =
     useMfaChallengeLogic();
 
@@ -20,5 +20,3 @@ const MfaChallengePage = () => {
     </AuthPageLayout>
   );
 };
-
-export default MfaChallengePage;

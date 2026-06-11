@@ -1,12 +1,10 @@
 import { AuthPageLayout } from "@/components/auth/auth-page-layout";
-import { MfaSetupPage } from "./mfa-setup-page";
+import { MfaSetupForm } from "./components/mfa-setup-form";
 
-const MfaSetupRoute = () => {
+export const MfaSetupPage = () => {
   return (
     <AuthPageLayout backButtonLink={null}>
-      <MfaSetupPage />
+      <MfaSetupForm />
     </AuthPageLayout>
   );
 };
-
-export default MfaSetupRoute;

@@ -8,9 +8,9 @@ import {
   InputOTPSeparator,
   InputOTPSlot,
 } from "@/components/ui/input-otp";
-import { useMfaSetupLogic } from "./useMfaSetupLogic";
+import { useMfaSetupLogic } from "../useMfaSetupLogic";
 
-export function MfaSetupPage() {
+export function MfaSetupForm() {
   const { t } = useTranslation();
   const {
     totpUri,

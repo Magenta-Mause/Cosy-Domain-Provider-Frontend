@@ -1,5 +1,5 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
-import MfaSetupPage from "@/pages/mfa-setup";
+import { MfaSetupPage } from "@/pages/mfa-setup";
 import { store } from "@/store/store.ts";
 
 export const Route = createFileRoute("/mfa-setup")({
