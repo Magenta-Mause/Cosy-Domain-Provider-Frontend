@@ -21,7 +21,7 @@ vi.mock("@/hooks/useAuthInformation/useAuthInformation", () => ({
   default: () => ({ userName: "alice", updateUser: vi.fn() }),
 }));
 
-vi.mock("./components/useChangeUsernameFormLogic", () => ({
+vi.mock("./components/change-username-form/useChangeUsernameFormLogic", () => ({
   useChangeUsernameFormLogic: () => ({
     newUsername: "alice",
     setNewUsername: vi.fn(),
@@ -33,7 +33,7 @@ vi.mock("./components/useChangeUsernameFormLogic", () => ({
   }),
 }));
 
-vi.mock("./components/useChangePasswordFormLogic", () => ({
+vi.mock("./components/change-password-form/useChangePasswordFormLogic", () => ({
   useChangePasswordFormLogic: () => ({
     currentPassword: "",
     setCurrentPassword: vi.fn(),
@@ -51,7 +51,7 @@ vi.mock("./components/useChangePasswordFormLogic", () => ({
   }),
 }));
 
-vi.mock("./components/useLinkedAccountsLogic", () => ({
+vi.mock("./components/linked-accounts-form/useLinkedAccountsLogic", () => ({
   useLinkedAccountsLogic: () => ({
     allProviders: ["google", "github", "discord"],
     identities: [],

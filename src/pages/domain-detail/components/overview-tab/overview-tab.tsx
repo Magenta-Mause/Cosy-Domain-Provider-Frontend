@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import type { SubdomainDto } from "@/api/generated/model";
 import { ErrorMessage } from "@/components/pixel/error-message";
 
-import { DomainMetaCards } from "./components/domain-meta-cards.tsx";
+import { DomainMetaCards } from "./components/domain-meta-cards";
 import { OverviewActions } from "./components/overview-actions";
 import { ReadonlyLabelField } from "./components/readonly-label-field";
 import { TargetIpTabs } from "./components/target-ip-tabs";

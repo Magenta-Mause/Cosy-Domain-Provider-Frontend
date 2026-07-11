@@ -2,7 +2,19 @@
 
 ## Folder layout
 
-Every component that has logic to extract, exceeds ~100 lines, or contains sub-components lives in its own folder:
+**Every feature component lives in its own folder**, named after the component, holding the component file, its co-located test, any logic hook / `lib.ts`, and an `index.ts` barrel:
+
+```
+change-password-form/
+  change-password-form.tsx          ← the component (kebab-case)
+  change-password-form.test.tsx     ← co-located test (always present)
+  useChangePasswordFormLogic.ts     ← logic hook (when the component has one)
+  index.ts                          ← barrel: export * from "./change-password-form"
+```
+
+This applies to components under `src/pages/**/components/`, `src/components/layout/`, and `src/components/auth/`. **Exceptions that stay flat:** shared primitives in `src/components/ui/` and `src/components/pixel/`, the `src/providers/` wrappers, and app-entry files (`main.tsx`, `entry-server.tsx`, `router.tsx`). A component's private sub-components live in a nested `components/` folder, each in its own folder by the same rule.
+
+Larger examples — logic hook and pure `lib.ts` alongside the component:
 
 ```
 src/pages/dashboard/

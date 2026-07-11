@@ -4,7 +4,7 @@ import { FlatPanel } from "@/components/pixel/panel";
 import { CreateSubdomainForm } from "./components/create-subdomain-form";
 import { DangerTab } from "./components/danger-tab";
 import { DnsTab } from "./components/dns-tab";
-import { DomainDetailHeader } from "./components/domain-detail-header.tsx";
+import { DomainDetailHeader } from "./components/domain-detail-header";
 import { DomainTabBar } from "./components/domain-tab-bar";
 import { OverviewTab } from "./components/overview-tab";
 import { useDomainDetailLogic } from "./useDomainDetailLogic";

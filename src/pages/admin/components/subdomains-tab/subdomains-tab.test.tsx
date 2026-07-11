@@ -47,7 +47,7 @@ const defaultKillSwitchLogic = {
 
 let mockKillSwitchLogic = { ...defaultKillSwitchLogic };
 
-vi.mock("./components/useKillSwitchLogic", () => ({
+vi.mock("./components/kill-switch-panel/useKillSwitchLogic", () => ({
   useKillSwitchLogic: () => mockKillSwitchLogic,
 }));
 
