@@ -6,13 +6,10 @@ const { mockGet, mockPost } = vi.hoisted(() => ({
   mockPost: vi.fn(),
 }));
 
-vi.mock("axios", () => ({
-  default: {
-    create: () => ({
-      get: mockGet,
-      post: mockPost,
-    }),
-  },
+vi.mock("@/api/staging-api", () => ({
+  checkStagingAuth: () => mockGet(),
+  submitStagingAuth: (username: string, password: string) =>
+    mockPost(username, password),
 }));
 
 import { useStagingAuthProviderLogic } from "./useStagingAuthProviderLogic";

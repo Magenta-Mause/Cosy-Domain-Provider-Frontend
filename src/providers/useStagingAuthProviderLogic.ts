@@ -1,7 +1,5 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
-
-const stagingAxios = axios.create({ baseURL: "/", withCredentials: true });
+import { checkStagingAuth, submitStagingAuth } from "@/api/staging-api";
 
 export function useStagingAuthProviderLogic() {
   const [authenticated, setAuthenticated] = useState(false);
@@ -12,8 +10,7 @@ export function useStagingAuthProviderLogic() {
   const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
-    stagingAxios
-      .get("/api/v1/staging-auth")
+    checkStagingAuth()
       .then(() => setAuthenticated(true))
       .catch(() => setAuthenticated(false))
       .finally(() => setChecking(false));
@@ -23,12 +20,7 @@ export function useStagingAuthProviderLogic() {
     setSubmitting(true);
     setError(null);
     try {
-      const token = btoa(`${username}:${password}`);
-      await stagingAxios.post(
-        "/api/v1/staging-auth",
-        {},
-        { headers: { Authorization: `Basic ${token}` } },
-      );
+      await submitStagingAuth(username, password);
       setAuthenticated(true);
     } catch {
       setError("error");
