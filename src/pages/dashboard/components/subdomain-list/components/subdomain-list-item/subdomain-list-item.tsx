@@ -11,7 +11,7 @@ export function SubdomainListItem({
 }: {
   readonly domain: SubdomainDto;
 }) {
-  const { t } = useTranslation();
+  const { t } = useTranslation("dashboard");
   const navigate = useNavigate();
 
   return (

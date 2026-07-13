@@ -8,7 +8,7 @@ interface DnsTabProps {
 }
 
 export function DnsTab({ domain }: DnsTabProps) {
-  const { t } = useTranslation();
+  const { t } = useTranslation("domainDetail");
 
   const entries = domain?.dnsEntries ?? [];
   const headers = ["Type", "Name", "Value", "TTL"];

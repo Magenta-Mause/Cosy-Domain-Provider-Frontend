@@ -11,7 +11,7 @@ import {
 import { useMfaSetupLogic } from "../../useMfaSetupLogic";
 
 export function MfaSetupForm() {
-  const { t } = useTranslation();
+  const { t } = useTranslation("auth");
   const {
     totpUri,
     secret,

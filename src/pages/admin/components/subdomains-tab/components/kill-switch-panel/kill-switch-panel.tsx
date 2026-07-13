@@ -2,7 +2,7 @@ import type { TFunction } from "i18next";
 import { useTranslation } from "react-i18next";
 
 function killSwitchButtonLabel(
-  t: TFunction,
+  t: TFunction<"admin">,
   isToggling: boolean,
   enabled: boolean,
 ): string {
@@ -19,7 +19,7 @@ interface KillSwitchPanelProps {
 }
 
 export function KillSwitchPanel({ adminKey }: KillSwitchPanelProps) {
-  const { t } = useTranslation();
+  const { t } = useTranslation("admin");
   const { domainCreationEnabled, isLoading, isToggling, toggle } =
     useKillSwitchLogic(adminKey);
 

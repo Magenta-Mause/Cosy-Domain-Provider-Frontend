@@ -8,7 +8,7 @@ interface ReadonlyLabelFieldProps {
 }
 
 export function ReadonlyLabelField({ label, fqdn }: ReadonlyLabelFieldProps) {
-  const { t } = useTranslation();
+  const { t } = useTranslation("domainDetail");
 
   const suffix = fqdn
     ? fqdn.slice(fqdn.indexOf("."))

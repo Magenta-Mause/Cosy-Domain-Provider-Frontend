@@ -9,7 +9,7 @@ export function useSubdomainDetailLogic(
   adminKey: string,
   onSaved: () => void,
 ) {
-  const { t } = useTranslation();
+  const { t } = useTranslation("admin");
   const navigate = useNavigate();
   const router = useRouter();
 

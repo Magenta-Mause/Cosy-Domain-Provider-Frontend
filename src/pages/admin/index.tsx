@@ -16,7 +16,7 @@ interface AdminAuthGateProps {
 }
 
 export function AdminAuthGate({ activeTab, outlet }: AdminAuthGateProps) {
-  const { t } = useTranslation();
+  const { t } = useTranslation("admin");
   const {
     isAuthenticated,
     loginError,

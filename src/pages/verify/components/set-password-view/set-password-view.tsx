@@ -26,7 +26,7 @@ export function SetPasswordView({
   onConfirmChange,
   onSubmit,
 }: SetPasswordViewProps) {
-  const { t } = useTranslation();
+  const { t } = useTranslation("auth");
 
   const passwordWeak = isPasswordWeak(password);
   const confirmMismatch =

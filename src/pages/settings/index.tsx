@@ -9,7 +9,7 @@ import { LinkedAccountsForm } from "./components/linked-accounts-form";
 import { SettingsHeader } from "./components/settings-header";
 
 export function SettingsPage() {
-  const { t } = useTranslation();
+  const { t } = useTranslation("settings");
   const { userName, updateUser } = useAuthInformation();
 
   return (

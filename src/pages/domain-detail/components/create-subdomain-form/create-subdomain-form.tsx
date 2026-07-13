@@ -59,7 +59,7 @@ export function CreateSubdomainForm({
   canSubmit,
   onSubmit,
 }: CreateSubdomainFormProps) {
-  const { t } = useTranslation();
+  const { t } = useTranslation("domainDetail");
 
   const labelInvalid = hasSubmitted && namingMode === "custom" && !labelValid;
 

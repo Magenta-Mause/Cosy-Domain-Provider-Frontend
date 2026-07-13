@@ -12,7 +12,7 @@ export function SubdomainsTable({
   subdomains,
   onSubdomainClick,
 }: SubdomainsTableProps) {
-  const { t } = useTranslation();
+  const { t } = useTranslation("admin");
 
   const columns: ColumnDef<AdminSubdomain>[] = [
     {

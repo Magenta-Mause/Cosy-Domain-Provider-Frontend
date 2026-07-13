@@ -14,7 +14,7 @@ export function SubdomainInfoPanels({
   subdomain,
   onOwnerClick,
 }: SubdomainInfoPanelsProps) {
-  const { t } = useTranslation();
+  const { t } = useTranslation("admin");
 
   return (
     <>

@@ -47,7 +47,7 @@ export function VerifyForm({
   onVerify,
   onResend,
 }: VerifyFormProps) {
-  const { t } = useTranslation();
+  const { t } = useTranslation("auth");
 
   return (
     <div className="flex flex-col gap-10">

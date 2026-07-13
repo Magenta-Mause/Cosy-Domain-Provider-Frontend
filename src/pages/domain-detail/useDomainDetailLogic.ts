@@ -30,7 +30,7 @@ import {
 export type { LabelAvailability, NamingMode, TabKey } from "./lib";
 
 export function useDomainDetailLogic(domainId: string) {
-  const { t, i18n } = useTranslation();
+  const { t, i18n } = useTranslation("domainDetail");
   const navigate = useNavigate();
   const isCreateMode = domainId === "new";
 

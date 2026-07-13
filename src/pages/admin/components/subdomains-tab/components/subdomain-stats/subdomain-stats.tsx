@@ -8,7 +8,7 @@ interface SubdomainStatsProps {
 }
 
 export function SubdomainStats({ total, failed }: SubdomainStatsProps) {
-  const { t } = useTranslation();
+  const { t } = useTranslation("admin");
   const stats = [
     {
       label: t("admin.statTotal"),

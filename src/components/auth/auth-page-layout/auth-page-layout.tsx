@@ -19,7 +19,7 @@ export function AuthPageLayout({
   backButtonLink = "/",
   maxWidth = 420,
 }: AuthPageLayoutProps) {
-  const { t } = useTranslation();
+  const { t } = useTranslation("legal");
   const { userName, isUserLoggedIn, isLoggingOut, handleLogout, handleDelete } =
     useAuthPageLayoutLogic();
 

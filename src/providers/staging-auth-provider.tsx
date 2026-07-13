@@ -15,7 +15,7 @@ export function StagingAuthProvider({
 }
 
 function StagingAuthGate({ children }: { readonly children: React.ReactNode }) {
-  const { t } = useTranslation();
+  const { t } = useTranslation("auth");
   const {
     authenticated,
     checking,

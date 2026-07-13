@@ -12,7 +12,7 @@ import { PasswordStrength } from "../password-strength";
 import { useRegisterFormLogic } from "./useRegisterFormLogic";
 
 function registerButtonLabel(
-  t: TFunction,
+  t: TFunction<"auth">,
   submitting: boolean,
   captchaReady: boolean,
 ): string {
@@ -23,7 +23,7 @@ function registerButtonLabel(
 }
 
 export function RegisterForm() {
-  const { t } = useTranslation();
+  const { t } = useTranslation("auth");
   const {
     step,
     username,

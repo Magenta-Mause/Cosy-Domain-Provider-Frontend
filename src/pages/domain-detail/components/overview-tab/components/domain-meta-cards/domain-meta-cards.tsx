@@ -9,7 +9,7 @@ interface DomainMetaCardsProps {
 }
 
 export function DomainMetaCards({ domain, createdAt }: DomainMetaCardsProps) {
-  const { t } = useTranslation();
+  const { t } = useTranslation("domainDetail");
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">

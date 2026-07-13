@@ -10,7 +10,7 @@ interface SubdomainsTabProps {
 }
 
 export function SubdomainsTab({ adminKey }: SubdomainsTabProps) {
-  const { t } = useTranslation();
+  const { t } = useTranslation("admin");
   const { isLoading, error, subdomains, total, failed, handleSubdomainClick } =
     useSubdomainsTabLogic(adminKey);
 

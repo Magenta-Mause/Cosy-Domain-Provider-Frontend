@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import useDataInteractions from "@/hooks/useDataInteractions/useDataInteractions";
 
 export function useMfaSetupLogic() {
-  const { t } = useTranslation();
+  const { t } = useTranslation("auth");
   const navigate = useNavigate();
   const { setupMfa, confirmMfa } = useDataInteractions();
 

@@ -2,7 +2,7 @@ import type { TFunction } from "i18next";
 import { useTranslation } from "react-i18next";
 
 function createButtonLabel(
-  t: TFunction,
+  t: TFunction<"dashboard">,
   isVerified: boolean,
   isMfaEnabled: boolean,
 ): string | null {
@@ -31,7 +31,7 @@ export function DashboardBanner({
   userTier,
   onCreateNew,
 }: DashboardBannerProps) {
-  const { t } = useTranslation();
+  const { t } = useTranslation("dashboard");
 
   const isButtonDisabled = !domainCreationEnabled || isSlotsExhausted;
 

@@ -8,7 +8,7 @@ import { Route } from "@/routes/verify";
 type Stage = "password" | "send" | "input" | "success";
 
 export function useVerifyLogic() {
-  const { t } = useTranslation();
+  const { t } = useTranslation("auth");
   const { userEmail, isVerified, needsPasswordSetup, isUserLoggedIn } =
     useAuthInformation();
   const { token: urlToken } = Route.useSearch();

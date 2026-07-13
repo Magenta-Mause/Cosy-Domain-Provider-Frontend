@@ -4,7 +4,7 @@ import type { UserDtoTier } from "@/api/generated/model";
 import { Badge } from "@/components/pixel/badge.tsx";
 
 const TierBadge = (props: { tier: UserDtoTier }) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation("billing");
   const isPlus = props.tier === "PLUS";
   const navigate = useNavigate();
 

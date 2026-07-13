@@ -9,7 +9,7 @@ interface UsersTabProps {
 }
 
 export function UsersTab({ adminKey }: UsersTabProps) {
-  const { t } = useTranslation();
+  const { t } = useTranslation("admin");
   const { users, isLoading, error, total, unverified, plus, handleUserClick } =
     useUsersTabLogic(adminKey);
 

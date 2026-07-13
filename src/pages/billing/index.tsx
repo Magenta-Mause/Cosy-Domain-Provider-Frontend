@@ -9,7 +9,7 @@ import { BillingHeader } from "./components/billing-header";
 import { useBillingLogic } from "./useBillingLogic";
 
 function billingButtonLabel(
-  t: TFunction,
+  t: TFunction<readonly ["billing", "home"]>,
   isRedirecting: boolean,
   isPlus: boolean,
 ): string {
@@ -18,7 +18,7 @@ function billingButtonLabel(
 }
 
 export function BillingPage() {
-  const { t } = useTranslation();
+  const { t } = useTranslation(["billing", "home"]);
   const { isPlus, isVerified, isRedirecting, error, handlePortalClick } =
     useBillingLogic();
 
@@ -64,11 +64,12 @@ export function BillingPage() {
           <FlatPanel className="px-5 py-5 flex flex-col gap-2">
             <span className="pixel text-sm mb-2">Cosy+</span>
             <ul className="flex flex-col gap-2 text-base opacity-80">
-              <li>{t("pricing.plusFeature1")}</li>
-              <li>{t("pricing.plusFeature2")}</li>
+              <li>{t("home:pricing.plusFeature1")}</li>
+              <li>{t("home:pricing.plusFeature2")}</li>
             </ul>
             <p className="text-sm mt-3 opacity-60">
-              {t("pricing.plusPrice")} &mdash; {t("pricing.plusSupport")}
+              {t("home:pricing.plusPrice")} &mdash;{" "}
+              {t("home:pricing.plusSupport")}
             </p>
           </FlatPanel>
         )}

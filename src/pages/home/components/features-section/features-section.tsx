@@ -24,7 +24,7 @@ function GrassSection({ children }: { readonly children: React.ReactNode }) {
 }
 
 export function FeaturesSection() {
-  const { t } = useTranslation();
+  const { t } = useTranslation("home");
 
   const stops = [
     {

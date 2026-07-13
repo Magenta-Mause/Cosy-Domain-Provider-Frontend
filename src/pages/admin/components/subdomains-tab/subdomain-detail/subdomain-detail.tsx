@@ -22,7 +22,7 @@ export function SubdomainDetail({
   adminKey,
   onSaved,
 }: SubdomainDetailProps) {
-  const { t } = useTranslation();
+  const { t } = useTranslation("admin");
 
   const {
     domainSuffix,

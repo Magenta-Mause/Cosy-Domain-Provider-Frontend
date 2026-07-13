@@ -21,7 +21,7 @@ export function SubdomainList({
   isVerified,
   isMfaEnabled,
 }: SubdomainListProps) {
-  const { t } = useTranslation();
+  const { t } = useTranslation("dashboard");
 
   if (isLoading) {
     return (

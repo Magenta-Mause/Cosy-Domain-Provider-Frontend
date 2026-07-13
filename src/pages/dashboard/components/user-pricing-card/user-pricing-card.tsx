@@ -11,7 +11,7 @@ interface UserPricingCardProps {
 
 const UserPricingCard = ({ serverCount }: UserPricingCardProps) => {
   const { maxSubdomainCount, userTier } = useAuthInformation();
-  const { t } = useTranslation();
+  const { t } = useTranslation("dashboard");
   const isPlus = userTier === "PLUS";
 
   return (

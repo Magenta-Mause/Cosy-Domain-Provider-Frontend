@@ -10,7 +10,7 @@ interface LabelAvailabilityIndicatorProps {
 export function LabelAvailabilityIndicator({
   availability,
 }: LabelAvailabilityIndicatorProps) {
-  const { t } = useTranslation();
+  const { t } = useTranslation("domainDetail");
 
   if (availability === "idle") return null;
   if (availability === "checking") {

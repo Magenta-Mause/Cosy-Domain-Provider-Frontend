@@ -10,7 +10,7 @@ type Provider = "google" | "github" | "discord";
 const ALL_PROVIDERS: Provider[] = ["google", "github", "discord"];
 
 export function useLinkedAccountsLogic() {
-  const { t } = useTranslation();
+  const { t } = useTranslation("settings");
   const { initiateOAuthLink, unlinkOAuth } = useDataInteractions();
   const { loadOAuthIdentities } = useDataLoading();
   const { linked, linkError } = useSearch({ from: "/settings" });

@@ -9,7 +9,7 @@ export function useUserDetailLogic(
   adminKey: string,
   onSaved: () => void,
 ) {
-  const { t } = useTranslation();
+  const { t } = useTranslation("admin");
   const navigate = useNavigate();
 
   // Max subdomain override

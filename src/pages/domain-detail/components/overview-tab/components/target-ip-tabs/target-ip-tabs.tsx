@@ -27,7 +27,7 @@ export function TargetIpTabs({
   ipv6Valid,
   atLeastOneIp,
 }: TargetIpTabsProps) {
-  const { t } = useTranslation();
+  const { t } = useTranslation("domainDetail");
 
   const showAtLeastOneError = hasSubmitted && !atLeastOneIp;
   const showIpv4Error = hasSubmitted && targetIp.trim() !== "" && !ipv4Valid;

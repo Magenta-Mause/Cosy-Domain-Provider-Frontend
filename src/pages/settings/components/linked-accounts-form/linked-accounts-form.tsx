@@ -24,7 +24,7 @@ const PROVIDER_LABELS: Record<Provider, string> = {
 };
 
 export function LinkedAccountsForm() {
-  const { t } = useTranslation();
+  const { t } = useTranslation("settings");
   const {
     allProviders,
     loading,

@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { type AdminUser, adminApi } from "@/api/admin-api";
 
 export function useUsersTabLogic(adminKey: string) {
-  const { t } = useTranslation();
+  const { t } = useTranslation("admin");
   const navigate = useNavigate();
   const [users, setUsers] = useState<AdminUser[]>([]);
   const [isLoading, setIsLoading] = useState(true);

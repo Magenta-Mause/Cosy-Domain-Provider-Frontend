@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { Mailbox } from "@/components/pixel/mailbox";
 
 export function VerifiedView() {
-  const { t } = useTranslation();
+  const { t } = useTranslation("auth");
   return (
     <div
       className="flex flex-col items-center gap-6 py-4 text-center"

@@ -16,7 +16,7 @@ export function DangerZonePanel({
   isDeleting,
   error,
 }: DangerZonePanelProps) {
-  const { t } = useTranslation();
+  const { t } = useTranslation("admin");
 
   return (
     <FlatPanel className="px-5 py-4 flex flex-col gap-3 border border-destructive/40">

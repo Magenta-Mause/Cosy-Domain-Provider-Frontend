@@ -12,7 +12,7 @@ import { PasswordField } from "@/components/ui/password-field";
 import { useLoginFormLogic } from "./useLoginFormLogic";
 
 function loginButtonLabel(
-  t: TFunction,
+  t: TFunction<"auth">,
   submitting: boolean,
   captchaReady: boolean,
 ): string {
@@ -21,7 +21,7 @@ function loginButtonLabel(
 }
 
 export function LoginForm() {
-  const { t } = useTranslation();
+  const { t } = useTranslation("auth");
   const {
     step,
     email,

@@ -15,7 +15,7 @@ export function ChangeUsernameForm({
   currentUsername,
   onSave,
 }: ChangeUsernameFormProps) {
-  const { t } = useTranslation();
+  const { t } = useTranslation("settings");
   const {
     newUsername,
     setNewUsername,

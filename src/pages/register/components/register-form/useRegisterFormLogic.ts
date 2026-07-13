@@ -9,7 +9,7 @@ import { useAppSelector } from "@/store/hooks";
 import { isPasswordWeak, isValidPassword, isValidUsername } from "./lib";
 
 export function useRegisterFormLogic() {
-  const { t } = useTranslation();
+  const { t } = useTranslation("auth");
   const navigate = useNavigate();
   const { registerUser } = useDataInteractions();
   const authState = useAppSelector((state) => state.auth.state);

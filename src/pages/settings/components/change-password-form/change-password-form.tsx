@@ -14,7 +14,7 @@ interface ChangePasswordFormProps {
 }
 
 export function ChangePasswordForm({ onSave }: ChangePasswordFormProps) {
-  const { t } = useTranslation();
+  const { t } = useTranslation("settings");
   const {
     currentPassword,
     setCurrentPassword,

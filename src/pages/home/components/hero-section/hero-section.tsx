@@ -6,7 +6,7 @@ import { FormField } from "@/components/ui/form-field";
 import { useHeroSectionLogic } from "./useHeroSectionLogic";
 
 export function HeroSection() {
-  const { t } = useTranslation();
+  const { t } = useTranslation("home");
   const { subdomain, handleSubdomainChange, handleCheckAvailability } =
     useHeroSectionLogic();
 

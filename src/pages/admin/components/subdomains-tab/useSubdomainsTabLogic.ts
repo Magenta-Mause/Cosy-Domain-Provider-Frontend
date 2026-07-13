@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { type AdminSubdomain, adminApi } from "@/api/admin-api";
 
 export function useSubdomainsTabLogic(adminKey: string) {
-  const { t } = useTranslation();
+  const { t } = useTranslation("admin");
   const navigate = useNavigate();
   const [subdomains, setSubdomains] = useState<AdminSubdomain[]>([]);
   const [isLoading, setIsLoading] = useState(true);

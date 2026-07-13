@@ -17,6 +17,7 @@ void i18n.use(initReactI18next).init({
   resources,
   lng: initialLanguage,
   fallbackLng: "en",
+  ns: Object.keys(resources.en),
   defaultNS,
   interpolation: {
     escapeValue: false,

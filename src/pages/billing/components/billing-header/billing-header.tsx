@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { PageHeader } from "@/components/layout/page-header";
 
 export function BillingHeader() {
-  const { t } = useTranslation();
+  const { t } = useTranslation(["billing", "dashboard"]);
 
   return (
     <PageHeader maxWidth={600}>
@@ -14,7 +14,7 @@ export function BillingHeader() {
         className="block mb-3 text-base"
         style={{ color: "oklch(0.95 0.08 70)" }}
       >
-        ← {t("dashboard.title")}
+        ← {t("dashboard:dashboard.title")}
       </Link>
       <h1
         style={{

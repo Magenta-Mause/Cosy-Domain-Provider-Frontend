@@ -5,7 +5,7 @@ import { CosyLogo } from "@/components/layout/cosy-logo";
 import { LanguageMenu } from "@/components/layout/language-menu";
 import useAuthInformation from "@/hooks/useAuthInformation/useAuthInformation";
 export function LandingNav() {
-  const { t } = useTranslation();
+  const { t } = useTranslation(["home", "common"]);
   const { isUserLoggedIn } = useAuthInformation();
 
   return (
@@ -51,7 +51,7 @@ export function LandingNav() {
               data-testid="home-login-link"
               className="pbtn sm secondary"
             >
-              {t("nav.login")}
+              {t("common:nav.login")}
             </Link>
             <Link
               to="/register"

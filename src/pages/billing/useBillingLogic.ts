@@ -4,7 +4,7 @@ import useAuthInformation from "@/hooks/useAuthInformation/useAuthInformation";
 import useDataInteractions from "@/hooks/useDataInteractions/useDataInteractions";
 
 export function useBillingLogic() {
-  const { t } = useTranslation();
+  const { t } = useTranslation("billing");
   const { userTier, isVerified } = useAuthInformation();
   const { openBillingPortal, openCheckout } = useDataInteractions();
   const [isRedirecting, setIsRedirecting] = useState(false);

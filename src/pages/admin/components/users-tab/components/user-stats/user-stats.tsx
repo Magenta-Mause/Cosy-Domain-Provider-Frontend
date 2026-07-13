@@ -9,7 +9,7 @@ interface UserStatsProps {
 }
 
 export function UserStats({ total, unverified, plus }: UserStatsProps) {
-  const { t } = useTranslation();
+  const { t } = useTranslation("admin");
 
   const stats = [
     {

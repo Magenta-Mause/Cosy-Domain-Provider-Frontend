@@ -3,7 +3,7 @@ import type { TFunction } from "i18next";
 import { useTranslation } from "react-i18next";
 
 function submitButtonLabel(
-  t: TFunction,
+  t: TFunction<"domainDetail">,
   isSubmitting: boolean,
   isCreateMode: boolean,
 ): string {
@@ -26,7 +26,7 @@ export function OverviewActions({
   isSubmitting,
   isCreateMode,
 }: OverviewActionsProps) {
-  const { t } = useTranslation();
+  const { t } = useTranslation("domainDetail");
 
   return (
     <div className="flex gap-3 justify-end">

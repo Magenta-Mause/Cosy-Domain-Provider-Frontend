@@ -30,7 +30,7 @@ export function CreateModeFields({
   namingMode,
   onNamingModeChange,
 }: CreateModeFieldsProps) {
-  const { t } = useTranslation();
+  const { t } = useTranslation("domainDetail");
 
   return (
     <>

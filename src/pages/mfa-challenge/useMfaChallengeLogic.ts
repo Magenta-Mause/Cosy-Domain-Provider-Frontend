@@ -5,7 +5,7 @@ import useDataInteractions from "@/hooks/useDataInteractions/useDataInteractions
 import { Route } from "@/routes/mfa-challenge";
 
 export function useMfaChallengeLogic() {
-  const { t } = useTranslation();
+  const { t } = useTranslation("auth");
   const navigate = useNavigate();
   const { token: challengeToken } = Route.useSearch();
   const { completeMfaChallenge } = useDataInteractions();

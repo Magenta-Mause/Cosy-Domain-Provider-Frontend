@@ -9,7 +9,7 @@ import { PasswordField } from "@/components/ui/password-field";
 import { useResetPasswordLogic } from "./useResetPasswordLogic";
 
 export const ResetPasswordPage = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation("auth");
   const {
     token,
     newPassword,

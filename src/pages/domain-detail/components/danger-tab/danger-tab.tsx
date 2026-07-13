@@ -15,7 +15,7 @@ export function DangerTab({
   isDeleting,
   onDelete,
 }: DangerTabProps) {
-  const { t } = useTranslation();
+  const { t } = useTranslation(["domainDetail", "dashboard"]);
 
   return (
     <div className="flex flex-col gap-4">
@@ -38,7 +38,9 @@ export function DangerTab({
             disabled={isDeleting}
             onClick={onDelete}
           >
-            {isDeleting ? t("dashboard.deleting") : t("dashboard.delete")}
+            {isDeleting
+              ? t("dashboard:dashboard.deleting")
+              : t("dashboard:dashboard.delete")}
           </Button>
         </div>
       </Panel>

@@ -5,7 +5,7 @@ import useDataInteractions from "@/hooks/useDataInteractions/useDataInteractions
 import { Route } from "@/routes/forgot-password";
 
 export function useForgotPasswordLogic() {
-  const { t } = useTranslation();
+  const { t } = useTranslation("auth");
   const { requestPasswordReset } = useDataInteractions();
   const { email: prefillEmail } = Route.useSearch();
   const [email, setEmail] = useState(prefillEmail ?? "");

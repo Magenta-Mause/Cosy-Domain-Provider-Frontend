@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { LegalPageLayout } from "../legal-page-layout";
 
 export function ImpressumPage() {
-  const { t } = useTranslation();
+  const { t } = useTranslation("legal");
 
   return (
     <LegalPageLayout title={t("legal.impressum.title")}>

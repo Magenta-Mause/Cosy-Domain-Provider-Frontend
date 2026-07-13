@@ -5,7 +5,7 @@ import { Badge } from "@/components/pixel/badge";
 import { Panel } from "@/components/pixel/panel";
 
 export function PricingSection() {
-  const { t } = useTranslation();
+  const { t } = useTranslation("home");
 
   return (
     <section id="pricing" className="px-5 sm:px-8 py-[60px] bg-background">

@@ -7,7 +7,7 @@ export function useChangeUsernameFormLogic(
   currentUsername: string | null,
   onSave: (newUsername: string) => Promise<void>,
 ) {
-  const { t } = useTranslation();
+  const { t } = useTranslation("settings");
   const [newUsername, setNewUsername] = useState(() => currentUsername ?? "");
   const [saving, setSaving] = useState(false);
   const [success, setSuccess] = useState(false);

@@ -50,7 +50,7 @@ export function OverviewTab({
   createdAt,
   onSubmit,
 }: OverviewTabProps) {
-  const { t } = useTranslation();
+  const { t } = useTranslation("domainDetail");
 
   return (
     <form onSubmit={onSubmit} className="flex flex-col gap-5">

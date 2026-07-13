@@ -60,7 +60,7 @@ export function UserSubdomainsTable({
   subdomains,
   onSubdomainClick,
 }: UserSubdomainsTableProps) {
-  const { t } = useTranslation();
+  const { t } = useTranslation("admin");
   const columns = getColumns(t);
 
   return (

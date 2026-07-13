@@ -6,7 +6,7 @@ import useDataInteractions from "@/hooks/useDataInteractions/useDataInteractions
 import { Route } from "@/routes/reset-password";
 
 export function useResetPasswordLogic() {
-  const { t } = useTranslation();
+  const { t } = useTranslation("auth");
   const navigate = useNavigate();
   const { token } = Route.useSearch();
   const { confirmPasswordReset } = useDataInteractions();

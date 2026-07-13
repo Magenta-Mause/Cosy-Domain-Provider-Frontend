@@ -16,7 +16,7 @@ export function DomainDetailHeader({
   domain,
   isCreateMode,
 }: DomainDetailHeaderProps) {
-  const { t } = useTranslation();
+  const { t } = useTranslation("domainDetail");
 
   return (
     <PageHeader maxWidth={1100}>

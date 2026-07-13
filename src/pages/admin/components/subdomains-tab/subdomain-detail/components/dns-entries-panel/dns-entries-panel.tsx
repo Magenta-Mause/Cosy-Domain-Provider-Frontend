@@ -8,7 +8,7 @@ interface DnsEntriesPanelProps {
 }
 
 export function DnsEntriesPanel({ entries }: DnsEntriesPanelProps) {
-  const { t } = useTranslation();
+  const { t } = useTranslation("admin");
 
   return (
     <div>

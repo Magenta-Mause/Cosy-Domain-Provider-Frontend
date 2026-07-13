@@ -15,7 +15,7 @@ interface UserDetailProps {
 }
 
 export function UserDetail({ detail, adminKey, onSaved }: UserDetailProps) {
-  const { t } = useTranslation();
+  const { t } = useTranslation("admin");
   const {
     overrideInput,
     setOverrideInput,

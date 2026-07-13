@@ -11,7 +11,7 @@ interface LegalPageLayoutProps {
 }
 
 export function LegalPageLayout({ title, children }: LegalPageLayoutProps) {
-  const { t } = useTranslation();
+  const { t } = useTranslation("legal");
 
   return (
     <div className="sky-bg min-h-screen relative overflow-hidden px-6 py-12">

@@ -6,7 +6,7 @@ import { isPasswordWeak, isValidPassword } from "@/lib/validators";
 export function useChangePasswordFormLogic(
   onSave: (currentPassword: string, newPassword: string) => Promise<void>,
 ) {
-  const { t } = useTranslation();
+  const { t } = useTranslation("settings");
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");

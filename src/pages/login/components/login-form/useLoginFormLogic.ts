@@ -14,7 +14,7 @@ import { Route } from "@/routes/login";
 import { useAppSelector } from "@/store/hooks";
 
 export function useLoginFormLogic() {
-  const { t } = useTranslation();
+  const { t } = useTranslation("auth");
   const navigate = useNavigate();
   const { loginUser, completeMfaChallenge } = useDataInteractions();
   const authState = useAppSelector((state) => state.auth.state);
