@@ -94,7 +94,7 @@ function getColumns(
 }
 
 export function UsersTable({ users, onUserClick }: UsersTableProps) {
-  const { t } = useTranslation();
+  const { t } = useTranslation("admin");
   const columns = getColumns(t);
 
   return (
