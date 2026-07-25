@@ -60,11 +60,3 @@ See `docs/patterns/` for canonical conventions:
 - `form-inputs.md` — `FormField` component spec and validation rules
 - `styling.md` — Tailwind-first approach, design tokens, when inline styles are allowed
 
-<!-- agents-kb:begin — synced conventions from ~/projects/agents; edit the KB, not the copies -->
-## Shared agent conventions
-
-@docs/conventions/AGENT.md
-@docs/conventions/cosy-domain-provider.md
-@docs/conventions/REACT.md
-@docs/conventions/AUTH.md
-<!-- agents-kb:end -->
