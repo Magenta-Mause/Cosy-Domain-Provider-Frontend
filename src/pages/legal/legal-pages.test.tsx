@@ -30,6 +30,17 @@ describe("legal pages", () => {
     expect(screen.getByTestId("language-menu")).toBeInTheDocument();
   });
 
+  // Database backups retain deleted data for a bounded period, so section 5 claiming
+  // account data is simply removed on deletion would understate the retention. Keep
+  // the disclosure and its figure in step with strata.backup.retention-tiers.
+  it("discloses that backups retain deleted data for a bounded period", () => {
+    render(<DatenschutzPage />);
+    expect(
+      screen.getByText(/Sicherungskopien \(Backups\) der Datenbank/),
+    ).toBeInTheDocument();
+    expect(screen.getByText(/längstens 60 Tage/)).toBeInTheDocument();
+  });
+
   it("renders the AGB page", () => {
     render(<AgbPage />);
     expect(screen.getByTestId("language-menu")).toBeInTheDocument();

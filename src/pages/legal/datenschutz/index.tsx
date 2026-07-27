@@ -71,6 +71,17 @@ export function DatenschutzPage() {
           entfernt. Zahlungsdaten unterliegen den gesetzlichen
           Aufbewahrungsfristen (10 Jahre).
         </p>
+        <p className="mt-2">
+          Zur Absicherung gegen Datenverlust und Systemausfälle werden
+          regelmäßig Sicherungskopien (Backups) der Datenbank erstellt —
+          berechtigtes Interesse an einem sicheren Betrieb, Art. 6 Abs. 1 lit. f
+          DSGVO in Verbindung mit Art. 32 DSGVO. Nach einer Löschung können die
+          betroffenen Daten in diesen Sicherungen noch längstens 60 Tage
+          enthalten sein; sie werden dort nicht mehr aktiv verarbeitet und
+          danach automatisch gelöscht. Sicherungen werden ausschließlich zur
+          Wiederherstellung nach einem Systemausfall verwendet, nicht zur
+          Wiederherstellung einzelner Konten.
+        </p>
       </section>
 
       <section>
