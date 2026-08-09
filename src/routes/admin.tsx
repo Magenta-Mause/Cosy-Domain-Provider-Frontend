@@ -13,7 +13,9 @@ function RouteComponent() {
   const { location } = useRouterState();
   const activeTab = location.pathname.startsWith("/admin/users")
     ? "users"
-    : "subdomains";
+    : location.pathname.startsWith("/admin/watchtower")
+      ? "watchtower"
+      : "subdomains";
 
   return <AdminAuthGate activeTab={activeTab} outlet={<Outlet />} />;
 }

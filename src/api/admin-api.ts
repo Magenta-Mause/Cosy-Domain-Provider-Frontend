@@ -38,6 +38,54 @@ export interface AdminSettings {
   domainCreationEnabled: boolean;
 }
 
+export type WatchtowerCategory =
+  | "COSY_FRONTEND"
+  | "BENIGN"
+  | "SUSPICIOUS"
+  | "MALICIOUS"
+  | "UNREACHABLE";
+
+export type WatchtowerRiskLevel = "NONE" | "LOW" | "MEDIUM" | "HIGH";
+
+export type WatchtowerReviewStatus =
+  | "PENDING"
+  | "ACKNOWLEDGED"
+  | "DISMISSED"
+  | "ACTIONED";
+
+export interface AdminWatchtowerScan {
+  uuid: string;
+  subdomainUuid: string;
+  label: string;
+  fqdn: string;
+  ownerUuid: string;
+  ownerUsername: string;
+  scannedAt: string;
+  reachable: boolean;
+  httpStatus: number | null;
+  category: WatchtowerCategory;
+  riskLevel: WatchtowerRiskLevel;
+  summary: string;
+  visitedPaths: string[];
+  /** Presigned MinIO URL — short-lived, so never cache it beyond the page load. */
+  screenshotUrl: string | null;
+  modelId: string;
+  reviewStatus: WatchtowerReviewStatus;
+  reviewNote: string | null;
+  reviewedAt: string | null;
+}
+
+export interface AdminWatchtowerSummary {
+  totalSubdomains: number;
+  scannedSubdomains: number;
+  cosyFrontends: number;
+  benign: number;
+  flagged: number;
+  unreachable: number;
+  pendingReview: number;
+  lastScanAt: string | null;
+}
+
 const BASE = "/api/v1/admin";
 
 async function request<T>(key: string, config: AxiosRequestConfig): Promise<T> {
@@ -119,6 +167,30 @@ export const adminApi = {
   updateSettings: (key: string, body: Partial<AdminSettings>) =>
     request<AdminSettings>(key, {
       url: `${BASE}/settings`,
+      method: "PATCH",
+      data: body,
+    }),
+
+  getWatchtowerSummary: (key: string) =>
+    request<AdminWatchtowerSummary>(key, {
+      url: `${BASE}/watchtower/summary`,
+    }),
+
+  getWatchtowerScans: (key: string) =>
+    request<AdminWatchtowerScan[]>(key, { url: `${BASE}/watchtower/scans` }),
+
+  getWatchtowerScanHistory: (key: string, subdomainUuid: string) =>
+    request<AdminWatchtowerScan[]>(key, {
+      url: `${BASE}/watchtower/subdomains/${subdomainUuid}/scans`,
+    }),
+
+  updateWatchtowerReview: (
+    key: string,
+    uuid: string,
+    body: { reviewStatus: WatchtowerReviewStatus; reviewNote?: string },
+  ) =>
+    request<AdminWatchtowerScan>(key, {
+      url: `${BASE}/watchtower/scans/${uuid}/review`,
       method: "PATCH",
       data: body,
     }),

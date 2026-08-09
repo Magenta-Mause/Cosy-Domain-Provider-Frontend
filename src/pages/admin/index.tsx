@@ -11,7 +11,7 @@ import { FormField } from "@/components/ui/form-field";
 import { useAdminLogic } from "./useAdminLogic";
 
 interface AdminAuthGateProps {
-  readonly activeTab: "subdomains" | "users";
+  readonly activeTab: "subdomains" | "users" | "watchtower";
   readonly outlet: ReactNode;
 }
 
@@ -80,6 +80,11 @@ export function AdminAuthGate({ activeTab, outlet }: AdminAuthGateProps) {
       key: "users" as const,
       label: t("admin.tabUsers"),
       to: "/admin/users",
+    },
+    {
+      key: "watchtower" as const,
+      label: t("admin.tabWatchtower"),
+      to: "/admin/watchtower",
     },
   ];
 
