@@ -159,6 +159,38 @@ describe("WatchtowerDetail", () => {
     expect(onClose).toHaveBeenCalled();
   });
 
+  it("closes when the backdrop is clicked", async () => {
+    const onClose = vi.fn();
+    render(
+      <WatchtowerDetail
+        scan={scan({})}
+        onClose={onClose}
+        onSubmitReview={vi.fn()}
+      />,
+    );
+
+    await userEvent.click(screen.getByTestId("watchtower-detail-backdrop"));
+
+    expect(onClose).toHaveBeenCalled();
+  });
+
+  it("stays open when the panel itself is clicked", async () => {
+    const onClose = vi.fn();
+    render(
+      <WatchtowerDetail
+        scan={scan({})}
+        onClose={onClose}
+        onSubmitReview={vi.fn()}
+      />,
+    );
+
+    // A click that bubbles up from inside the panel must not dismiss the dialog —
+    // otherwise selecting text in the summary would throw away a drafted note.
+    await userEvent.click(screen.getByText("Crypto scam pattern"));
+
+    expect(onClose).not.toHaveBeenCalled();
+  });
+
   it("closes on Escape", async () => {
     const onClose = vi.fn();
     render(

@@ -39,7 +39,19 @@ export function WatchtowerDetail({
       className="fixed inset-0 z-50 w-full h-full max-w-none max-h-none bg-black/50 flex items-center justify-center p-4"
       data-testid="watchtower-detail"
     >
-      <FlatPanel className="w-full max-w-[880px] max-h-full overflow-y-auto p-6 flex flex-col gap-4">
+      {/*
+        A real button rather than a click handler on the dialog: the backdrop is
+        then reachable by keyboard too, and clicks inside the panel never reach it,
+        so selecting summary text cannot throw away a half-written review note.
+      */}
+      <button
+        type="button"
+        aria-label={t("watchtower.close")}
+        onClick={onClose}
+        data-testid="watchtower-detail-backdrop"
+        className="absolute inset-0 w-full h-full cursor-default"
+      />
+      <FlatPanel className="relative z-10 w-full max-w-[880px] max-h-full overflow-y-auto p-6 flex flex-col gap-4">
         <div className="flex items-start justify-between gap-4">
           <div className="flex flex-col gap-1">
             <h3>{scan.label}</h3>
