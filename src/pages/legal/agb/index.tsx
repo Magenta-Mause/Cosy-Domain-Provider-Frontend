@@ -99,7 +99,35 @@ export function AgbPage() {
 
       <section>
         <h2 className="font-semibold text-lg mb-2">
-          7. Verfügbarkeit und Haftung
+          7. Automatisierte Inhaltsprüfung
+        </h2>
+        <p className="mb-2">
+          Um Missbrauch der Domain{" "}
+          <code className="text-sm bg-foreground/10 px-1 rounded">
+            play.cosy-hosting.net
+          </code>{" "}
+          zu erkennen, prüft der Anbieter die öffentlich erreichbaren Inhalte
+          hinter den vergebenen Subdomains regelmäßig automatisiert. Dabei
+          werden die Startseite und einzelne öffentlich verlinkte Unterseiten
+          abgerufen, ein Bildschirmfoto erstellt und der sichtbare Inhalt durch
+          ein KI-System bewertet.
+        </p>
+        <p className="mb-2">
+          Geprüft wird ausschließlich, was auch jeder andere Besucher sieht: Es
+          erfolgt keine Anmeldung, es werden keine Formulare abgeschickt und
+          keine zugangsgeschützten Bereiche aufgerufen.
+        </p>
+        <p>
+          Die Ergebnisse werden vom Anbieter gesichtet. Eine Sperrung erfolgt
+          nicht automatisch, sondern erst nach einer Prüfung durch einen
+          Menschen. Einzelheiten zur Verarbeitung, Rechtsgrundlage und
+          Speicherdauer stehen in der Datenschutzerklärung.
+        </p>
+      </section>
+
+      <section>
+        <h2 className="font-semibold text-lg mb-2">
+          8. Verfügbarkeit und Haftung
         </h2>
         <p>
           Der Anbieter bemüht sich um eine hohe Verfügbarkeit des Dienstes,
@@ -110,7 +138,7 @@ export function AgbPage() {
       </section>
 
       <section>
-        <h2 className="font-semibold text-lg mb-2">8. Änderungen der AGB</h2>
+        <h2 className="font-semibold text-lg mb-2">9. Änderungen der AGB</h2>
         <p>
           Der Anbieter behält sich vor, diese AGB jederzeit zu ändern. Über
           wesentliche Änderungen wird per E-Mail informiert. Die weitere Nutzung
@@ -120,14 +148,14 @@ export function AgbPage() {
       </section>
 
       <section>
-        <h2 className="font-semibold text-lg mb-2">9. Anwendbares Recht</h2>
+        <h2 className="font-semibold text-lg mb-2">10. Anwendbares Recht</h2>
         <p>
           Es gilt deutsches Recht unter Ausschluss des UN-Kaufrechts.
           Gerichtsstand ist, soweit gesetzlich zulässig, der Sitz des Anbieters.
         </p>
       </section>
 
-      <p className="text-sm opacity-50 mt-8">Stand: April 2026</p>
+      <p className="text-sm opacity-50 mt-8">Stand: August 2026</p>
     </LegalPageLayout>
   );
 }

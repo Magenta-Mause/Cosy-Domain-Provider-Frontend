@@ -9,6 +9,7 @@ export type WatchtowerFilter =
   | "all"
   | "cosy"
   | "benign"
+  | "empty"
   | "flagged"
   | "offline";
 
@@ -47,6 +48,12 @@ export function categoryAccent(category: WatchtowerCategory): {
         badge: "bg-success text-white",
         text: "text-foreground",
       };
+    case "EMPTY":
+      return {
+        border: "border-foreground",
+        badge: "bg-foreground/50 text-white",
+        text: "text-foreground",
+      };
     case "SUSPICIOUS":
       return {
         border: "border-accent",
@@ -79,6 +86,8 @@ export function matchesFilter(
       return scan.category === "COSY_FRONTEND";
     case "benign":
       return scan.category === "BENIGN";
+    case "empty":
+      return scan.category === "EMPTY";
     case "flagged":
       return isFlagged(scan);
     case "offline":

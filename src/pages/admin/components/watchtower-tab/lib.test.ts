@@ -127,6 +127,7 @@ describe("categoryAccent", () => {
     for (const category of [
       "COSY_FRONTEND",
       "BENIGN",
+      "EMPTY",
       "SUSPICIOUS",
       "MALICIOUS",
       "UNREACHABLE",
@@ -158,12 +159,28 @@ describe("categoryAccent", () => {
   });
 });
 
-describe("matchesFilter (benign)", () => {
+describe("matchesFilter (benign / empty)", () => {
   it("benign matches only the BENIGN category", () => {
     expect(matchesFilter(scan({ category: "BENIGN" }), "benign")).toBe(true);
     expect(matchesFilter(scan({ category: "COSY_FRONTEND" }), "benign")).toBe(
       false,
     );
+  });
+
+  it("keeps EMPTY out of benign, offline and flagged", () => {
+    // A parked subdomain is its own thing: counting it as OK overstates how much of
+    // the estate is in use, counting it as offline overstates how much is broken.
+    const parked = scan({ category: "EMPTY" });
+    expect(matchesFilter(parked, "empty")).toBe(true);
+    expect(matchesFilter(parked, "benign")).toBe(false);
+    expect(matchesFilter(parked, "offline")).toBe(false);
+    expect(matchesFilter(parked, "flagged")).toBe(false);
+    expect(matchesFilter(parked, "all")).toBe(true);
+  });
+
+  it("does not treat EMPTY as a reputation risk", () => {
+    expect(isFlagged(scan({ category: "EMPTY" }))).toBe(false);
+    expect(needsReview(scan({ category: "EMPTY" }))).toBe(false);
   });
 });
 

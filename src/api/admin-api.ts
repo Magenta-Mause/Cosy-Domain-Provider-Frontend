@@ -41,6 +41,7 @@ export interface AdminSettings {
 export type WatchtowerCategory =
   | "COSY_FRONTEND"
   | "BENIGN"
+  | "EMPTY"
   | "SUSPICIOUS"
   | "MALICIOUS"
   | "UNREACHABLE";
@@ -80,6 +81,7 @@ export interface AdminWatchtowerSummary {
   scannedSubdomains: number;
   cosyFrontends: number;
   benign: number;
+  empty: number;
   flagged: number;
   unreachable: number;
   pendingReview: number;

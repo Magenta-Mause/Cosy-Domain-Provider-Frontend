@@ -66,6 +66,7 @@ const summary: AdminWatchtowerSummary = {
   scannedSubdomains: 2,
   cosyFrontends: 1,
   benign: 0,
+  empty: 0,
   flagged: 1,
   unreachable: 0,
   pendingReview: 1,
