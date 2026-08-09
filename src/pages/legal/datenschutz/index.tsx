@@ -60,11 +60,49 @@ export function DatenschutzPage() {
             <strong>Google / GitHub / Discord</strong> — OAuth-Login, sofern
             genutzt.
           </li>
+          <li>
+            <strong>Anthropic</strong> — KI-Auswertung im Rahmen der
+            automatisierten Inhaltsprüfung (siehe Abschnitt 5). Übermittelt
+            werden Bildschirmfoto und sichtbarer Text der geprüften Seite.
+          </li>
         </ul>
       </section>
 
       <section>
-        <h2 className="font-semibold text-lg mb-2">5. Speicherdauer</h2>
+        <h2 className="font-semibold text-lg mb-2">
+          5. Automatisierte Inhaltsprüfung der Subdomains
+        </h2>
+        <p className="mb-2">
+          Wir rufen die öffentlich erreichbaren Seiten hinter den vergebenen
+          Subdomains regelmäßig automatisiert ab, erstellen ein Bildschirmfoto
+          und lassen den sichtbaren Inhalt durch ein KI-System bewerten.
+          Gespeichert werden das Bildschirmfoto, die abgerufenen Pfade, der
+          HTTP-Status und eine kurze Einschätzung.
+        </p>
+        <p className="mb-2">
+          <strong>Zweck:</strong> Erkennung von Missbrauch unserer Domain, etwa
+          Phishing-, Betrugs- oder Schadsoftware-Seiten.{" "}
+          <strong>Rechtsgrundlage:</strong> berechtigtes Interesse an der
+          Integrität und Reputation der von uns betriebenen Domain, Art. 6 Abs.
+          1 lit. f DSGVO.
+        </p>
+        <p className="mb-2">
+          Abgerufen wird nur, was auch jedem anderen Besucher öffentlich
+          zugänglich ist — ohne Anmeldung, ohne Absenden von Formularen, ohne
+          zugangsgeschützte Bereiche. Enthält eine geprüfte Seite
+          personenbezogene Daten Dritter, werden diese unvermeidbar
+          mitgespeichert; wir werten sie nicht gesondert aus und geben sie nicht
+          weiter.
+        </p>
+        <p>
+          <strong>Speicherdauer:</strong> Bildschirmfotos und Bewertungen werden
+          nach 90 Tagen automatisch gelöscht. Zur KI-Auswertung wird der Inhalt
+          an Anthropic übermittelt (siehe Abschnitt 4).
+        </p>
+      </section>
+
+      <section>
+        <h2 className="font-semibold text-lg mb-2">6. Speicherdauer</h2>
         <p>
           Daten werden gelöscht, sobald sie für den Verarbeitungszweck nicht
           mehr benötigt werden. Kontodaten werden bei Löschung des Kontos
@@ -85,7 +123,7 @@ export function DatenschutzPage() {
       </section>
 
       <section>
-        <h2 className="font-semibold text-lg mb-2">6. Deine Rechte</h2>
+        <h2 className="font-semibold text-lg mb-2">7. Deine Rechte</h2>
         <p>
           Du hast das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung
           der Verarbeitung, Datenübertragbarkeit und Widerspruch. Wende dich
@@ -103,7 +141,7 @@ export function DatenschutzPage() {
       </section>
 
       <section>
-        <h2 className="font-semibold text-lg mb-2">7. Cookies</h2>
+        <h2 className="font-semibold text-lg mb-2">8. Cookies</h2>
         <p>
           Wir verwenden ausschließlich technisch notwendige Cookies und
           Session-Token für die Authentifizierung. Es werden keine

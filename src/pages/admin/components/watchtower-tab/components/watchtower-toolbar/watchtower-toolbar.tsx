@@ -26,6 +26,7 @@ export function WatchtowerToolbar({
     { key: "all", count: summary?.scannedSubdomains },
     { key: "cosy", count: summary?.cosyFrontends },
     { key: "benign", count: summary?.benign },
+    { key: "empty", count: summary?.empty },
     { key: "flagged", count: summary?.flagged },
     { key: "offline", count: summary?.unreachable },
   ];
