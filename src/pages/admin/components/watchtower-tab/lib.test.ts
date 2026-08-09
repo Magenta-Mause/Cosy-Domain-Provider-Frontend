@@ -3,6 +3,7 @@ import { describe, expect, it } from "vitest";
 import type { AdminWatchtowerScan } from "@/api/admin-api";
 
 import {
+  categoryAccent,
   compareScans,
   formatPaths,
   isFlagged,
@@ -118,6 +119,51 @@ describe("formatPaths", () => {
 
   it("renders a dash for no paths", () => {
     expect(formatPaths([])).toBe("—");
+  });
+});
+
+describe("categoryAccent", () => {
+  it("gives every category a token-based accent", () => {
+    for (const category of [
+      "COSY_FRONTEND",
+      "BENIGN",
+      "SUSPICIOUS",
+      "MALICIOUS",
+      "UNREACHABLE",
+    ] as const) {
+      const accent = categoryAccent(category);
+      expect(accent.border).toMatch(/^border-/);
+      expect(accent.badge).toMatch(/^bg-/);
+      expect(accent.text).toMatch(/^text-/);
+    }
+  });
+
+  it("marks only MALICIOUS in destructive colours", () => {
+    // The border is what makes a risky card readable at a glance across the grid,
+    // so it must not quietly become the same as every other card's.
+    expect(categoryAccent("MALICIOUS").border).toBe("border-destructive");
+    expect(categoryAccent("MALICIOUS").text).toBe("text-destructive");
+    expect(categoryAccent("BENIGN").text).not.toBe("text-destructive");
+    expect(categoryAccent("COSY_FRONTEND").border).toBe("border-foreground");
+  });
+
+  it("separates SUSPICIOUS from MALICIOUS visually", () => {
+    expect(categoryAccent("SUSPICIOUS").badge).not.toBe(
+      categoryAccent("MALICIOUS").badge,
+    );
+  });
+
+  it("gives UNREACHABLE a neutral accent", () => {
+    expect(categoryAccent("UNREACHABLE").border).toBe("border-foreground");
+  });
+});
+
+describe("matchesFilter (benign)", () => {
+  it("benign matches only the BENIGN category", () => {
+    expect(matchesFilter(scan({ category: "BENIGN" }), "benign")).toBe(true);
+    expect(matchesFilter(scan({ category: "COSY_FRONTEND" }), "benign")).toBe(
+      false,
+    );
   });
 });
 
