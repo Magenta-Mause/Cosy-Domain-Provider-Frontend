@@ -26,6 +26,7 @@ import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
 import { Route as DomainDomainIdRouteImport } from './routes/domain/$domainId'
+import { Route as AdminWatchtowerRouteImport } from './routes/admin/watchtower'
 import { Route as AdminUsersRouteImport } from './routes/admin/users'
 import { Route as AdminSubdomainsRouteImport } from './routes/admin/subdomains'
 import { Route as AdminUsersIndexRouteImport } from './routes/admin/users/index'
@@ -118,6 +119,11 @@ const DomainDomainIdRoute = DomainDomainIdRouteImport.update({
   path: '/domain/$domainId',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminWatchtowerRoute = AdminWatchtowerRouteImport.update({
+  id: '/watchtower',
+  path: '/watchtower',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminUsersRoute = AdminUsersRouteImport.update({
   id: '/users',
   path: '/users',
@@ -168,6 +174,7 @@ export interface FileRoutesByFullPath {
   '/verify': typeof VerifyRoute
   '/admin/subdomains': typeof AdminSubdomainsRouteWithChildren
   '/admin/users': typeof AdminUsersRouteWithChildren
+  '/admin/watchtower': typeof AdminWatchtowerRoute
   '/domain/$domainId': typeof DomainDomainIdRoute
   '/admin/': typeof AdminIndexRoute
   '/admin/subdomains/$subdomainId': typeof AdminSubdomainsSubdomainIdRoute
@@ -190,6 +197,7 @@ export interface FileRoutesByTo {
   '/settings': typeof SettingsRoute
   '/terms': typeof TermsRoute
   '/verify': typeof VerifyRoute
+  '/admin/watchtower': typeof AdminWatchtowerRoute
   '/domain/$domainId': typeof DomainDomainIdRoute
   '/admin': typeof AdminIndexRoute
   '/admin/subdomains/$subdomainId': typeof AdminSubdomainsSubdomainIdRoute
@@ -216,6 +224,7 @@ export interface FileRoutesById {
   '/verify': typeof VerifyRoute
   '/admin/subdomains': typeof AdminSubdomainsRouteWithChildren
   '/admin/users': typeof AdminUsersRouteWithChildren
+  '/admin/watchtower': typeof AdminWatchtowerRoute
   '/domain/$domainId': typeof DomainDomainIdRoute
   '/admin/': typeof AdminIndexRoute
   '/admin/subdomains/$subdomainId': typeof AdminSubdomainsSubdomainIdRoute
@@ -243,6 +252,7 @@ export interface FileRouteTypes {
     | '/verify'
     | '/admin/subdomains'
     | '/admin/users'
+    | '/admin/watchtower'
     | '/domain/$domainId'
     | '/admin/'
     | '/admin/subdomains/$subdomainId'
@@ -265,6 +275,7 @@ export interface FileRouteTypes {
     | '/settings'
     | '/terms'
     | '/verify'
+    | '/admin/watchtower'
     | '/domain/$domainId'
     | '/admin'
     | '/admin/subdomains/$subdomainId'
@@ -290,6 +301,7 @@ export interface FileRouteTypes {
     | '/verify'
     | '/admin/subdomains'
     | '/admin/users'
+    | '/admin/watchtower'
     | '/domain/$domainId'
     | '/admin/'
     | '/admin/subdomains/$subdomainId'
@@ -438,6 +450,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DomainDomainIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/watchtower': {
+      id: '/admin/watchtower'
+      path: '/watchtower'
+      fullPath: '/admin/watchtower'
+      preLoaderRoute: typeof AdminWatchtowerRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/users': {
       id: '/admin/users'
       path: '/users'
@@ -514,12 +533,14 @@ const AdminUsersRouteWithChildren = AdminUsersRoute._addFileChildren(
 interface AdminRouteChildren {
   AdminSubdomainsRoute: typeof AdminSubdomainsRouteWithChildren
   AdminUsersRoute: typeof AdminUsersRouteWithChildren
+  AdminWatchtowerRoute: typeof AdminWatchtowerRoute
   AdminIndexRoute: typeof AdminIndexRoute
 }
 
 const AdminRouteChildren: AdminRouteChildren = {
   AdminSubdomainsRoute: AdminSubdomainsRouteWithChildren,
   AdminUsersRoute: AdminUsersRouteWithChildren,
+  AdminWatchtowerRoute: AdminWatchtowerRoute,
   AdminIndexRoute: AdminIndexRoute,
 }
 
