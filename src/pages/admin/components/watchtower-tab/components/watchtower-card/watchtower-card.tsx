@@ -19,11 +19,11 @@ export function WatchtowerCard({ scan, onSelect }: WatchtowerCardProps) {
       type="button"
       onClick={() => onSelect(scan.uuid)}
       data-testid={`watchtower-card-${scan.label}`}
-      className={`bg-white border-[3px] ${accent.border} rounded-radius-lg overflow-hidden flex flex-col text-left cursor-pointer`}
+      className={`bg-secondary-background border-[3px] ${accent.border} rounded-radius-lg overflow-hidden flex flex-col text-left cursor-pointer`}
       style={{ boxShadow: "6px 6px 0 0 var(--shadow)" }}
     >
       <div
-        className={`h-[180px] overflow-hidden border-b-[3px] ${accent.border} bg-secondary-background relative`}
+        className={`h-[180px] overflow-hidden border-b-[3px] ${accent.border} bg-background relative`}
       >
         {scan.screenshotUrl ? (
           <img
@@ -38,7 +38,7 @@ export function WatchtowerCard({ scan, onSelect }: WatchtowerCardProps) {
           </div>
         )}
         {needsReview(scan) ? (
-          <span className="pixel text-[9px] absolute top-2 right-2 bg-destructive text-white border-2 border-foreground rounded-radius-sm px-2 py-1">
+          <span className="pixel text-[9px] absolute top-2 right-2 bg-destructive text-paper border-2 border-foreground rounded-radius-sm px-2 py-1">
             {t("watchtower.needsReview")}
           </span>
         ) : null}

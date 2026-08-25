@@ -154,6 +154,38 @@ describe("categoryAccent", () => {
     );
   });
 
+  it("never uses an opacity modifier on a token colour", () => {
+    // Every palette colour is a bare `var(--token)`, so `bg-foreground/50` compiles
+    // to nothing and the badge renders with no background — which once made the
+    // EMPTY badge white text on a white card.
+    for (const category of [
+      "COSY_FRONTEND",
+      "BENIGN",
+      "EMPTY",
+      "SUSPICIOUS",
+      "MALICIOUS",
+      "UNREACHABLE",
+    ] as const) {
+      const accent = categoryAccent(category);
+      expect(`${accent.border} ${accent.badge} ${accent.text}`).not.toContain(
+        "/",
+      );
+    }
+  });
+
+  it("pairs every badge fill with an explicit text colour", () => {
+    for (const category of [
+      "COSY_FRONTEND",
+      "BENIGN",
+      "EMPTY",
+      "SUSPICIOUS",
+      "MALICIOUS",
+      "UNREACHABLE",
+    ] as const) {
+      expect(categoryAccent(category).badge).toMatch(/\btext-\S+/);
+    }
+  });
+
   it("gives UNREACHABLE a neutral accent", () => {
     expect(categoryAccent("UNREACHABLE").border).toBe("border-foreground");
   });

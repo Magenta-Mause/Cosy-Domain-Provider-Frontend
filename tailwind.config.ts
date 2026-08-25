@@ -11,10 +11,16 @@ const config: Config = {
       },
     },
     extend: {
+      // NOTE: every colour below resolves to a bare `var(--token)`, so Tailwind's
+      // opacity modifiers (`bg-foreground/50`) produce invalid CSS and are dropped
+      // silently — the element then renders with no background at all. Pick a token
+      // that already has the shade you want instead.
       colors: {
         background: "var(--background)",
         "secondary-background": "var(--secondary-background)",
         foreground: "var(--foreground)",
+        muted: "var(--muted)",
+        paper: "var(--white)",
         accent: "var(--accent)",
         "accent-2": "var(--accent-2)",
         "accent-3": "var(--accent-3)",

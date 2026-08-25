@@ -28,7 +28,7 @@ export function WatchtowerSummary({ summary }: WatchtowerSummaryProps) {
       label: t("watchtower.statBenign"),
       value: summary.benign,
       sub: t("watchtower.statBenignSub"),
-      color: "text-green-600",
+      color: "text-success",
     },
     {
       label: t("watchtower.statFlagged"),

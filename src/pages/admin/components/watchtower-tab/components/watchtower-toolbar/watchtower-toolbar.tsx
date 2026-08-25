@@ -45,8 +45,8 @@ export function WatchtowerToolbar({
             data-testid={`watchtower-view-${v}`}
             className={`pixel text-[10px] px-4 py-3 cursor-pointer ${
               view === v
-                ? "bg-foreground text-white"
-                : "bg-white text-foreground"
+                ? "bg-foreground text-paper"
+                : "bg-secondary-background text-foreground"
             }`}
           >
             {t(`watchtower.view.${v}`)}
@@ -63,10 +63,10 @@ export function WatchtowerToolbar({
             data-testid={`watchtower-filter-${key}`}
             className={`text-[17px] border-2 rounded-radius-sm px-3 py-1 cursor-pointer ${
               filter === key
-                ? "bg-foreground text-white border-foreground"
+                ? "bg-foreground text-paper border-foreground"
                 : key === "flagged"
-                  ? "bg-white text-destructive border-destructive"
-                  : "bg-white text-foreground border-foreground"
+                  ? "bg-secondary-background text-destructive border-destructive"
+                  : "bg-secondary-background text-foreground border-foreground"
             }`}
           >
             {t(`watchtower.filter.${key}`)}
