@@ -39,37 +39,37 @@ export function categoryAccent(category: WatchtowerCategory): {
     case "COSY_FRONTEND":
       return {
         border: "border-foreground",
-        badge: "bg-accent-3 text-white",
+        badge: "bg-accent-3 text-paper",
         text: "text-foreground",
       };
     case "BENIGN":
       return {
         border: "border-foreground",
-        badge: "bg-success text-white",
+        badge: "bg-success text-paper",
         text: "text-foreground",
       };
     case "EMPTY":
       return {
         border: "border-foreground",
-        badge: "bg-foreground/50 text-white",
+        badge: "bg-muted text-paper",
         text: "text-foreground",
       };
     case "SUSPICIOUS":
       return {
         border: "border-accent",
-        badge: "bg-accent text-white",
+        badge: "bg-accent text-foreground",
         text: "text-foreground",
       };
     case "MALICIOUS":
       return {
         border: "border-destructive",
-        badge: "bg-destructive text-white",
+        badge: "bg-destructive text-paper",
         text: "text-destructive",
       };
     case "UNREACHABLE":
       return {
         border: "border-foreground",
-        badge: "bg-foreground text-white",
+        badge: "bg-foreground text-paper",
         text: "text-foreground",
       };
   }
